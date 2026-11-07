@@ -1,0 +1,33 @@
+博士园_品牌印象_品牌简介_品牌创始人_创始人简介_发展历程_企业荣誉
+$(function () { var e = $(".itop"); $(window).scroll(function () { var t = $(document).scrollTop(); if (t > 300) { e.fadeIn("slow") } else { e.fadeOut("slow") } }); e.click(function () { $("html,body").animate({ scrollTop: 0 }, 500) }) });
+var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?44aebdeb8436604750e1e5df37f922d3";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "博士园",
+  "url": "http://www.bosye.com",
+  "logo": "http://www.bosye.com/images/logo.png",
+  "telephone": "400-618-9558",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "后现代城5号楼c座2层",
+    "addressLocality": "朝阳区",
+    "addressRegion": "北京市",
+    "postalCode": "100022", 
+    "addressCountry": "CN"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "400-618-9558",
+    "contactType": "customer service"
+  }
+  "service":"防脱护发加盟|专注脱发白发30年|功能性养发|白发养护|养发|植发|养发馆连锁加盟",
+  "description": "北京博士园成立于2000年是一家致力于毛发健康管理公司,主营业务防脱护发加盟|专注脱发白发30年|功能性养发|白发养护|养发|植发|养发馆连锁加盟|博士园是全国养发知名品牌,养发加盟连锁店遍布全国"
+}
+博士园始于2000年，由留日归国医学博士、牛津毛发基金会专家王朝刚发起创立，聚焦毛发健康研究与连锁运营20多年，是集产品研发、生产销售及服务于一体的北京高新企业单位，标准化连锁经营近2000家专营店，自有医疗机构。科研铸就品牌，创新驱动发展，博士园作为“养防植健”毛发健康全产业链提供者，获得广泛赞许。

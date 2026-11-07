@@ -1,0 +1,1139 @@
+{
+  "retrieved": "2026-10-13",
+  "pages": [
+    {
+      "url": "http://www.bosye.com/",
+      "path": "source-materials/website/index.html",
+      "bytes": 14156,
+      "sha256": "7e258be65fa1d320051f1754f7d80ac841b091fa9feb002cbb412aa6fc0ad383",
+      "mime": "text/html"
+    },
+    {
+      "url": "http://www.bosye.com/ppyx.html",
+      "path": "source-materials/website/ppyx.html",
+      "bytes": 4112,
+      "sha256": "7885359f8ad1539bfb07f26289c496b3222941fd4e92e71b68770f5e05bd6a25",
+      "mime": "text/html"
+    },
+    {
+      "url": "http://www.bosye.com/ky23.html",
+      "path": "source-materials/website/ky23.html",
+      "bytes": 8796,
+      "sha256": "bb083b79006adc1d805feaf17bdff098dfc3d2af74a623e2999c1835608f7ce9",
+      "mime": "text/html"
+    },
+    {
+      "url": "http://www.bosye.com/mdfw.html",
+      "path": "source-materials/website/mdfw.html",
+      "bytes": 8119,
+      "sha256": "af38390a4a2d75f394c461f091c31217b6d02f8c28fbca1d644d73bda3ea2352",
+      "mime": "text/html"
+    },
+    {
+      "url": "http://www.bosye.com/mdls.html",
+      "path": "source-materials/website/mdls.html",
+      "bytes": 6293,
+      "sha256": "22c7ef40080c36686437d066db2e501248291299f079f4645650915c01fa3501",
+      "mime": "text/html"
+    },
+    {
+      "url": "http://www.bosye.com/zfls.html",
+      "path": "source-materials/website/zfls.html",
+      "bytes": 7777,
+      "sha256": "00eeb141a28fbdb726dfe28c513a5782c08006b24b5383186762840d81cb7b47",
+      "mime": "text/html"
+    },
+    {
+      "url": "http://www.bosye.com/mfxy.html",
+      "path": "source-materials/website/mfxy.html",
+      "bytes": 7156,
+      "sha256": "7b0ea29bd78aead5abe829d58fbbe44801becf6efafc74c47c7180f0f296244a",
+      "mime": "text/html"
+    },
+    {
+      "url": "http://www.bosye.com/zshz.html",
+      "path": "source-materials/website/zshz.html",
+      "bytes": 4469,
+      "sha256": "fa8e838e9b8b74dc90c99446050bff4e2d0314282155c6c04a77cfcdf185e71f",
+      "mime": "text/html"
+    }
+  ],
+  "assets": [
+    {
+      "url": "http://www.bosye.com/css/fw.css",
+      "path": "source-materials/website/fw.css",
+      "bytes": 11332,
+      "sha256": "3ae60add464816460415b275f40a3224257935f6e11c9610a2140603d47eef4e",
+      "mime": "text/css"
+    },
+    {
+      "url": "http://www.bosye.com/css/md.css",
+      "path": "source-materials/website/md.css",
+      "bytes": 9492,
+      "sha256": "16402946e2bba4a0bd0480d98df520c05e174d3e3900212b1eb84b2304bee2ea",
+      "mime": "text/css"
+    },
+    {
+      "url": "http://www.bosye.com/css/style.css",
+      "path": "source-materials/website/style.css",
+      "bytes": 13877,
+      "sha256": "f5f35d8073299f69fb0dfc2f465cbb94aa1077ade574e3223874675d7fdedc19",
+      "mime": "text/css"
+    },
+    {
+      "url": "http://www.bosye.com/css/sxy.css",
+      "path": "source-materials/website/sxy.css",
+      "bytes": 9997,
+      "sha256": "23bb6a2187bbdbe7e4f9d4369a0562d71c2b5ea762c2ba64e5954c6b6bb01ef4",
+      "mime": "text/css"
+    },
+    {
+      "url": "http://www.bosye.com/css/zf.css",
+      "path": "source-materials/website/zf.css",
+      "bytes": 12712,
+      "sha256": "d25eaec237ea3428b124c8498d44ef1fbe4f65b962961fbae5736bc67befb79b",
+      "mime": "text/css"
+    },
+    {
+      "url": "http://www.bosye.com/images/arr-bg.png",
+      "path": "assets/bosye-arr-bg.png",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/images/arrow.png",
+      "path": "assets/bosye-arrow.png",
+      "bytes": 5107,
+      "sha256": "b3721f7f837f88ce3db3af924fe1f071905fd957c1aca4116c1749adadecbe43",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/banner1.jpg",
+      "path": "assets/bosye-banner1.jpg",
+      "bytes": 1266569,
+      "sha256": "4a81b93684ef6c6d9d18e6d49b5c2bdd507138845b91b3d0423b836276692a0c",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/banner2.jpg",
+      "path": "assets/bosye-banner2.jpg",
+      "bytes": 1028327,
+      "sha256": "d47c3331372220b13e0948e3893a8378a54d9128aaf7f01192c547e60e855b4e",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/banner3.jpg",
+      "path": "assets/bosye-banner3.jpg",
+      "bytes": 1723259,
+      "sha256": "7ac41dd42dab507bd024ff98af2053a92758c88088e774757e708d5fe3b6fbc5",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/banner4.jpg",
+      "path": "assets/bosye-banner4.jpg",
+      "bytes": 90114,
+      "sha256": "a013bcc234c51506d84a30de88333c1952c2a9db6d72b1a42368670ae640ec46",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/ditu.jpg",
+      "path": "assets/bosye-ditu.jpg",
+      "bytes": 1423,
+      "sha256": "30fb3041041141e6f6225895804c0071a66859815ce364a0738ebb5c1496e86b",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/ewm.jpg",
+      "path": "assets/bosye-ewm.jpg",
+      "bytes": 8960,
+      "sha256": "244b177b954b7da83448176d12656ea05653f13b16fb2de2aafa78f0c2e82637",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/favicon.ico",
+      "path": "assets/bosye-favicon.ico",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwbg.jpg",
+      "path": "assets/bosye-fwbg.jpg",
+      "bytes": 240721,
+      "sha256": "741a733570a12c4ab7b0301ad746d1d01e706568e77dff610245bf3b989f9c0e",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwbg2.jpg",
+      "path": "assets/bosye-fwbg2.jpg",
+      "bytes": 83940,
+      "sha256": "a7a3a20bc00f6401e3bafd0f1c3f31177941e6ab5957d7961824d78f75aad846",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwlb1.jpg",
+      "path": "assets/bosye-fwlb1.jpg",
+      "bytes": 50293,
+      "sha256": "21372f72410ea50030da53a5166e3c970005117e8703305dec9cdc64785750f1",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwlb2.jpg",
+      "path": "assets/bosye-fwlb2.jpg",
+      "bytes": 54433,
+      "sha256": "73d614f2d93f489f39fad99df22d46443d97b7962c3dacb09987ac97afb08ed4",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwlb3.jpg",
+      "path": "assets/bosye-fwlb3.jpg",
+      "bytes": 65605,
+      "sha256": "2cc8c1bc787c2d16df3a40b26f5fab62c829a74af999f41c58917807d9be15f0",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwlb4.jpg",
+      "path": "assets/bosye-fwlb4.jpg",
+      "bytes": 227627,
+      "sha256": "d726e6d496b4328ff5a05566b8a237f2b16ef50239c5cb7fd5bd544e0cb6df3d",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwlb5.jpg",
+      "path": "assets/bosye-fwlb5.jpg",
+      "bytes": 57718,
+      "sha256": "51ca758e5f12c8d781e1b6e810a5af5aec688e9f8fe787040c94ffc8755beada",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwlbxt1.png",
+      "path": "assets/bosye-fwlbxt1.png",
+      "bytes": 2648,
+      "sha256": "c94920c8580f6deb0d895988a6d4dcb8f16a5ee0db13a695a062d64d275f9506",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwlbxt2.png",
+      "path": "assets/bosye-fwlbxt2.png",
+      "bytes": 2997,
+      "sha256": "89b28fb30d785f3561e6aa8db596b35dc7955bdfe78478a9cec3d9aacb7337bb",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwlbxt3.png",
+      "path": "assets/bosye-fwlbxt3.png",
+      "bytes": 2802,
+      "sha256": "4bdf09d18d5391b03e2de186e84626877654259ba5c4ded11b05bc8e5023038f",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwlbxt4.png",
+      "path": "assets/bosye-fwlbxt4.png",
+      "bytes": 3190,
+      "sha256": "68b56136b0b2b8b456651cc4c7aa8d7bbd8cf39c90462345c472424c48e92cd5",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/fwlbxt5.png",
+      "path": "assets/bosye-fwlbxt5.png",
+      "bytes": 2997,
+      "sha256": "9d2b309ead3d31fd80877d5905ad5c6cc46da07bc110628ef67f20974ddb26af",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/hd.gif",
+      "path": "assets/bosye-hd.gif",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/images/hea.jpg",
+      "path": "assets/bosye-hea.jpg",
+      "bytes": 30493,
+      "sha256": "6a3178046f134e3e13fd2d3a4ff9325e51844871f2a3b7edee5d4bf035e8e259",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/head1.png",
+      "path": "assets/bosye-head1.png",
+      "bytes": 5192,
+      "sha256": "e9075e21239daa0c70b7a4ba6ea0f4bd7fee5f323699e40a1932742147d7dacf",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/head2.png",
+      "path": "assets/bosye-head2.png",
+      "bytes": 2935,
+      "sha256": "048a32c91dad5b22273242b79680c7a9f76df04ec3acf6cbc0bd30339e6cd52c",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/head3.png",
+      "path": "assets/bosye-head3.png",
+      "bytes": 2765,
+      "sha256": "30e826c6f802d86a9c2a9679c757f94bdbab4000d1d3487c10f22143d7295780",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/iconsprite_btbar.png",
+      "path": "assets/bosye-iconsprite_btbar.png",
+      "bytes": 195,
+      "sha256": "32d01ec9d9a40db67cb4f95d2cb3ebca4743ba644fb4d7ac44bfee4e623f1f73",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/jtx.png",
+      "path": "assets/bosye-jtx.png",
+      "bytes": 1515,
+      "sha256": "d1176427ab09f7c5f74e09af7afaacabcf2babf6b084cb7d31ae00cf73efd505",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/jty.png",
+      "path": "assets/bosye-jty.png",
+      "bytes": 1439,
+      "sha256": "190150208147f5791e8a48a9e8d11b90a9621b1ef41d8a8f380024b2e465844a",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/jtz.png",
+      "path": "assets/bosye-jtz.png",
+      "bytes": 1488,
+      "sha256": "e87f6090db483a8f9c425d19a132fbc6404a072dc35e61468d7de1250a5275f3",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/ky1.jpg",
+      "path": "assets/bosye-ky1.jpg",
+      "bytes": 234329,
+      "sha256": "613fed91424b89d87849380bcc76d702b719759e8124e17967e4ad593258b71d",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/ky22.jpg",
+      "path": "assets/bosye-ky22.jpg",
+      "bytes": 280499,
+      "sha256": "d86901767ff89025c3a2974a7d113f2d8918cc5fb92988fcde44f2665ce9f59a",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/ky3.jpg",
+      "path": "assets/bosye-ky3.jpg",
+      "bytes": 559270,
+      "sha256": "3618824908d0a67c25f81590ecea5d488421c5cccfa258700b2d11fbd7d88506",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb01.png",
+      "path": "assets/bosye-kylb01.png",
+      "bytes": 947827,
+      "sha256": "dcc759bbf2d01101603729ba3fa6a1a2c78269cc568e944815be42c06279dead",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb02.png",
+      "path": "assets/bosye-kylb02.png",
+      "bytes": 500345,
+      "sha256": "2af7926f0c4fe8e8c2151f3a177917dcea240de447bf73d2a0c71762187dad18",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb03.png",
+      "path": "assets/bosye-kylb03.png",
+      "bytes": 1237158,
+      "sha256": "0230f3c08c1afdc3c4df6a91ce3bdc77a86f08e8a897a2c0ff12a4f06161697a",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb04.png",
+      "path": "assets/bosye-kylb04.png",
+      "bytes": 881054,
+      "sha256": "5a0de5a6d6f517246c06f33275f17b675a5fdb4e0fea36aee69ce306e05f4c02",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb05.png",
+      "path": "assets/bosye-kylb05.png",
+      "bytes": 685124,
+      "sha256": "b63c6ec8e20c3934e6a99ccdd598553c49018c1da78f8f42fbdf6d0867690f7c",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb06.png",
+      "path": "assets/bosye-kylb06.png",
+      "bytes": 435314,
+      "sha256": "4d40c1f2b3d508600521af75e2f682f74d6cd52295d35f72e4d74a341873b1d7",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb07.png",
+      "path": "assets/bosye-kylb07.png",
+      "bytes": 973603,
+      "sha256": "ceb5b24cc2943629128298c0261e9fe55f434e7e01743a8195b8b9a08c94324d",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb08.png",
+      "path": "assets/bosye-kylb08.png",
+      "bytes": 339021,
+      "sha256": "72c79cd5fe9f82a7654ebe60bea88d0ed9b2c62c020d78fd51ec19e90d5c27b2",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb09.png",
+      "path": "assets/bosye-kylb09.png",
+      "bytes": 915437,
+      "sha256": "5b8d2ca2b4c81ee2e0816aa854bcf8829cfd4abe71ad5c0e1e23a39824e6febb",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb10.png",
+      "path": "assets/bosye-kylb10.png",
+      "bytes": 822616,
+      "sha256": "5f446eb8c27140e2d645379014ee39fd963ab68f8c068e45dbd1c63cbf325b56",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb11.png",
+      "path": "assets/bosye-kylb11.png",
+      "bytes": 948634,
+      "sha256": "261775e3028f5df2b1fcf209d0018e2960d96f7b79539c7a35ea3bd79cc8f159",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kylb12.png",
+      "path": "assets/bosye-kylb12.png",
+      "bytes": 548476,
+      "sha256": "6bdfed1c503750ac46faf7d9af91322e8ed16ae72e6f02129b0a34852d1aa56c",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/kyxin1.jpg",
+      "path": "assets/bosye-kyxin1.jpg",
+      "bytes": 294456,
+      "sha256": "86ad2f70c069c04abe11eb1ad4cdf3ec6798b81bb2096ddb999c858584bbd7b0",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/li001.png",
+      "path": "assets/bosye-li001.png",
+      "bytes": 10804,
+      "sha256": "c70003660009254180c5409fdf751db4d1e7b94109faa1c162df0ed0bbc672f4",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li002.png",
+      "path": "assets/bosye-li002.png",
+      "bytes": 13626,
+      "sha256": "3cee38e810658f20216a5b4a8574959d78572120a3a21c8302c9f127cf68e3f2",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li003.png",
+      "path": "assets/bosye-li003.png",
+      "bytes": 9286,
+      "sha256": "987a21b46a71c34f3e847bd2dd89ed673b36e186c5c222b0df8ca7e0ab954c18",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li004.png",
+      "path": "assets/bosye-li004.png",
+      "bytes": 13979,
+      "sha256": "f72cfe5da0694cec300cd101a8bb38d0978887c4984164b816a8e302f4ac2307",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li005.png",
+      "path": "assets/bosye-li005.png",
+      "bytes": 11330,
+      "sha256": "13c98e12c105b04d4c8862b49badfd546867dfe6fe473cf25ef6880dadfeb7a7",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li006.png",
+      "path": "assets/bosye-li006.png",
+      "bytes": 14278,
+      "sha256": "00fd9c84da3eeb5b63fec7f57c572e29b781ea0f4094dc4f6655ceb1e6b77d99",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li007.png",
+      "path": "assets/bosye-li007.png",
+      "bytes": 12467,
+      "sha256": "a42d560248c15894ffca64249db7f9b6443be3927705679ee4b78f0dfee5fbcd",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li008.png",
+      "path": "assets/bosye-li008.png",
+      "bytes": 12532,
+      "sha256": "281c7b9d63276a8bf4780f5ab81a350b9278cbda84012a1047cc4c717c4be084",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li01.png",
+      "path": "assets/bosye-li01.png",
+      "bytes": 10611,
+      "sha256": "8c9698f56a3b7d95deaca7ee2a24ff05021a3a3b19834351b1538a5e18cf136a",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li02.png",
+      "path": "assets/bosye-li02.png",
+      "bytes": 12052,
+      "sha256": "33c5966a921b5e186268704cde8c18f7d16b48fd2756ef6da6624de84ffe5a49",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li03.png",
+      "path": "assets/bosye-li03.png",
+      "bytes": 10027,
+      "sha256": "148c47759e92fe7805994ed7858f625209928aed73208533773ec5353492d333",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li04.png",
+      "path": "assets/bosye-li04.png",
+      "bytes": 14840,
+      "sha256": "f6e78d47e31f83fc4cfa5d8e958d65263d6e4bfdb03f5b12e61c1d91418cac14",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li05.png",
+      "path": "assets/bosye-li05.png",
+      "bytes": 10847,
+      "sha256": "d837b796731e96431e889169a24bc1d7de805875297c532fdb112d6f8edb1ea6",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li06.png",
+      "path": "assets/bosye-li06.png",
+      "bytes": 14514,
+      "sha256": "8ae18d1136ad7d63113b559f1980ef66f4e2178e7a1189436b87b5cfc3ce8a7f",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li07.png",
+      "path": "assets/bosye-li07.png",
+      "bytes": 12167,
+      "sha256": "01ecee7aaf41249022b636d2b6eb7344cc7266eb1fe22f31234a217912270154",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/li08.png",
+      "path": "assets/bosye-li08.png",
+      "bytes": 12056,
+      "sha256": "d5d7c248c0b93e38a01392131fa0401592d7290c9fcf0e43c482e6a3cd788d9f",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/logo.png",
+      "path": "assets/bosye-logo.png",
+      "bytes": 3824,
+      "sha256": "ab6981260f8cfe181cfc9b2c1137dc283216699f8bf3788fe5c6bdd6ed28c513",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/main0001.jpg",
+      "path": "assets/bosye-main0001.jpg",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/images/main01.jpg",
+      "path": "assets/bosye-main01.jpg",
+      "bytes": 72545,
+      "sha256": "ff45734053bdb27661adf1cac2732eca29ad413e4331055149e10b974183d426",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/main023.jpg",
+      "path": "assets/bosye-main023.jpg",
+      "bytes": 645813,
+      "sha256": "8592ede584a926f3dcb28b116db13c7dea9f39c5c32bababfb7594137bb9ebb7",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/main03.jpg",
+      "path": "assets/bosye-main03.jpg",
+      "bytes": 489757,
+      "sha256": "9e1c6341e71dc68b1aa4f7836c087f98cbda8afe0fae5e517eac10ae8afb77ac",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/main04.jpg",
+      "path": "assets/bosye-main04.jpg",
+      "bytes": 589560,
+      "sha256": "a37f009d98edde0e5eaab8a1559d6f784185aea2fab29171403c32a371f6bd8e",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/main05.jpg",
+      "path": "assets/bosye-main05.jpg",
+      "bytes": 263548,
+      "sha256": "faaaa1d4d092f6ce0eb6054c0c45727becec927e6648b32f657826128b850424",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/md1.png",
+      "path": "assets/bosye-md1.png",
+      "bytes": 380432,
+      "sha256": "4f12e385d90eb50613c420ad4e7621a36e926fca48ba48b2e625fba9fc36f39f",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/md2.png",
+      "path": "assets/bosye-md2.png",
+      "bytes": 155500,
+      "sha256": "f9bf4aada0cee41802f3595e97ba3605f17d7af088e2b263ac9539f5e189afe9",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/md3.png",
+      "path": "assets/bosye-md3.png",
+      "bytes": 321169,
+      "sha256": "091cf043d4bd20e8593991a9f7db97963b43e0067b9058b9a9f2c808d468981a",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/md4.png",
+      "path": "assets/bosye-md4.png",
+      "bytes": 176397,
+      "sha256": "19e3d3b57480c75d7c4522fb17c7569d25ff20efa66debafeffa6ac8a28ba365",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/md5.png",
+      "path": "assets/bosye-md5.png",
+      "bytes": 181961,
+      "sha256": "bf2a060136cee1a3490eb129db84355af15a11319784c802e4211bab7ad1aa2a",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/mdfwts.jpg",
+      "path": "assets/bosye-mdfwts.jpg",
+      "bytes": 269228,
+      "sha256": "d59cf7299b76f7a8bdd6a9a5a885e180660116603e60933c764c3129e8418f42",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/mdjs.jpg",
+      "path": "assets/bosye-mdjs.jpg",
+      "bytes": 93552,
+      "sha256": "e7e0107ec699e4f3fe4246e99f1bf019198426e734f124efdb471dbf748b30bf",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/mdls.jpg",
+      "path": "assets/bosye-mdls.jpg",
+      "bytes": 82153,
+      "sha256": "652bdd5b128fe56081ad8369f5168d5054122ea5cd9fd0ba01642922f1e01ab0",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/mdlsbg.jpg",
+      "path": "assets/bosye-mdlsbg.jpg",
+      "bytes": 37232,
+      "sha256": "87e2f4ccf38a51d758cdbf0c054ac827678e55c232b72811a6df1d7842e9be36",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/mdlsdt.jpg",
+      "path": "assets/bosye-mdlsdt.jpg",
+      "bytes": 289473,
+      "sha256": "a7e5958977ecd9a0ff332ae917868b0bba7b5faea031c895544ec01cf8ad3742",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/mdlssp1.jpg",
+      "path": "assets/bosye-mdlssp1.jpg",
+      "bytes": 272567,
+      "sha256": "a2d6fbe1332f48a59da2f9f90739671424317b5242cced8b0d25462ff6261d4c",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/n1.png",
+      "path": "assets/bosye-n1.png",
+      "bytes": 5321,
+      "sha256": "60b1406c984f188114015e9b8d58893657084860d2509f2548abefa28b5c38aa",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n10.png",
+      "path": "assets/bosye-n10.png",
+      "bytes": 5521,
+      "sha256": "c3b4e333c0cd96acfc7c9235ab0c9a4d07cf0322997c81e1d608454693d31211",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n11.png",
+      "path": "assets/bosye-n11.png",
+      "bytes": 6166,
+      "sha256": "05ebb68dff0060b2db9f06310285a775485fb739e4db6c9ade5244611c57ba68",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n12.png",
+      "path": "assets/bosye-n12.png",
+      "bytes": 6879,
+      "sha256": "00cdcfa98ca6033bc53872cfd65c99e2582070d51e18165b8d57a6156b2b78a7",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n2.png",
+      "path": "assets/bosye-n2.png",
+      "bytes": 5749,
+      "sha256": "5fb790d1bb73f1c32f584ee23fa0e589abcee89a35b76698d09452e9e0c2d64e",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n3.png",
+      "path": "assets/bosye-n3.png",
+      "bytes": 7259,
+      "sha256": "159782854ca7d5581aed3c86640ec74707ecbd532b117c554c37034d74e6051d",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n4.png",
+      "path": "assets/bosye-n4.png",
+      "bytes": 7523,
+      "sha256": "99b6c389f4970fd586b07d19d29c9a894427ce08f8c5d846c1fd39527c633724",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n5.png",
+      "path": "assets/bosye-n5.png",
+      "bytes": 7543,
+      "sha256": "3c46bfa6330d53946b3d5261fc1c4905376c6e1b02e0c182f223e169d1edb422",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n6.png",
+      "path": "assets/bosye-n6.png",
+      "bytes": 5615,
+      "sha256": "89e25368722d994d55c6a14f1501420ad68aa33fb8fd4f1d758ce8cce67540f4",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n7.png",
+      "path": "assets/bosye-n7.png",
+      "bytes": 6884,
+      "sha256": "f63c998766494906000b8b3b915f44b2c6e20a404aa32f238b8f70965ea2c738",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n8.png",
+      "path": "assets/bosye-n8.png",
+      "bytes": 7395,
+      "sha256": "e03676f1959a940b2116ada5e025d94ecafea8b9d5f269a7ff06a535d2f2c856",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/n9.png",
+      "path": "assets/bosye-n9.png",
+      "bytes": 7492,
+      "sha256": "8041649db2972b6b6d3d30ade53deaf03f3b1d9060869dd7dc6feffd11577e7b",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/off.jpg",
+      "path": "assets/bosye-off.jpg",
+      "bytes": 1521,
+      "sha256": "46f6d422203f569ec83b7d7421f049f3f7e740eec1ea001f4dbe4532b77d2efa",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/on.jpg",
+      "path": "assets/bosye-on.jpg",
+      "bytes": 1564,
+      "sha256": "f67b14ee8c0a707e098c26805ebe1cfb5b4fdb03b2b1e5658c8e0e084e3d496f",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/pp2.jpg",
+      "path": "assets/bosye-pp2.jpg",
+      "bytes": 137639,
+      "sha256": "3c0b1d0c38a9bec5763769a13071b65243945eb64aa30fd138832c88b91261f4",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/pp5.jpg",
+      "path": "assets/bosye-pp5.jpg",
+      "bytes": 504057,
+      "sha256": "b6fc43214ef3dd4092c9f0971c4144ed420548a2f54a13f7936318a6925368c4",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/pp6.jpg",
+      "path": "assets/bosye-pp6.jpg",
+      "bytes": 225883,
+      "sha256": "6bb701ed1b92032fd3490c594330f0184781f8af748089eb68bd688ba076c160",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/pp7.jpg",
+      "path": "assets/bosye-pp7.jpg",
+      "bytes": 186685,
+      "sha256": "2c442e34fb9f1d107a5a4d16445545fed768b85b460b990b56b872446c674f9d",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/ppxin01.jpg",
+      "path": "assets/bosye-ppxin01.jpg",
+      "bytes": 405477,
+      "sha256": "f3f6cc686f28386749111ffb87fad5bf03395d9ffed39ab6fe792fe37b650437",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/ppxin03.jpg",
+      "path": "assets/bosye-ppxin03.jpg",
+      "bytes": 10183,
+      "sha256": "59c98188a00a7aff3ddb132719239622996a776d87d0494f40970829715e0802",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/sxy1.jpg",
+      "path": "assets/bosye-sxy1.jpg",
+      "bytes": 197787,
+      "sha256": "b1ce2f5b090092468ff2b1f5ace5c2b327deb25da61ff5c4da95f60da97e9547",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/sxy2.jpg",
+      "path": "assets/bosye-sxy2.jpg",
+      "bytes": 94630,
+      "sha256": "9d89a1954774f725e147318f9c90a5f614d0cace86cf2dd4fe82de5389185ac1",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/sxy3.jpg",
+      "path": "assets/bosye-sxy3.jpg",
+      "bytes": 81546,
+      "sha256": "f84cac9be7fcbc81bca60a900229f452e629d11b7b34381babf73cccf95113f3",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/sxy4.jpg",
+      "path": "assets/bosye-sxy4.jpg",
+      "bytes": 232027,
+      "sha256": "0a0d6a8eb9351abdd988c6f5bcce5e2c2e83537af721752733f9301ce1fcba93",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/sxy5.jpg",
+      "path": "assets/bosye-sxy5.jpg",
+      "bytes": 92926,
+      "sha256": "5a3e9a196a06857af4a8505766238e4b225ee5c49d3f233c0a8f1fa90f0c2624",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/sxylb1.png",
+      "path": "assets/bosye-sxylb1.png",
+      "bytes": 283309,
+      "sha256": "8ee635a01cff78ff6c6670ed56ac1a2aba756581b9a3099db4c16e031ea5be08",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/sxylb2.png",
+      "path": "assets/bosye-sxylb2.png",
+      "bytes": 342807,
+      "sha256": "f6944bd2a080dc5d18b3ed58db7b17da2080e80af2771ff5c9d5f6d4868a446b",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/sxylb3.png",
+      "path": "assets/bosye-sxylb3.png",
+      "bytes": 297724,
+      "sha256": "8d41e8267915ee34e58400cebeb60896d8361edc98c878f3173caa574960066a",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/sxylb4.png",
+      "path": "assets/bosye-sxylb4.png",
+      "bytes": 340308,
+      "sha256": "8e4a75da0212374bc22b481e02d69499bbca25673fa4c0d6a7fa28d1a0998501",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/sxylb5.png",
+      "path": "assets/bosye-sxylb5.png",
+      "bytes": 298316,
+      "sha256": "21693a8fb7c2fe41f3c776edfa69e4bb887847292d52de4665d57ffba0ed24d5",
+      "mime": "image/png"
+    },
+    {
+      "url": "http://www.bosye.com/images/tel.jpg",
+      "path": "assets/bosye-tel.jpg",
+      "bytes": 1429,
+      "sha256": "ec2f3ef449905cf86af88b4b69d578cbe93b9b7aaf9def829e7cc798aa7f1ba4",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/xm1.jpg",
+      "path": "assets/bosye-xm1.jpg",
+      "bytes": 14719,
+      "sha256": "793c452ea9d22c0b31aaef4a23b0b6c3cfaee6b9482ace300f8a49f91a6a33ef",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/xm2.jpg",
+      "path": "assets/bosye-xm2.jpg",
+      "bytes": 13692,
+      "sha256": "86daa964baa22a17f9c0d22c37785f8039bfe63a42515a34865a5baab1b0c307",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/xm3.jpg",
+      "path": "assets/bosye-xm3.jpg",
+      "bytes": 19702,
+      "sha256": "d97b0ee70ce3c2491beb73b0a9ba83709c54a124b7fef094c78fde19796c068f",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/xm4.jpg",
+      "path": "assets/bosye-xm4.jpg",
+      "bytes": 59484,
+      "sha256": "d99b1bbf1b7eff2ba4e1129df282ebf1ddc6b1f2a4f5b33bb86f2b2718b4d10b",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/xm5.jpg",
+      "path": "assets/bosye-xm5.jpg",
+      "bytes": 15201,
+      "sha256": "18abf5ba50f4de8708a7580d5827d61110554eedc8da7dbe9c427ee95fd0a53f",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/xm6.jpg",
+      "path": "assets/bosye-xm6.jpg",
+      "bytes": 69695,
+      "sha256": "1914c0f80f6b42cfc7b550faf492b9f642586a013e679cc70ca6ad3ede6e44a6",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zfls1.jpg",
+      "path": "assets/bosye-zfls1.jpg",
+      "bytes": 344874,
+      "sha256": "da2f8d858ef0c53a2ae89527ff323766ed1ba89aef2de72ef9740486ef6ef99c",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zfls2.jpg",
+      "path": "assets/bosye-zfls2.jpg",
+      "bytes": 63602,
+      "sha256": "766f756ceed6a9a3d9ffd64628505144a258ea7199f8093de976167a208d5d67",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zfls3.jpg",
+      "path": "assets/bosye-zfls3.jpg",
+      "bytes": 228134,
+      "sha256": "4c9d95114738564971d0d0b4c9e51a3121c3a6c5c396e41cbebd2322aa49afcd",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zfls4.jpg",
+      "path": "assets/bosye-zfls4.jpg",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/images/zflslb01.jpg",
+      "path": "assets/bosye-zflslb01.jpg",
+      "bytes": 97642,
+      "sha256": "4ec3e04ae12b53c8121a4c1b4ff262f9db476d0b6663016319c20ee107b90b5a",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zflslb02.jpg",
+      "path": "assets/bosye-zflslb02.jpg",
+      "bytes": 80038,
+      "sha256": "5022eb28fc9828c88d1d2b091aa23994f01c352fbd3da1cd44f72521561f085b",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zflslb03.jpg",
+      "path": "assets/bosye-zflslb03.jpg",
+      "bytes": 99176,
+      "sha256": "deb527c0b53be37722fcea2393e9433c43ae97a501e14fac6143cb08290d840a",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zflslb04.jpg",
+      "path": "assets/bosye-zflslb04.jpg",
+      "bytes": 64119,
+      "sha256": "88adcbf11bddc1e4c58736f982de2aeca4dcfd259f66d5e62a3ed6da6740fd20",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zflslb05.jpg",
+      "path": "assets/bosye-zflslb05.jpg",
+      "bytes": 70090,
+      "sha256": "efbb4dc25ac500ade589dedebeb5d0f191b70d804af9fada6816f1abe46d31ca",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zflslb06.jpg",
+      "path": "assets/bosye-zflslb06.jpg",
+      "bytes": 347842,
+      "sha256": "a0a1a72502acf40704d9efabc371b5bc83dc2590fa3938b56f048443f2362c07",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zj1.jpg",
+      "path": "assets/bosye-zj1.jpg",
+      "bytes": 42212,
+      "sha256": "efdaf967b438aaad5887e0de24f1bb1ff05cc954666eda540531fe66fddbcb74",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zj2.jpg",
+      "path": "assets/bosye-zj2.jpg",
+      "bytes": 44003,
+      "sha256": "3b290190bca62e4627da519eb2d167b3a06ab0946e234ff5357fa37632d3c38d",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zj3.jpg",
+      "path": "assets/bosye-zj3.jpg",
+      "bytes": 40237,
+      "sha256": "139aec12111fd2cc22bb192b3ea8a1c3425858e8f394e2331784e954edf674a6",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zj4.jpg",
+      "path": "assets/bosye-zj4.jpg",
+      "bytes": 44940,
+      "sha256": "3e0e6925e3e8579f2accf562b67d2c392581b02d57d2357b8dae78d42ab66e03",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zs01.jpg",
+      "path": "assets/bosye-zs01.jpg",
+      "bytes": 143900,
+      "sha256": "5dce506f2142b441d622daa7c935ecbe687ccdb1710f9b33af16cc42ba077897",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zs02.jpg",
+      "path": "assets/bosye-zs02.jpg",
+      "bytes": 760074,
+      "sha256": "2b1f31bdbf3e7862204894749a3c5c9d9e277b8449ec60dadc2a9b48f2deb14a",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zs03.jpg",
+      "path": "assets/bosye-zs03.jpg",
+      "bytes": 370427,
+      "sha256": "d7a7a33dec33cd619e034c499951632684cc4d5c2dbbbc51dbc78793993cb3bb",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zs04.jpg",
+      "path": "assets/bosye-zs04.jpg",
+      "bytes": 494470,
+      "sha256": "9c50232dd2d2b61bd210a97d4524b6c74e28a7d9371648a658ca25b9d2a30b6a",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zs05.jpg",
+      "path": "assets/bosye-zs05.jpg",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/images/zs06.jpg",
+      "path": "assets/bosye-zs06.jpg",
+      "bytes": 312825,
+      "sha256": "34801ab4b73afb627c6a158f26abffd8e312da76fed53f538ecec7bd7b666c4f",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.bosye.com/images/zshz1.jpg",
+      "path": "assets/bosye-zshz1.jpg",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/images/zshz2.jpg",
+      "path": "assets/bosye-zshz2.jpg",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/images/zshz5.jpg",
+      "path": "assets/bosye-zshz5.jpg",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/js/banner.js",
+      "path": "source-materials/website/banner.js",
+      "bytes": 3543,
+      "sha256": "fde076fafd7c2d95fff8a80a3d017ca06db6d6b02ea55f75a5cb046343947284",
+      "mime": "application/javascript"
+    },
+    {
+      "url": "http://www.bosye.com/js/footer.js",
+      "path": "source-materials/website/footer.js",
+      "bytes": 7409,
+      "sha256": "4b8b1173978a6952ddce8faa02b652054f33b12a294c3242efdd73172a46ec2f",
+      "mime": "application/javascript"
+    },
+    {
+      "url": "http://www.bosye.com/js/header.js",
+      "path": "source-materials/website/header.js",
+      "bytes": 1884,
+      "sha256": "1807dbb08c442f4fc01513210e8dfce28780cfaf160203262bac2880544d3d86",
+      "mime": "application/javascript"
+    },
+    {
+      "url": "http://www.bosye.com/js/index.js",
+      "path": "source-materials/website/index.js",
+      "bytes": 1244,
+      "sha256": "8da6c0943a0052d8f4b7d23939718681a04fe05bd1d1bb47bf254abf7bc2f1a9",
+      "mime": "application/javascript"
+    },
+    {
+      "url": "http://www.bosye.com/js/jq.js",
+      "path": "source-materials/website/jq.js",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/js/jquery-1.11.2.min.js",
+      "path": "source-materials/website/jquery-1.11.2.min.js",
+      "bytes": 95931,
+      "sha256": "2ecd295d295bec062cedebe177e54b9d6b19fc0a841dc5c178c654c9ccff09c0",
+      "mime": "application/javascript"
+    },
+    {
+      "url": "http://www.bosye.com/js/jquery-1.7.1.min.js",
+      "path": "source-materials/website/jquery-1.7.1.min.js",
+      "bytes": 93856,
+      "sha256": "c5c53f6f84601a2d4b0ee666880cb2a6beddb8b0690779a08842e54687d235dd",
+      "mime": "application/javascript"
+    },
+    {
+      "url": "http://www.bosye.com/js/jquery-1.8.0.js",
+      "path": "source-materials/website/jquery-1.8.0.js",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "http://www.bosye.com/js/jquery-1.9.1.min.js",
+      "path": "source-materials/website/jquery-1.9.1.min.js",
+      "bytes": 92521,
+      "sha256": "d2a199e230388908e67be6c8fc5e9fa3cabae8e8033e61be3cf32ecb02430714",
+      "mime": "application/javascript"
+    },
+    {
+      "url": "http://www.bosye.com/js/jquery.js",
+      "path": "source-materials/website/jquery.js",
+      "bytes": 93870,
+      "sha256": "33493c0893725595f5665d9c730befd7a7ae9d85aca01947fe8c8e1e3ff0e95a",
+      "mime": "application/javascript"
+    },
+    {
+      "url": "http://www.bosye.com/video/mdlsv1.mp4",
+      "path": "source-materials/website/mdlsv1.mp4",
+      "bytes": 15131866,
+      "sha256": "f6640f7695c4f0cae9402daa8f3b197253aa36702ddac793c363c1d9902c23ae",
+      "mime": "video/mp4"
+    }
+  ],
+  "document": {
+    "source": "/Users/peaklin/Documents/北京博士园/医和你-服务合同.docx",
+    "archive": "source-materials/knowledge/医和你-服务合同.docx",
+    "paragraphs": 160,
+    "images": 8
+  }
+}

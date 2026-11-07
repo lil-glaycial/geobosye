@@ -1,0 +1,175 @@
+博士园_养发馆加盟_防脱护发加盟_白发养护_头疗馆加盟_养发馆加盟哪个好_博士园养发加盟连锁店—30年科研技术打造百年养发品牌
+function mobile_device_detect(url)
+		{
+				var thisOS=navigator.platform;
+				var os=new Array("iPhone","iPod","iPad","android","Nokia","SymbianOS","Symbian","Windows Phone","Phone","Linux armv71","MAUI","UNTRUSTED/1.0","Windows CE","BlackBerry","IEMobile");
+		 for(var i=0;i<os.length;i++)
+				{
+		 if(thisOS.match(os[i]))
+				{   
+		  window.location=url;
+		 }
+		  
+		 }
+		 //因为相当部分的手机系统不知道信息,这里是做临时性特殊辨认
+		 if(navigator.platform.indexOf('iPad') != -1)
+				{
+		  window.location=url;
+		 }
+		 //做这一部分是因为Android手机的内核也是Linux
+		 //但是navigator.platform显示信息不尽相同情况繁多,因此从浏览器下手，即用navigator.appVersion信息做判断
+		  var check = navigator.appVersion;
+		  if( check.match(/linux/i) )
+				  {
+		   //X11是UC浏览器的平台 ，如果有其他特殊浏览器也可以附加上条件
+		   if(check.match(/mobile/i) || check.match(/X11/i))
+						 {
+		   window.location=url;
+		   }
+		 }
+		 //类in_array函数
+		 Array.prototype.in_array = function(e)
+		 {
+		  for(i=0;i<this.length;i++)
+		  {
+		   if(this[i] == e)
+		   return true;
+		  }
+		  return false;
+		 }
+		} 
+		mobile_device_detect("http://wap.bosye.com");
+
+		$(function () { var e = $(".itop"); $(window).scroll(function () { var t = $(document).scrollTop(); if (t > 300) { e.fadeIn("slow") } else { e.fadeOut("slow") } }); e.click(function () { $("html,body").animate({ scrollTop: 0 }, 500) }) });
+var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?44aebdeb8436604750e1e5df37f922d3";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?c06a18bd703bc4b016976a59f1cdf8d8";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "博士园",
+  "url": "http://www.bosye.com",
+  "logo": "http://www.bosye.com/images/logo.png",
+  "telephone": "400-618-9558",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "后现代城5号楼c座2层",
+    "addressLocality": "朝阳区",
+    "addressRegion": "北京市",
+    "postalCode": "100022", 
+    "addressCountry": "CN"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "400-618-9558",
+    "contactType": "customer service"
+  }
+  "service":"防脱护发加盟|专注脱发白发30年|功能性养发|白发养护|养发|植发|养发馆连锁加盟",
+  "description": "北京博士园成立于2000年是一家致力于毛发健康管理公司,主营业务防脱护发加盟|专注脱发白发30年|功能性养发|白发养护|养发|植发|养发馆连锁加盟|博士园是全国养发知名品牌,养发加盟连锁店遍布全国"
+}
+400-618-9558
+首页
+品牌印象
+科研30+年
+门店服务
+门店连锁
+植发连锁
+毛发学院
+招商合作
+联系我们
+防脱养护
+植发健发
+白发养护
+科学养发
+头皮调养
+居家养护
+联系我们
+CONTACT US
+400-618-9558
+咨询热线
+北京市朝阳区后现代城5号楼c座2层
+总部地址
+北京博士园科技发展有限公司
+备案信息：
+京ICP备10216282号-12
+京公网安备 11010502039889号
+var menuLeft = document.getElementById('cbp-spmenu-s1'),
+                    showLeft = document.getElementById('showLeft'),
+                    body = document.body;
+                showLeft.onclick = function () {
+                    classie.toggle(this, 'active');
+                    classie.toggle(menuLeft, 'cbp-spmenu-open');
+                    disableOther('showLeft');
+                };
+						function nameFocus(obj){
+                            if (obj.value == '请输入姓名') {
+                                obj.value = '';
+                            }
+                        }
+                        function phoneFocus(obj) {
+                            if (obj.value == '请输入电话') {
+                                obj.value = '';
+                            }
+                        }
+                function disableOther(button) {
+                    if (button !== 'showLeft') {
+                        classie.toggle(showLeft, 'disabled');
+                    }
+                }
+                function checkJoin1() {
+					
+                    var name = $('#name1');
+                    if (name.val() == '' || name.val() == '请输入姓名') {
+                        name.val('请输入姓名');
+                        return false;
+                    }
+                    var phone = $('#phone1');
+                    if (phone.val() == '' || phone.val() == '请输入电话') {
+                        phone.val('请输入电话');
+                        return false;
+                    }
+					var return_visit_time = $("input[name='return_visit_time']:checked").val();
+					
+					var leave_message = $('#leave_message');
+					if(leave_message.val().length > 400){
+						alert('留言内容太长')
+						return false;
+					}
+                    var area = $('#area1');
+					$.ajaxSetup({
+							contentType: "application/x-www-form-urlencoded; charset=utf-8"
+					});
+                    $.post('http://www.bosye.com/api/join.aspx?web_id=3', { "name": name.val(), "phone": phone.val(), "area": area.val(),"leave_message":leave_message.val(),
+						"return_visit_time":return_visit_time
+					}, function (data) {
+                        var json = eval(data);
+                        if (json[0].code == '1') {
+							
+                            name.val('');
+                            phone.val('');
+                            area.val('');
+                            alert('已提交成功，我们将尽快联系您');
+                        } else {
+                            alert(json[0].error);
+                        }
+                    });
+                }
+                document.write('<script type="text/javascript"  data-lxb-uid="18344227" data-lxb-gid="" src="http://lxbjs.baidu.com/api/asset/api.js?t=' + new Date().getTime() + '" charset="utf-8"><\/script>');
+                
+                document.getElementById("callBtn").onclick = function () {
+                        lxb.call(document.getElementById("telInput"));
+                };
+                document.getElementById("callBtn1").onclick = function () {
+                    lxb.call(document.getElementById("telInput1"));
+                };

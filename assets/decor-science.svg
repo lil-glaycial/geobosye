@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" fill="none">
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" stroke="#61b9af" stroke-opacity=".11"/>
+      <circle cx="0" cy="0" r="1.5" fill="#61b9af" fill-opacity=".24"/>
+    </pattern>
+    <radialGradient id="fade"><stop stop-color="white"/><stop offset="1" stop-color="white" stop-opacity="0"/></radialGradient>
+    <mask id="mask"><ellipse cx="510" cy="320" rx="520" ry="380" fill="url(#fade)"/></mask>
+  </defs>
+  <g mask="url(#mask)">
+    <path fill="url(#grid)" d="M0 0h900v700H0z"/>
+    <g stroke="#55aaa3" stroke-opacity=".23" stroke-width="1.4">
+      <path d="m545 60 100 58v116l-100 58-100-58V118Z"/>
+      <path d="m645 234 100 58v116l-100 58-100-58V292M745 292l100-58V118M445 234l-100 58v116M545 408l-100 58v116"/>
+      <circle cx="545" cy="234" r="170" stroke-dasharray="3 12"/>
+      <circle cx="545" cy="234" r="206"/>
+    </g>
+    <g fill="#58b3aa" fill-opacity=".35">
+      <circle cx="545" cy="60" r="4"/><circle cx="645" cy="118" r="4"/><circle cx="645" cy="234" r="5"/><circle cx="545" cy="292" r="4"/><circle cx="445" cy="234" r="4"/><circle cx="445" cy="118" r="5"/><circle cx="745" cy="408" r="4"/><circle cx="545" cy="408" r="4"/><circle cx="445" cy="582" r="4"/>
+    </g>
+  </g>
+</svg>

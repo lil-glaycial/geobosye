@@ -1,0 +1,107 @@
+博士园_门店服务_门店项目_门店顾客
+$(function(){		
+
+	//设计案例切换
+
+	$('.title li').mouseover(function(){
+
+		var liindex = $('.title li').index(this);
+
+		$(this).addClass('on').siblings().removeClass('on');
+
+		$('.ppfyco div.ppfycont').eq(liindex).fadeIn(150).siblings('div.ppfycont').hide();
+
+		var liWidth = $('.title li').width();
+
+		$('.case .title p').stop(false,true).animate({'left' : liindex * liWidth + 'px'},300);
+
+	});
+
+	
+
+	//设计案例hover效果
+
+	$('.ppfyco .ppfycont li').hover(function(){
+
+		$(this).css("border-color","#ff6600");
+
+		$(this).find('p > a').css('color','#ff6600');
+
+	},function(){
+
+		$(this).css("border-color","#fafafa");
+
+		$(this).find('p > a').css('color','#666666');
+
+	});
+
+	});
+
+
+$(function(){		
+	//设计案例切换
+	$('.zfjgqhk li').click(function(){
+		var liindex = $('.zfjgqhk li').index(this);
+		$(this).addClass('on').siblings().removeClass('on');
+		$('.jcpqh div.product').eq(liindex).fadeIn(150).siblings('div.product').hide();
+		var liWidth = $('.zfjgqhk li').width();
+		$('.case .zfjgqhk p').stop(false,true).animate({'left' : liindex * liWidth + 'px'},300);
+	});
+	
+	//设计案例hover效果
+	$('.jcpqh .product li').hover(function(){
+		$(this).css("border-color","#ff6600");
+		$(this).find('p > a').css('color','#ff6600');
+	},function(){
+		$(this).css("border-color","#fafafa");
+		$(this).find('p > a').css('color','#666666');
+	});
+});
+
+$(function () { var e = $(".itop"); $(window).scroll(function () { var t = $(document).scrollTop(); if (t > 300) { e.fadeIn("slow") } else { e.fadeOut("slow") } }); e.click(function () { $("html,body").animate({ scrollTop: 0 }, 500) }) });
+var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?44aebdeb8436604750e1e5df37f922d3";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "博士园",
+  "url": "http://www.bosye.com",
+  "logo": "http://www.bosye.com/images/logo.png",
+  "telephone": "400-618-9558",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "后现代城5号楼c座2层",
+    "addressLocality": "朝阳区",
+    "addressRegion": "北京市",
+    "postalCode": "100022", 
+    "addressCountry": "CN"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "400-618-9558",
+    "contactType": "customer service"
+  }
+  "service":"防脱护发加盟|专注脱发白发30年|功能性养发|白发养护|养发|植发|养发馆连锁加盟",
+  "description": "北京博士园成立于2000年是一家致力于毛发健康管理公司,主营业务防脱护发加盟|专注脱发白发30年|功能性养发|白发养护|养发|植发|养发馆连锁加盟|博士园是全国养发知名品牌,养发加盟连锁店遍布全国"
+}
+防脱养护
+针对多种脱发情况，进行合理预防与有效防脱。
+植发健发
+健发：针对脱发，改善毛囊生长环境，为毛囊持续提供营养，帮助休眠毛囊焕发生机。
+植发：获取人体后枕部毛囊为发源，通过手术，把毛囊单位移植到相应部位，修补局部毛发分布密度，自然美观。
+白发养护
+改善色素营养代谢，调理毛发生长微环境，从而预防和改善白发。
+科学养发
+维护受损毛发、改善头发干枯毛糙、发黄分叉、细软易断等毛发问题。
+头皮调养
+调理头皮亚健康状态，增强头皮韧性，改善头油头屑。
+防脱养护
+植发健发
+白发养护
+科学养发
+头皮调养

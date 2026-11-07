@@ -1,0 +1,187 @@
+[
+  {
+    "source": "source-materials/knowledge/image2.jpeg",
+    "output": "assets/brand-space-2.webp",
+    "crop": null,
+    "dimensions": [
+      1269,
+      937
+    ],
+    "label": "门店外观设计"
+  },
+  {
+    "source": "source-materials/knowledge/image3.jpeg",
+    "output": "assets/brand-space-3.webp",
+    "crop": null,
+    "dimensions": [
+      1269,
+      952
+    ],
+    "label": "独立护理空间"
+  },
+  {
+    "source": "source-materials/knowledge/image4.jpeg",
+    "output": "assets/brand-space-4.webp",
+    "crop": null,
+    "dimensions": [
+      1269,
+      952
+    ],
+    "label": "接待与产品展示区"
+  },
+  {
+    "source": "source-materials/knowledge/image5.jpeg",
+    "output": "assets/brand-space-5.webp",
+    "crop": null,
+    "dimensions": [
+      1269,
+      952
+    ],
+    "label": "洗护空间"
+  },
+  {
+    "source": "source-materials/knowledge/image6.jpeg",
+    "output": "assets/brand-space-6.webp",
+    "crop": null,
+    "dimensions": [
+      1269,
+      952
+    ],
+    "label": "开放护理空间"
+  },
+  {
+    "source": "source-materials/knowledge/image7.jpeg",
+    "output": "assets/brand-space-7.webp",
+    "crop": null,
+    "dimensions": [
+      1269,
+      952
+    ],
+    "label": "头皮检测与咨询区"
+  },
+  {
+    "source": "assets/bosye-kyxin1.jpg",
+    "output": "assets/brand-founder.webp",
+    "crop": [
+      1080,
+      0,
+      1918,
+      520
+    ],
+    "dimensions": [
+      838,
+      520
+    ],
+    "label": "王朝刚博士"
+  },
+  {
+    "source": "assets/bosye-zflslb01.jpg",
+    "output": "assets/brand-laboratory.webp",
+    "crop": [
+      0,
+      0,
+      790,
+      540
+    ],
+    "dimensions": [
+      790,
+      540
+    ],
+    "label": "科研工作场景"
+  },
+  {
+    "source": "assets/bosye-kylb04.png",
+    "output": "assets/brand-products.webp",
+    "crop": [
+      0,
+      0,
+      800,
+      500
+    ],
+    "dimensions": [
+      800,
+      500
+    ],
+    "label": "博士园产品展示"
+  },
+  {
+    "source": "assets/bosye-kylb11.png",
+    "output": "assets/brand-campus.webp",
+    "crop": [
+      0,
+      0,
+      790,
+      510
+    ],
+    "dimensions": [
+      790,
+      510
+    ],
+    "label": "品牌园区历史资料"
+  },
+  {
+    "source": "assets/bosye-sxylb4.png",
+    "output": "assets/brand-training.webp",
+    "crop": [
+      0,
+      0,
+      940,
+      570
+    ],
+    "dimensions": [
+      940,
+      570
+    ],
+    "label": "门店人员培训"
+  },
+  {
+    "source": "assets/bosye-fwlb1.jpg",
+    "output": "assets/brand-care-1.webp",
+    "crop": null,
+    "dimensions": [
+      766,
+      598
+    ],
+    "label": "官网服务场景"
+  },
+  {
+    "source": "assets/bosye-fwlb2.jpg",
+    "output": "assets/brand-care-2.webp",
+    "crop": null,
+    "dimensions": [
+      766,
+      598
+    ],
+    "label": "官网服务场景"
+  },
+  {
+    "source": "assets/bosye-fwlb3.jpg",
+    "output": "assets/brand-care-3.webp",
+    "crop": null,
+    "dimensions": [
+      766,
+      598
+    ],
+    "label": "官网服务场景"
+  },
+  {
+    "source": "assets/bosye-fwlb4.jpg",
+    "output": "assets/brand-care-4.webp",
+    "crop": null,
+    "dimensions": [
+      766,
+      598
+    ],
+    "label": "官网服务场景"
+  },
+  {
+    "source": "assets/bosye-fwlb5.jpg",
+    "output": "assets/brand-care-5.webp",
+    "crop": null,
+    "dimensions": [
+      766,
+      598
+    ],
+    "label": "官网服务场景"
+  }
+]

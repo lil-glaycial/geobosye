@@ -1,0 +1,82 @@
+博士园_毛发学院_关于商学院_特色课程_商学院优势_导师团队_线上教育系统
+$(function(){		
+	//设计案例切换
+	$('.zfjgqhk li').click(function(){
+		var liindex = $('.zfjgqhk li').index(this);
+		$(this).addClass('on').siblings().removeClass('on');
+		$('.jcpqh div.product').eq(liindex).fadeIn(150).siblings('div.product').hide();
+		var liWidth = $('.zfjgqhk li').width();
+		$('.case .zfjgqhk p').stop(false,true).animate({'left' : liindex * liWidth + 'px'},300);
+	});
+	
+	//设计案例hover效果
+	$('.jcpqh .product li').hover(function(){
+		$(this).css("border-color","#ff6600");
+		$(this).find('p > a').css('color','#ff6600');
+	},function(){
+		$(this).css("border-color","#fafafa");
+		$(this).find('p > a').css('color','#666666');
+	});
+});
+
+$(function () { var e = $(".itop"); $(window).scroll(function () { var t = $(document).scrollTop(); if (t > 300) { e.fadeIn("slow") } else { e.fadeOut("slow") } }); e.click(function () { $("html,body").animate({ scrollTop: 0 }, 500) }) });
+var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?44aebdeb8436604750e1e5df37f922d3";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "博士园",
+  "url": "http://www.bosye.com",
+  "logo": "http://www.bosye.com/images/logo.png",
+  "telephone": "400-618-9558",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "后现代城5号楼c座2层",
+    "addressLocality": "朝阳区",
+    "addressRegion": "北京市",
+    "postalCode": "100022", 
+    "addressCountry": "CN"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "400-618-9558",
+    "contactType": "customer service"
+  }
+  "service":"防脱护发加盟|专注脱发白发30年|功能性养发|白发养护|养发|植发|养发馆连锁加盟",
+  "description": "北京博士园成立于2000年是一家致力于毛发健康管理公司,主营业务防脱护发加盟|专注脱发白发30年|功能性养发|白发养护|养发|植发|养发馆连锁加盟|博士园是全国养发知名品牌,养发加盟连锁店遍布全国"
+}
+博士园商学院成立于2015年，以“让毛发健康行业没有难做的店”为使命；以“聚集行业英才、整合业内资源、肩负教育使命、振兴行业之邦”为愿景；以“脚踏实地、务实创新”为价值观。数年间，成功为博士园近2000家门店持续输送管理运营、销售、服务等人才。
+博士园商学院围绕毛发健康行业难点，精心设计5大培训体系，为加盟店盟商解决门店运营、利润拓展等课题，涉及店长发展战略、技能、人才培养、销售实战、互联网+线上学习等模块。
+线上学习系统
+老板密训营
+店长绝对成交
+新员工毛发健康师
+技能培训
+由毛发健康行业创始人王朝刚博士、留美学者朱袁蒙、博士园商学院院长孟繁辉等近50位讲师团队打造。
+门店运营实效、持续业绩赋能系统培训，线上互联网+线下教学同步，业绩咨询服务。
+通过系统实战训练、落地方案学习，解决门店发展关键点，为近2000家门店实战赋能。
+掌握数据即得先机，财务管理、客户管理系统培训，帮助门店积累资源。
+王朝刚博士
+博士园创始人
+北京博士园创始人
+原北大医院整形美容医师
+在日本取得整形美容医学博士的中国医师
+朱袁蒙
+博士园总经理
+毛发健康行业10年运营精英
+留美学者
+孟繁辉
+商学院院长
+毕业于河北医科大学
+毛发行业20年资深经验
+刘健
+商学院副院长
+毕业于北京中医药大学
+养生保健行业20余年
+毛发健康达人
+线上教学E-Learning系统是博士园商学院倾力打造的一套学习系统，主要针对门店店长、店员进行营销、运营、管理、服务等体系化的培训。

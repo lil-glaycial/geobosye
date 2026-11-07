@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>博士园 · 管理后台</title>
+    <link rel="icon" href="assets/bosye-logo.png" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <section id="loginScreen" class="login-screen">
+      <div class="login-brand">
+        <img
+          class="admin-official-logo"
+          src="assets/bosye-logo.png"
+          alt="博士园 BOSYE"
+          width="121"
+          height="75"
+        />
+        <h1>专业服务的每一天，<br />从这里开始。</h1>
+        <p>北京博士园 · 品牌运营管理中心</p>
+      </div>
+      <form id="loginForm" class="login-form">
+        <p class="page-kicker">BOSYE MANAGEMENT</p>
+        <h2>登录管理后台</h2>
+        <p>使用您的管理员账号继续</p>
+        <label
+          >账号<input
+            name="username"
+            autocomplete="username"
+            required
+            maxlength="60"
+            placeholder="管理员账号" /></label
+        ><label
+          >密码<input
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+            maxlength="128"
+            placeholder="请输入密码"
+        /></label>
+        <p id="loginError" class="form-error" role="alert"></p>
+        <button class="primary-action" type="submit">登录后台 →</button
+        ><a href="/">← 返回官网</a>
+      </form>
+    </section>
+    <div class="admin-shell" id="adminShell" hidden>
+      <aside class="sidebar" id="sidebar">
+        <div class="admin-brand">
+          <img
+            class="admin-official-logo"
+            src="assets/bosye-logo.png"
+            alt="博士园 BOSYE"
+            width="121"
+            height="75"
+          />
+          <div><strong>博士园</strong><small>品牌运营管理中心</small></div>
+        </div>
+        <nav class="side-nav" id="sideNav" aria-label="后台导航"></nav>
+        <div class="sidebar-bottom">
+          <a class="back-site" href="/" target="_blank" rel="noopener"
+            >↗ 查看官网</a
+          >
+        </div>
+      </aside>
+      <div class="admin-main">
+        <header class="admin-topbar">
+          <button
+            class="sidebar-toggle"
+            id="sidebarToggle"
+            aria-label="展开管理菜单"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+          <div class="breadcrumb">
+            <span>管理后台</span><b>/</b
+            ><strong id="breadcrumbTitle">仪表盘</strong>
+          </div>
+          <div class="top-actions">
+            <button class="outline-btn" id="changePassword">修改密码</button>
+            <div class="admin-user">
+              <div class="user-avatar" id="userAvatar"></div>
+              <div class="user-info">
+                <strong id="userName"></strong><span id="userRole"></span>
+              </div>
+            </div>
+            <button class="outline-btn" id="logoutBtn">退出</button>
+          </div>
+        </header>
+        <main class="admin-content" id="adminContent" tabindex="-1">
+          <p>正在读取数据…</p>
+        </main>
+      </div>
+    </div>
+    <div class="admin-modal-backdrop" id="editorModal" hidden>
+      <section
+        class="admin-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <button class="modal-close" id="modalClose" aria-label="关闭">×</button>
+        <h2 id="modalTitle"></h2>
+        <div id="modalBody"></div>
+      </section>
+    </div>
+    <div class="admin-toast" id="adminToast" role="status"></div>
+    <div class="media-picker-backdrop" id="mediaPickerModal" hidden>
+      <section
+        class="media-picker"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="mediaPickerTitle"
+        aria-describedby="mediaPickerDescription"
+      >
+        <div class="media-picker-heading">
+          <div>
+            <p class="page-kicker">BOSYE / IMAGE LIBRARY</p>
+            <h2 id="mediaPickerTitle">选择展示图片</h2>
+            <p id="mediaPickerDescription">选择图库图片，或上传本地图片。</p>
+          </div>
+          <button
+            class="picker-close"
+            type="button"
+            id="mediaPickerClose"
+            aria-label="关闭图库"
+          >
+            ×
+          </button>
+        </div>
+        <div class="media-picker-toolbar">
+          <label class="picker-search"
+            ><span class="sr-only">搜索图片名称</span
+            ><input
+              id="mediaSearch"
+              type="search"
+              placeholder="搜索图片名称"
+              maxlength="120"
+          /></label>
+          <label
+            ><span class="sr-only">图片来源</span
+            ><select id="mediaSource">
+              <option value="all">全部图片</option>
+              <option value="assets">品牌素材</option>
+              <option value="uploads">本地上传</option>
+            </select></label
+          >
+          <button class="primary-action" type="button" id="mediaPickerUpload">
+            ↑ 上传本地图片
+          </button>
+          <input
+            id="mediaPickerFile"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            hidden
+          />
+        </div>
+        <p class="picker-upload-note">支持 JPG、PNG、WEBP，单张不超过 5 MB。</p>
+        <p
+          id="mediaPickerError"
+          class="form-error picker-error"
+          role="alert"
+        ></p>
+        <div class="media-picker-body">
+          <div class="media-picker-results">
+            <p id="mediaPickerCount" class="picker-count" role="status"></p>
+            <div
+              class="picker-grid"
+              id="mediaPickerGrid"
+              aria-label="图片图库"
+            ></div>
+          </div>
+          <aside class="picker-preview" aria-label="所选图片预览">
+            <div class="picker-preview-image" id="mediaPickerPreview"></div>
+            <p id="mediaPickerName"></p>
+            <small id="mediaPickerInfo"></small>
+          </aside>
+        </div>
+        <div class="media-picker-footer">
+          <p id="mediaPickerSelection" role="status">请选择图片</p>
+          <div>
+            <button class="outline-btn" type="button" id="mediaPickerCancel">
+              取消</button
+            ><button
+              class="primary-action"
+              type="button"
+              id="mediaPickerConfirm"
+              disabled
+            >
+              使用此图片
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="admin.js" defer></script>
+  </body>
+</html>

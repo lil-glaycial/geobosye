@@ -1,0 +1,118 @@
+博士园_植发连锁_植发项目_植发优势_植发流程
+$(function(){		
+
+	//设计案例切换
+
+	$('.title li').mouseover(function(){
+
+		var liindex = $('.title li').index(this);
+
+		$(this).addClass('on').siblings().removeClass('on');
+
+		$('.ppfyco div.ppfycont').eq(liindex).fadeIn(150).siblings('div.ppfycont').hide();
+
+		var liWidth = $('.title li').width();
+
+		$('.case .title p').stop(false,true).animate({'left' : liindex * liWidth + 'px'},300);
+
+	});
+
+	
+
+	//设计案例hover效果
+
+	$('.ppfyco .ppfycont li').hover(function(){
+
+		$(this).css("border-color","#ff6600");
+
+		$(this).find('p > a').css('color','#ff6600');
+
+	},function(){
+
+		$(this).css("border-color","#fafafa");
+
+		$(this).find('p > a').css('color','#666666');
+
+	});
+
+	});
+
+
+$(function(){		
+	//设计案例切换
+	$('.zfjgqhk li').click(function(){
+		var liindex = $('.zfjgqhk li').index(this);
+		$(this).addClass('on').siblings().removeClass('on');
+		$('.jcpqh div.product').eq(liindex).fadeIn(150).siblings('div.product').hide();
+		var liWidth = $('.zfjgqhk li').width();
+		$('.case .zfjgqhk p').stop(false,true).animate({'left' : liindex * liWidth + 'px'},300);
+	});
+	
+	//设计案例hover效果
+	$('.jcpqh .product li').hover(function(){
+		$(this).css("border-color","#ff6600");
+		$(this).find('p > a').css('color','#ff6600');
+	},function(){
+		$(this).css("border-color","#fafafa");
+		$(this).find('p > a').css('color','#666666');
+	});
+});
+
+$(function () { var e = $(".itop"); $(window).scroll(function () { var t = $(document).scrollTop(); if (t > 300) { e.fadeIn("slow") } else { e.fadeOut("slow") } }); e.click(function () { $("html,body").animate({ scrollTop: 0 }, 500) }) });
+var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?44aebdeb8436604750e1e5df37f922d3";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "博士园",
+  "url": "http://www.bosye.com",
+  "logo": "http://www.bosye.com/images/logo.png",
+  "telephone": "400-618-9558",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "后现代城5号楼c座2层",
+    "addressLocality": "朝阳区",
+    "addressRegion": "北京市",
+    "postalCode": "100022", 
+    "addressCountry": "CN"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "400-618-9558",
+    "contactType": "customer service"
+  }
+  "service":"防脱护发加盟|专注脱发白发30年|功能性养发|白发养护|养发|植发|养发馆连锁加盟",
+  "description": "北京博士园成立于2000年是一家致力于毛发健康管理公司,主营业务防脱护发加盟|专注脱发白发30年|功能性养发|白发养护|养发|植发|养发馆连锁加盟|博士园是全国养发知名品牌,养发加盟连锁店遍布全国"
+}
+科研揭秘
+植发本质
+植发器械
+迭代升级
+毛囊检测
+手术技术方案
+迭代升级
+产品统一
+权威认证
+科研揭秘植发本质
+将植发与科技相结合，
+从源头实现郁郁葱葱的植发效果。
+植发器械迭代升级
+取代传统台式植发器械，
+完成植发器械时代性跨越。
+毛囊检测
+在原有的毛囊检测、植发设计仪基础上，
+引进进口头皮酸碱度检测仪，改善方案更优。
+手术技术方案迭代升级
+手术设计团队定期进行
+造型、艺术、美学的培训交流。
+产品统一
+六大产品体系，贯彻养防植健理念，
+术前护发，术后健发养发。
+权威认证
+连年荣获
+“重质守信、优质服务、维权信誉单位”。

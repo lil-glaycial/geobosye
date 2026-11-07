@@ -1,0 +1,10 @@
+node_modules
+data
+.local-credentials.txt
+.env
+test-results
+.git
+
+source-materials
+scripts
+docs

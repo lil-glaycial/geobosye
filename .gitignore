@@ -1,0 +1,6 @@
+node_modules/
+data/
+.env
+.local-credentials.txt
+test-results/
+.DS_Store

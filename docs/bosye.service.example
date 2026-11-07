@@ -1,0 +1,23 @@
+# Linux systemd 示例。代码、数据与 Node 路径应与 deployment.md 保持一致。
+# 若 command -v node 的结果不是 /usr/bin/node，请调整 ExecStart。
+[Unit]
+Description=Beijing Bosye website and administration API
+After=network.target
+
+[Service]
+Type=simple
+User=bosye
+Group=bosye
+WorkingDirectory=/srv/bosye/app
+EnvironmentFile=/etc/bosye.env
+ExecStart=/usr/bin/node /srv/bosye/app/server/index.js
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+UMask=0077
+NoNewPrivileges=true
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
