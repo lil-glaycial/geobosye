@@ -12,6 +12,7 @@ COPY --chown=node:node package.json index.html admin.html privacy.html styles.cs
 COPY --chown=node:node assets ./assets
 COPY --chown=node:node server ./server
 COPY --chown=node:node content ./content
+COPY --chown=node:node scripts ./scripts
 RUN mkdir -p /app/data && chown node:node /app /app/data
 USER node
 EXPOSE 4173
