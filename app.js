@@ -388,7 +388,7 @@
       models.innerHTML = (k.shopModels || [])
         .map(
           (v) =>
-            `<article class="model-card"><div><h4>${esc(v.name)}</h4><span>${esc(v.size)}</span></div><p class="model-price"><strong>${esc(v.investment)}</strong> 万元</p><p>资料所列标准投资</p><ul><li>${esc(v.products)}</li><li>${esc(v.equipment)}</li></ul><a class="text-link" href="#contact" data-consult="合作加盟咨询">了解合作方案 <span aria-hidden="true">↗</span></a></article>`,
+            `<article class="model-card"><div><h4>${esc(v.name)}</h4><span>${esc(v.size)}</span></div><p class="model-price"><strong>${esc(v.investment)}</strong> 万元</p><p>资料所列标准投资</p><ul><li>${esc(v.products)}</li><li>${esc(v.equipment)}</li></ul><a class="text-link" href="#contact" data-consult="合作加盟咨询">了解合作方案 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a></article>`,
         )
         .join("");
     const learning = document.querySelector("#learningTracks");
@@ -404,7 +404,7 @@
       partners.innerHTML = (k.partners || [])
         .map(
           (v, i) =>
-            `<button class="partner-card" data-partner-index="${i}"><div><span>${esc(v.city)}</span><small>${esc(v.joined)} 年加入</small></div><p><strong>${esc(v.metric)}</strong>${esc(v.unit)}</p><h4>${esc(v.name)} · 合作伙伴 <span aria-hidden="true">↗</span></h4></button>`,
+            `<button class="partner-card" data-partner-index="${i}"><div><span>${esc(v.city)}</span><small>${esc(v.joined)} 年加入</small></div><p><strong>${esc(v.metric)}</strong>${esc(v.unit)}</p><h4>${esc(v.name)} · 合作伙伴 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></h4></button>`,
         )
         .join("");
     const thumbs = document.querySelector("#galleryThumbs");
@@ -589,7 +589,7 @@
             String(i + 1).padStart(2, "0") +
             "</span>" +
             esc(v.name) +
-            '<b aria-hidden="true">↗</b></button>',
+            '<b aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></b></button>',
         )
         .join("");
       selectProduct(0);
@@ -616,14 +616,14 @@
       $(".service-grid").innerHTML = services
         .map(
           (v, i) =>
-            `<button class="service-card" data-service="${v.id}" aria-label="了解${esc(v.name)}"><div class="service-image">${v.image ? `<img src="${esc(v.image)}" alt="${esc(v.name)}服务" loading="lazy">` : ""}<div class="service-overlay"></div><span class="service-index">${String(i + 1).padStart(2, "0")}</span></div><div class="service-content"><p>${esc(v.english)}</p><h3>${esc(v.name)}</h3><span class="service-arrow" aria-hidden="true">↗</span><div class="service-detail">${esc(v.summary)}</div></div></button>`,
+            `<button class="service-card" data-service="${v.id}" aria-label="了解${esc(v.name)}"><div class="service-image">${v.image ? `<img src="${esc(v.image)}" alt="${esc(v.name)}服务" loading="lazy">` : ""}<div class="service-overlay"></div><span class="service-index">${String(i + 1).padStart(2, "0")}</span></div><div class="service-content"><p>${esc(v.english)}</p><h3>${esc(v.name)}</h3><span class="service-arrow" aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span><div class="service-detail">${esc(v.summary)}</div></div></button>`,
         )
         .join("");
       $("#news").hidden = !articles.length;
       $("#newsGrid").innerHTML = articles
         .map(
           (v) =>
-            `<button class="news-card" data-article="${v.id}"><small>${esc(v.category)}</small><h3>${esc(v.title)}</h3><p>${esc(v.summary)}</p><span>阅读全文 ↗</span></button>`,
+            `<button class="news-card" data-article="${v.id}"><small>${esc(v.category)}</small><h3>${esc(v.title)}</h3><p>${esc(v.summary)}</p><span>阅读全文 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></button>`,
         )
         .join("");
     } catch {

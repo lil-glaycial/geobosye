@@ -1276,7 +1276,7 @@ function createApp(options = {}) {
       .sort((a, b) => a.sort - b.sort)
       .map(
         (v, i) =>
-          `<button class="service-card" data-service="${v.id}" aria-label="了解${escapeHtml(v.name)}"><div class="service-image">${v.image ? `<img src="${escapeHtml(v.image)}" alt="${escapeHtml(v.name)}服务" loading="lazy">` : ""}<div class="service-overlay"></div><span class="service-index">${String(i + 1).padStart(2, "0")}</span></div><div class="service-content"><p>${escapeHtml(v.english)}</p><h3>${escapeHtml(v.name)}</h3><span class="service-arrow" aria-hidden="true">↗</span><div class="service-detail">${escapeHtml(v.summary)}</div></div></button>`,
+          `<button class="service-card" data-service="${v.id}" aria-label="了解${escapeHtml(v.name)}"><div class="service-image">${v.image ? `<img src="${escapeHtml(v.image)}" alt="${escapeHtml(v.name)}服务" loading="lazy">` : ""}<div class="service-overlay"></div><span class="service-index">${String(i + 1).padStart(2, "0")}</span></div><div class="service-content"><p>${escapeHtml(v.english)}</p><h3>${escapeHtml(v.name)}</h3><span class="service-arrow" aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span><div class="service-detail">${escapeHtml(v.summary)}</div></div></button>`,
       )
       .join("");
     html = html.replace(

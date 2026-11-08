@@ -4506,19 +4506,14 @@ h2 {
   box-shadow: 0 18px 60px #244d3910;
 }
 
-/* Keep decorative diagonal arrows consistent across device fonts. */
-.btn > span,
-.text-link > span,
-.header-cta > span,
-.service-arrow,
-.expand-icon,
-.partner-card h4 > span,
-.resource-arrow,
-.brand-news-read > span {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 400;
-  line-height: 1;
-  font-variant-ligatures: none;
+/* Fixed SVG geometry and size keep arrows independent of system fonts. */
+svg.icon-arrow-up-right {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  vertical-align: -3px;
+  pointer-events: none;
 }
 .brand-news-page .content-photo {
   overflow: hidden;

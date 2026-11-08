@@ -353,7 +353,7 @@ function renderHome(html, content, fields, site) {
     "shopModels",
     content.shopModels,
     (v) =>
-      `<article class="model-card"><div><h4>${e(v.name)}</h4><span>${e(v.size)}</span></div><p class="model-price"><strong>${e(v.investment)}</strong> 万元</p><p>资料所列标准投资</p><ul><li>${e(v.products)}</li><li>${e(v.equipment)}</li></ul><a class="text-link" href="#contact" data-consult="合作加盟咨询">了解合作方案 <span aria-hidden="true">↗</span></a></article>`,
+      `<article class="model-card"><div><h4>${e(v.name)}</h4><span>${e(v.size)}</span></div><p class="model-price"><strong>${e(v.investment)}</strong> 万元</p><p>资料所列标准投资</p><ul><li>${e(v.products)}</li><li>${e(v.equipment)}</li></ul><a class="text-link" href="#contact" data-consult="合作加盟咨询">了解合作方案 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a></article>`,
   );
   block(
     "learningTracks",
@@ -365,7 +365,7 @@ function renderHome(html, content, fields, site) {
     "partnerGrid",
     content.partners,
     (v, i) =>
-      `<button class="partner-card" data-partner-index="${i}"><div><span>${e(v.city)}</span><small>${e(v.joined)} 年加入</small></div><p><strong>${e(v.metric)}</strong>${e(v.unit)}</p><h4>${e(v.name)} · 合作伙伴 <span aria-hidden="true">↗</span></h4></button>`,
+      `<button class="partner-card" data-partner-index="${i}"><div><span>${e(v.city)}</span><small>${e(v.joined)} 年加入</small></div><p><strong>${e(v.metric)}</strong>${e(v.unit)}</p><h4>${e(v.name)} · 合作伙伴 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></h4></button>`,
   );
   block(
     "galleryThumbs",

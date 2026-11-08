@@ -52,7 +52,7 @@ function newsPages(db) {
           : "") +
         renderText(item.body).replace(/src="(assets|uploads)\//g, 'src="/$1/') +
         (item.sourceUrl
-          ? `<p class="content-source-link"><a href="${esc(item.sourceUrl)}" rel="noopener" target="_blank">查看微信公众号原文 ↗</a></p>`
+          ? `<p class="content-source-link"><a href="${esc(item.sourceUrl)}" rel="noopener" target="_blank">查看微信公众号原文 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></a></p>`
           : "") +
         '<p><a href="/news">← 返回品牌资讯</a></p>',
     })),
@@ -88,7 +88,7 @@ function newsListing(db, value) {
         .slice((page - 1) * 12, page * 12)
         .map(
           (item) =>
-            `<a class="brand-news-card" href="/news/${esc(item.id)}">${item.image ? `<div class="brand-news-cover"><img src="/${esc(item.image)}" alt="" loading="lazy"><span>品牌资讯</span></div>` : ""}<div class="brand-news-card-body"><p class="brand-news-meta">${esc(item.account || "品牌资讯")} · <time datetime="${esc(item.publishedDate)}">${esc(item.publishedDate)}</time>${item.imageCount !== undefined ? ` · ${esc(item.imageCount)} 图` : ""}</p><h2>${esc(item.title)}</h2><p class="brand-news-summary">${esc(item.summary)}</p><span class="brand-news-read">阅读全文 <span aria-hidden="true">↗</span></span></div></a>`,
+            `<a class="brand-news-card" href="/news/${esc(item.id)}">${item.image ? `<div class="brand-news-cover"><img src="/${esc(item.image)}" alt="" loading="lazy"><span>品牌资讯</span></div>` : ""}<div class="brand-news-card-body"><p class="brand-news-meta">${esc(item.account || "品牌资讯")} · <time datetime="${esc(item.publishedDate)}">${esc(item.publishedDate)}</time>${item.imageCount !== undefined ? ` · ${esc(item.imageCount)} 图` : ""}</p><h2>${esc(item.title)}</h2><p class="brand-news-summary">${esc(item.summary)}</p><span class="brand-news-read">阅读全文 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></span></div></a>`,
         )
         .join("") ||
       '<div class="brand-news-empty"><h2>暂无品牌资讯</h2><p>更多品牌动态，敬请期待。</p></div>'

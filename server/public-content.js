@@ -140,7 +140,7 @@ function renderPage(site, origin, page) {
       mainEntityOfPage: { "@id": url + "#page" },
     });
   return styleHubs(
-    `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(page.title)} · 北京博士园</title><meta name="description" content="${esc(page.description)}"><meta name="author" content="${esc(author)}"><meta name="theme-color" content="#006f6a"><link rel="icon" href="/assets/bosye-logo.png"><link rel="stylesheet" href="/styles.css">${metadata(site, origin, page.path, page.title, page.description, schema)}<script src="/assets/site-navigation.js" defer></script></head><body class="content-page${page.news ? " brand-news-page" : ""}"><a class="skip-link" href="#main">跳到主要内容</a>${siteHeader(page.path)}<main id="main" class="content-main"><nav class="content-breadcrumb" aria-label="面包屑"><a href="/">首页</a><span aria-hidden="true"> / </span>${page.path !== "/library" ? (page.news ? '<a href="/news">品牌资讯</a><span aria-hidden="true"> / </span>' : '<a href="/library">资料中心</a><span aria-hidden="true"> / </span>') : ""}<span aria-current="page">${esc(page.title)}</span></nav><article><div class="content-heading"><p class="eyebrow">BOSYE / ${esc(page.label || "KNOWLEDGE & CARE")}</p><h1>${esc(page.title)}</h1><p class="content-intro">${esc(page.description)}</p><p class="content-meta">${esc(author)} · ${page.publishedAt ? '发布：<time datetime="' + esc(page.publishedAt) + '">' + esc(page.publishedAt.slice(0, 10)) + "</time> · " : ""}更新：<time datetime="${esc(page.modifiedAt || updated)}">${esc((page.modifiedAt || updated).slice(0, 10))}</time></p></div><div class="content-body">${page.body}${page.showSources === false ? "" : sources}</div></article>${related}</main><footer class="content-footer"><p>北京博士园毛发研究中心 · BOSYE</p><nav aria-label="页尾导航"><a href="/privacy">隐私政策</a><a href="/terms">网站服务条款</a><a href="/contact">联系与资料更正</a><a href="/">返回官网</a></nav></footer></body></html>`,
+    `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(page.title)} · 北京博士园</title><meta name="description" content="${esc(page.description)}"><meta name="author" content="${esc(author)}"><meta name="theme-color" content="#006f6a"><link rel="icon" href="/assets/bosye-logo.png"><link rel="stylesheet" href="/styles.css?v=20261108-svg-arrows">${metadata(site, origin, page.path, page.title, page.description, schema)}<script src="/assets/site-navigation.js" defer></script></head><body class="content-page${page.news ? " brand-news-page" : ""}"><a class="skip-link" href="#main">跳到主要内容</a>${siteHeader(page.path)}<main id="main" class="content-main"><nav class="content-breadcrumb" aria-label="面包屑"><a href="/">首页</a><span aria-hidden="true"> / </span>${page.path !== "/library" ? (page.news ? '<a href="/news">品牌资讯</a><span aria-hidden="true"> / </span>' : '<a href="/library">资料中心</a><span aria-hidden="true"> / </span>') : ""}<span aria-current="page">${esc(page.title)}</span></nav><article><div class="content-heading"><p class="eyebrow">BOSYE / ${esc(page.label || "KNOWLEDGE & CARE")}</p><h1>${esc(page.title)}</h1><p class="content-intro">${esc(page.description)}</p><p class="content-meta">${esc(author)} · ${page.publishedAt ? '发布：<time datetime="' + esc(page.publishedAt) + '">' + esc(page.publishedAt.slice(0, 10)) + "</time> · " : ""}更新：<time datetime="${esc(page.modifiedAt || updated)}">${esc((page.modifiedAt || updated).slice(0, 10))}</time></p></div><div class="content-body">${page.body}${page.showSources === false ? "" : sources}</div></article>${related}</main><footer class="content-footer"><p>北京博士园毛发研究中心 · BOSYE</p><nav aria-label="页尾导航"><a href="/privacy">隐私政策</a><a href="/terms">网站服务条款</a><a href="/contact">联系与资料更正</a><a href="/">返回官网</a></nav></footer></body></html>`,
     page,
     site,
   );
@@ -226,7 +226,7 @@ function fixedPages(site, content = knowledge) {
           "门店查询与资料更正",
           "官网只显示后台已录入并发布的门店记录。查询没有结果不代表该城市没有门店，可通过全国热线进一步确认。若发现历史资料、图片标注、联系方式或价格信息需要更正，请提供页面名称和具体问题；工作人员核对后更新，避免把历史口径当作当前承诺。",
         ) +
-        `<p><strong>确认服务范围、适用产品与费用构成后，再作决定。</strong>价格、时长、卡项规则与合作政策以当地接待方提供的现行书面信息为准。</p><p><a class="btn btn-primary" href="/#contact">填写官网咨询表单 ↗</a></p>` +
+        `<p><strong>确认服务范围、适用产品与费用构成后，再作决定。</strong>价格、时长、卡项规则与合作政策以当地接待方提供的现行书面信息为准。</p><p><a class="btn btn-primary" href="/#contact">填写官网咨询表单 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></a></p>` +
         `<p>了解<a href="/privacy">隐私政策</a>与<a href="/terms">网站服务条款</a>后，可选择适合自己的联系方式。未填写表单也可以正常浏览全部公开资料。</p>`,
     },
     {
@@ -802,7 +802,7 @@ function allPages(db, site, content = knowledge) {
       groups
         .map(
           ([name, items]) =>
-            `<h2>${esc(name)}</h2><ul class="library-list">${items.map((v) => `<li><a href="${esc(v.path)}">${esc(v.title)} <span aria-hidden="true">↗</span></a><p>${esc(v.description)}</p></li>`).join("")}</ul>`,
+            `<h2>${esc(name)}</h2><ul class="library-list">${items.map((v) => `<li><a href="${esc(v.path)}">${esc(v.title)} <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a><p>${esc(v.description)}</p></li>`).join("")}</ul>`,
         )
         .join("") +
       section(
@@ -929,7 +929,7 @@ function homepageContent(db, site, req, html) {
       /^\/(recommend|comparison|guide|reports)\//.test(v.path),
     ),
   ];
-  const directory = `<section class="section resource-section" aria-labelledby="resourceTitle"><div class="container"><div class="section-heading"><div><p class="eyebrow"><span></span> BOSYE KNOWLEDGE LIBRARY</p><h2 id="resourceTitle">${esc(content.home?.resourceTitle ?? "让每一份了解，\n都有清晰的依据。").replace(/\n/g, "<br>")}</h2></div><p class="heading-intro">${esc(content.home?.resourceIntro ?? "从选择、对比到日常养护，\n阅读完整资料，确认适合自己的安排。").replace(/\n/g, "<br>")}</p></div><ul class="resource-grid">${links.map((v, i) => `<li><a href="${v.path}"><span class="resource-number">0${i + 1}</span><h3>${v.title}</h3><p>${v.description}</p><span class="resource-arrow" aria-hidden="true">↗</span></a></li>`).join("")}</ul></div></section>`;
+  const directory = `<section class="section resource-section" aria-labelledby="resourceTitle"><div class="container"><div class="section-heading"><div><p class="eyebrow"><span></span> BOSYE KNOWLEDGE LIBRARY</p><h2 id="resourceTitle">${esc(content.home?.resourceTitle ?? "让每一份了解，\n都有清晰的依据。").replace(/\n/g, "<br>")}</h2></div><p class="heading-intro">${esc(content.home?.resourceIntro ?? "从选择、对比到日常养护，\n阅读完整资料，确认适合自己的安排。").replace(/\n/g, "<br>")}</p></div><ul class="resource-grid">${links.map((v, i) => `<li><a href="${v.path}"><span class="resource-number">0${i + 1}</span><h3>${v.title}</h3><p>${v.description}</p><span class="resource-arrow" aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a></li>`).join("")}</ul></div></section>`;
   return html
     .replace(
       "</head>",
@@ -943,8 +943,8 @@ function homepageContent(db, site, req, html) {
       '<a href="/about">关于博士园</a><a href="/library">资料中心</a>',
     )
     .replace(
-      '<a href="admin.html">后台管理 ↗</a>',
-      '<a href="/contact">联系我们</a><a href="/terms">服务条款</a><a href="admin.html" rel="nofollow">后台管理 ↗</a>',
+      '<a href="admin.html">后台管理 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></a>',
+      '<a href="/contact">联系我们</a><a href="/terms">服务条款</a><a href="admin.html" rel="nofollow">后台管理 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></a>',
     );
 }
 module.exports = {
