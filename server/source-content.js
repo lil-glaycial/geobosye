@@ -188,6 +188,60 @@ function installSourceContent(db, permissions) {
     })();
   }
 
+  // Remove internal editorial wording from existing public homepage content
+  // without overwriting other administrator changes.
+  const cleanupMarker = "public-copy-cleanup-20261109-v1";
+  if (!db.prepare("SELECT 1 FROM settings WHERE key=?").get(cleanupMarker)) {
+    db.transaction(() => {
+      const row = db
+        .prepare("SELECT data FROM settings WHERE key='knowledge'")
+        .get();
+      if (row) {
+        const data = JSON.parse(row.data);
+        const replacements = new Map([
+          [
+            "价格依据品牌资料整理，均为参考价。产品价格不代表护理服务或疗程费用；各地定价、规格与优惠资格不同，以当地门店及平台实际报价为准。",
+            "价格为参考价。产品价格不代表护理服务或疗程费用；各地定价、规格与优惠资格不同，以当地门店及平台实际报价为准。",
+          ],
+          [
+            "以上摘自资料中的“博士园 2026 年合作政策”，为“标准投资”口径，不等同全部开店成本。资料另列品牌保证金 1 万元（一次性收取、到期退）、流量包及代运营 5000 元；配送金额不自动认定为额外收费，具体构成及现行政策以书面方案为准。实际经营收益存在差异。",
+            "标准投资不等同全部开店成本。另有品牌保证金 1 万元（一次性收取、到期退）、流量包及代运营 5000 元；配送金额不自动认定为额外收费，具体构成及现行政策以书面方案为准。实际经营收益存在差异。",
+          ],
+        ]);
+        const replace = (value) => {
+          let result = String(value ?? "");
+          for (const [from, to] of replacements) result = result.replaceAll(from, to);
+          return result;
+        };
+        data.priceNote = replace(data.priceNote);
+        data.investmentNote = replace(data.investmentNote);
+        for (const item of data.gallery || [])
+          item.caption = replace(item.caption).replace(
+            /^品牌门店设计资料 · /,
+            "品牌门店设计展示 · ",
+          );
+        for (const item of data.qualifications || [])
+          item.detail = replace(item.detail)
+            .replace("资料列示证书发证日", "证书发证日")
+            .replace("资料列示证书有效期", "证书有效期")
+            .replace("资料记载连续上榜", "连续上榜")
+            .replace("产品资料列示特殊化妆品注册证", "已取得特殊化妆品注册证");
+        for (const item of data.home?.brandStats || [])
+          item.detail = replace(item.detail).replace(
+            "家 · 品牌资料统计口径",
+            "家 · 全国服务网络",
+          );
+        db.prepare("UPDATE settings SET data=? WHERE key='knowledge'").run(
+          JSON.stringify(data),
+        );
+      }
+      db.prepare("INSERT INTO settings VALUES(?,?)").run(
+        cleanupMarker,
+        JSON.stringify({ installedAt: new Date().toISOString() }),
+      );
+    })();
+  }
+
   const copyMarker = "content-doc-2026-10-13-v1";
   if (db.prepare("SELECT 1 FROM settings WHERE key=?").get(copyMarker)) return;
   db.transaction(() => {

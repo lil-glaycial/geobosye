@@ -24,6 +24,22 @@ function publishedNews(db) {
         a.id.localeCompare(b.id),
     );
 }
+
+// Imported WeChat history contains an editorial index wrapper. Keep any
+// genuine article text an editor may add, while removing the internal
+// account/image/source notes from the public article.
+function publicNewsBody(item) {
+  return String(item.body || "")
+    .replace(/^本文收录自“[^”]+”微信公众号文章清单。\s*$/m, "")
+    .replace(/^## 原文信息\s*$/m, "")
+    .replace(/^- 发布账号：.*$/gm, "")
+    .replace(/^- 发布时间：.*$/gm, "")
+    .replace(/^- 原文图片：.*$/gm, "")
+    .replace(/^\[在微信公众号中阅读原文\]\([^\n]+\)\s*$/m, "")
+    .replace(/^本文为博士园官网历史文章索引，正文与图片以微信公众号原文为准。\s*$/m, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
 function newsPages(db) {
   return [
     {
@@ -37,7 +53,8 @@ function newsPages(db) {
     ...publishedNews(db).map((item) => ({
       path: "/news/" + item.id,
       title: item.title,
-      description: item.summary,
+      description: "博士园品牌资讯。",
+      showDescription: false,
       article: true,
       news: true,
       showSources: false,
@@ -47,12 +64,9 @@ function newsPages(db) {
         (item.image
           ? `<figure class="content-photo"><img src="/${esc(item.image)}" alt="${esc(item.title)}"></figure>`
           : "") +
-        (item.account || item.imageCount !== undefined
-          ? `<p class="content-meta-detail">来源账号：${esc(item.account || "博士园")} · 原文图片：${esc(item.imageCount ?? 0)} 张</p>`
-          : "") +
-        renderText(item.body).replace(/src="(assets|uploads)\//g, 'src="/$1/') +
+        renderText(publicNewsBody(item)).replace(/src="(assets|uploads)\//g, 'src="/$1/') +
         (item.sourceUrl
-          ? `<p class="content-source-link"><a href="${esc(item.sourceUrl)}" rel="noopener" target="_blank">查看微信公众号原文 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></a></p>`
+          ? `<p class="content-source-link"><a href="${esc(item.sourceUrl)}" rel="noopener" target="_blank">阅读完整资讯 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></a></p>`
           : "") +
         '<p><a href="/news">← 返回品牌资讯</a></p>',
     })),
@@ -88,7 +102,7 @@ function newsListing(db, value) {
         .slice((page - 1) * 12, page * 12)
         .map(
           (item) =>
-            `<a class="brand-news-card" href="/news/${esc(item.id)}">${item.image ? `<div class="brand-news-cover"><img src="/${esc(item.image)}" alt="" loading="lazy"><span>品牌资讯</span></div>` : ""}<div class="brand-news-card-body"><p class="brand-news-meta">${esc(item.account || "品牌资讯")} · <time datetime="${esc(item.publishedDate)}">${esc(item.publishedDate)}</time>${item.imageCount !== undefined ? ` · ${esc(item.imageCount)} 图` : ""}</p><h2>${esc(item.title)}</h2><p class="brand-news-summary">${esc(item.summary)}</p><span class="brand-news-read">阅读全文 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></span></div></a>`,
+            `<a class="brand-news-card" href="/news/${esc(item.id)}">${item.image ? `<div class="brand-news-cover"><img src="/${esc(item.image)}" alt="" loading="lazy"><span>品牌资讯</span></div>` : ""}<div class="brand-news-card-body"><h2>${esc(item.title)}</h2><span class="brand-news-read">阅读全文 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></span></div></a>`,
         )
         .join("") ||
       '<div class="brand-news-empty"><h2>暂无品牌资讯</h2><p>更多品牌动态，敬请期待。</p></div>'

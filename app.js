@@ -324,7 +324,7 @@
             {
               number: "2000+",
               label: "品牌连锁网络",
-              detail: "家 · 品牌资料统计口径",
+              detail: "家 · 全国服务网络",
             },
             { number: "6", label: "专业产品系列", detail: "覆盖多种养护需求" },
             { number: "16", label: "全国办事处", detail: "就近支持与服务" },
@@ -467,7 +467,7 @@
       $("#" + id).textContent = product[field] || "";
     $("#productImage").src =
       product.image || "assets/brand-product-hair-loss.webp";
-    $("#productImage").alt = "博士园品牌产品资料 · " + product.name;
+    $("#productImage").alt = "博士园产品陈列 · " + product.name;
   }
   $("#productTabs").addEventListener("keydown", (e) => {
     const tabs = [...$("#productTabs").querySelectorAll('[role="tab"]')],
@@ -648,7 +648,7 @@
       if (version !== searchVersion) return;
       $("#networkResult").textContent = d.items.length
         ? `找到 ${d.items.length} 家门店`
-        : "暂未查询到已发布的门店信息，请拨打全国热线咨询附近门店。";
+        : "暂未查询到门店信息，请拨打全国热线咨询附近门店。";
       results.innerHTML = d.items
         .map(
           (s) =>

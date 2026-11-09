@@ -79,7 +79,7 @@ const defaultBlocks = {
       label: "毛发研究积累",
       detail: "年 · 创始人研究始于 1987",
     },
-    { number: "2000+", label: "品牌连锁网络", detail: "家 · 品牌资料统计口径" },
+    { number: "2000+", label: "品牌连锁网络", detail: "家 · 全国服务网络" },
     { number: "6", label: "专业产品系列", detail: "覆盖多种养护需求" },
     { number: "16", label: "全国办事处", detail: "就近支持与服务" },
   ],
@@ -353,7 +353,7 @@ function renderHome(html, content, fields, site) {
     "shopModels",
     content.shopModels,
     (v) =>
-      `<article class="model-card"><div><h4>${e(v.name)}</h4><span>${e(v.size)}</span></div><p class="model-price"><strong>${e(v.investment)}</strong> 万元</p><p>资料所列标准投资</p><ul><li>${e(v.products)}</li><li>${e(v.equipment)}</li></ul><a class="text-link" href="#contact" data-consult="合作加盟咨询">了解合作方案 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a></article>`,
+      `<article class="model-card"><div><h4>${e(v.name)}</h4><span>${e(v.size)}</span></div><p class="model-price"><strong>${e(v.investment)}</strong> 万元</p><p>标准投资参考</p><ul><li>${e(v.products)}</li><li>${e(v.equipment)}</li></ul><a class="text-link" href="#contact" data-consult="合作加盟咨询">了解合作方案 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a></article>`,
   );
   block(
     "learningTracks",

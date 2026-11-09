@@ -78,7 +78,7 @@ try {
   await page.locator("#cityInput").fill("北京");
   await page.locator("#searchStore").click();
   await page
-    .getByText("暂未查询到已发布的门店信息，请拨打全国热线咨询附近门店。")
+    .getByText("暂未查询到门店信息，请拨打全国热线咨询附近门店。")
     .waitFor();
   await page.locator("#contactForm [name=name]").fill("浏览器验收客户");
   await page.locator("#contactForm [name=phone]").fill("13800009999");

@@ -87,7 +87,7 @@ const entries = [
             image: "assets/" + image,
             sort: i + 10,
             publishedDate: "2026-10-30",
-            body: `${summary}\n\n## ${h1}\n\n${p1}\n\n## ${h2}\n\n${p2}\n\n本文为页面展示示例，根据现有品牌资料整理，不代表新增活动公告。可由后台编辑或替换。`,
+            body: `${summary}\n\n## ${h1}\n\n${p1}\n\n## ${h2}\n\n${p2}`,
           };
           return (
             count +

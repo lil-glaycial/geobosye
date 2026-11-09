@@ -6,7 +6,6 @@ const knowledge = require("../content/knowledge.json");
 const { renderText } = require("./content-text");
 const { newsPages, newsListing } = require("./news");
 const updated = knowledge.version;
-const author = "北京博士园官网资料整理";
 const esc = (value) =>
   String(value ?? "").replace(
     /[&<>"']/g,
@@ -21,7 +20,6 @@ const list = (values, ordered = false) =>
   `<${ordered ? "ol" : "ul"}>${values.map((v) => `<li>${esc(v)}</li>`).join("")}</${ordered ? "ol" : "ul"}>`;
 const table = (headers, rows, caption) =>
   `<div class="content-table" role="region" aria-label="${esc(caption)}" tabindex="0"><table><caption>${esc(caption)}</caption><thead><tr>${headers.map((v) => `<th scope="col">${esc(v)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((v, i) => (i === 0 ? `<th scope="row">${esc(v)}</th>` : `<td>${esc(v)}</td>`)).join("")}</tr>`).join("")}</tbody></table></div>`;
-const sources = `<section class="content-sources"><h2>资料来源与阅读口径</h2><p>品牌文案根据用户提供的《北京博士园官网文案按模块整理改》整理，结合旧官网公开栏目核对。资料整理日期为 2026 年 10 月 13 日，属于资料版本时间，不代表每项历史事件或价格在当天发生。</p><ul><li><a href="http://www.bosye.com/ppyx.html" rel="noopener" target="_blank">资料来源：博士园旧官网品牌介绍</a></li><li><a href="http://www.bosye.com/ky23.html" rel="noopener" target="_blank">资料来源：博士园旧官网科研栏目</a></li><li><a href="http://www.bosye.com/mdfw.html" rel="noopener" target="_blank">资料来源：博士园旧官网门店服务</a></li></ul><p>历史资料、参考价格与门店现行安排可能存在差异。需要确认适用服务、产品说明、当地报价或资料更正时，请通过<a href="/contact">联系页面</a>沟通；继续阅读<a href="/faq">常见问题</a>。</p></section>`;
 
 function originFor(req) {
   const configured = process.env.PUBLIC_ORIGIN;
@@ -133,14 +131,14 @@ function renderPage(site, origin, page) {
       headline: page.title,
       description: page.description,
       url,
-      author: { "@type": "Organization", name: author },
+      author: { "@type": "Organization", name: "北京博士园" },
       datePublished: page.publishedAt || updated,
       dateModified: page.modifiedAt || updated,
       publisher: { "@id": origin + "/#organization" },
       mainEntityOfPage: { "@id": url + "#page" },
     });
   return styleHubs(
-    `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(page.title)} · 北京博士园</title><meta name="description" content="${esc(page.description)}"><meta name="author" content="${esc(author)}"><meta name="theme-color" content="#006f6a"><link rel="icon" href="/assets/bosye-logo.png"><link rel="stylesheet" href="/styles.css?v=20261108-svg-arrows">${metadata(site, origin, page.path, page.title, page.description, schema)}<script src="/assets/site-navigation.js" defer></script></head><body class="content-page${page.news ? " brand-news-page" : ""}"><a class="skip-link" href="#main">跳到主要内容</a>${siteHeader(page.path)}<main id="main" class="content-main"><nav class="content-breadcrumb" aria-label="面包屑"><a href="/">首页</a><span aria-hidden="true"> / </span>${page.path !== "/library" ? (page.news ? '<a href="/news">品牌资讯</a><span aria-hidden="true"> / </span>' : '<a href="/library">资料中心</a><span aria-hidden="true"> / </span>') : ""}<span aria-current="page">${esc(page.title)}</span></nav><article><div class="content-heading"><p class="eyebrow">BOSYE / ${esc(page.label || "KNOWLEDGE & CARE")}</p><h1>${esc(page.title)}</h1><p class="content-intro">${esc(page.description)}</p><p class="content-meta">${esc(author)} · ${page.publishedAt ? '发布：<time datetime="' + esc(page.publishedAt) + '">' + esc(page.publishedAt.slice(0, 10)) + "</time> · " : ""}更新：<time datetime="${esc(page.modifiedAt || updated)}">${esc((page.modifiedAt || updated).slice(0, 10))}</time></p></div><div class="content-body">${page.body}${page.showSources === false ? "" : sources}</div></article>${related}</main><footer class="content-footer"><p>北京博士园毛发研究中心 · BOSYE</p><nav aria-label="页尾导航"><a href="/privacy">隐私政策</a><a href="/terms">网站服务条款</a><a href="/contact">联系与资料更正</a><a href="/">返回官网</a></nav></footer></body></html>`,
+    `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(page.title)} · 北京博士园</title><meta name="description" content="${esc(page.description)}"><meta name="theme-color" content="#006f6a"><link rel="icon" href="/assets/bosye-logo.png"><link rel="stylesheet" href="/styles.css?v=20261108-svg-arrows">${metadata(site, origin, page.path, page.title, page.description, schema)}<script src="/assets/site-navigation.js" defer></script></head><body class="content-page${page.news ? " brand-news-page" : ""}"><a class="skip-link" href="#main">跳到主要内容</a>${siteHeader(page.path)}<main id="main" class="content-main"><nav class="content-breadcrumb" aria-label="面包屑"><a href="/">首页</a><span aria-hidden="true"> / </span>${page.path !== "/library" ? (page.news ? '<a href="/news">品牌资讯</a><span aria-hidden="true"> / </span>' : '<a href="/library">资料中心</a><span aria-hidden="true"> / </span>') : ""}<span aria-current="page">${esc(page.title)}</span></nav><article><div class="content-heading"><p class="eyebrow">BOSYE / ${esc(page.label || "KNOWLEDGE & CARE")}</p><h1>${esc(page.title)}</h1>${page.showDescription === false ? "" : `<p class="content-intro">${esc(page.description)}</p>`}</div><div class="content-body">${page.body}</div></article>${related}</main><footer class="content-footer"><p>北京博士园毛发研究中心 · BOSYE</p><nav aria-label="页尾导航"><a href="/privacy">隐私政策</a><a href="/terms">网站服务条款</a><a href="/contact">联系博士园</a><a href="/">返回官网</a></nav></body></html>`,
     page,
     site,
   );
@@ -150,14 +148,14 @@ function fixedPages(site, content = knowledge) {
   const knowledge = content;
   const productBody = (english) =>
     knowledge.products.find((v) => v.english === english)?.body ||
-    "具体产品信息请查阅已发布产品资料或向门店确认。";
+    "具体产品信息请向门店确认。";
   const pages = [
     {
       path: "/about",
       title: "关于北京博士园",
       label: "OUR STORY",
       description:
-        "从品牌沿革、创始人经历、科研方向与资质资料，了解博士园毛发健康连锁服务的定位和资料口径。",
+        "从品牌沿革、创始人经历、科研方向与资质信息，了解博士园毛发健康连锁服务的定位。",
       body:
         p(knowledge.brand.description) +
         `<p><strong>生活美容养护与医疗服务分别由相应主体提供。</strong>博士园品牌服务连接门店护理、居家养护与专业医疗机构；生活美容门店不开展疾病诊断、处方或植发手术。</p>` +
@@ -167,9 +165,9 @@ function fixedPages(site, content = knowledge) {
         ) +
         section("创始人与研究积累", knowledge.brand.founderBody) +
         table(
-          ["年份", "阶段", "资料记载"],
+          ["年份", "阶段", "发展记录"],
           knowledge.timeline.map((v) => [v.year, v.title, v.text]),
-          "品牌发展历程（历史资料）",
+          "品牌发展历程",
         ) +
         `<h2>科研支持与产品开发</h2>` +
         knowledge.research
@@ -182,8 +180,8 @@ function fixedPages(site, content = knowledge) {
           )
           .join("") +
         section(
-          "规模与资质的阅读方式",
-          `品牌资料列示 ${knowledge.brand.stores} 家门店、${knowledge.brand.offices} 个办事处等信息。门店规模为资料整体统计，不等同于当前后台已发布的可查询门店数量；官网不会据此补造分店地址。${knowledge.brand.researchYears} 年描述创始人的研究积累，${knowledge.brand.established} 年描述品牌创立时间，两者口径不同。`,
+          "规模与资质",
+          `品牌目前介绍 ${knowledge.brand.stores} 家门店、${knowledge.brand.offices} 个办事处等规模信息。${knowledge.brand.researchYears} 年为创始人的研究积累，${knowledge.brand.established} 年为品牌创立时间。`,
         ) +
         list(
           knowledge.qualifications.map(
@@ -191,7 +189,7 @@ function fixedPages(site, content = knowledge) {
           ),
         ) +
         p(
-          "荣誉、科研方向与专利资料用于介绍品牌历史和研发背景。专利授权不等于临床疗效证明，资质是否适用于某一具体门店或服务，应核对证书主体和现行有效信息。",
+          "荣誉、科研方向与专利用于介绍品牌历史和研发背景。专利授权不等于临床疗效证明，具体服务仍以相应主体的现行资质为准。",
         ),
     },
     {
@@ -204,7 +202,7 @@ function fixedPages(site, content = knowledge) {
         p(
           "您可以就头皮护理与养护、门店服务预约、合作加盟、品牌与产品四类问题联系博士园。为了便于回复，先说明所在城市和具体需求；需要诊断、处方或手术评估时，应联系具备相应资质的医疗机构。",
         ) +
-        `<h2>官方联系信息</h2><dl><dt>网站主体</dt><dd>北京博士园科技发展有限公司</dd><dt>全国咨询热线</dt><dd><a href="tel:${esc(site.phone.replace(/[^+\d]/g, ""))}">${esc(site.phone)}</a></dd><dt>资料所列总部地址</dt><dd>${esc(site.address)}</dd></dl>` +
+        `<h2>官方联系信息</h2><dl><dt>网站主体</dt><dd>北京博士园科技发展有限公司</dd><dt>全国咨询热线</dt><dd><a href="tel:${esc(site.phone.replace(/[^+\d]/g, ""))}">${esc(site.phone)}</a></dd><dt>总部地址</dt><dd>${esc(site.address)}</dd></dl>` +
         section(
           "如何预约当地服务？",
           "官网咨询是服务沟通入口。请告知城市、希望了解的项目和方便联系的安排，由工作人员确认可服务的门店、时间和费用。提交表单本身不代表已经锁定服务时段，预约需以双方确认的结果为准。总部地址不自动视为接待护理的门店地址，到访前请先电话确认。",
@@ -220,11 +218,7 @@ function fixedPages(site, content = knowledge) {
         ) +
         section(
           "咨询前可以准备什么？",
-          "个人护理可说明日常洗护习惯、对清洁或滋养的需求以及希望了解的产品系列。合作咨询可说明意向城市、店型与需要了解的支持。请勿在官网留言中填写身份证号、完整病历或银行卡信息；这些内容不是品牌资料咨询所必需的信息。",
-        ) +
-        section(
-          "门店查询与资料更正",
-          "官网只显示后台已录入并发布的门店记录。查询没有结果不代表该城市没有门店，可通过全国热线进一步确认。若发现历史资料、图片标注、联系方式或价格信息需要更正，请提供页面名称和具体问题；工作人员核对后更新，避免把历史口径当作当前承诺。",
+          "个人护理可说明日常洗护习惯、对清洁或滋养的需求以及希望了解的产品系列。合作咨询可说明意向城市、店型与需要了解的支持。请勿在官网留言中填写身份证号、完整病历或银行卡信息；这些内容不是本次咨询所需的信息。",
         ) +
         `<p><strong>确认服务范围、适用产品与费用构成后，再作决定。</strong>价格、时长、卡项规则与合作政策以当地接待方提供的现行书面信息为准。</p><p><a class="btn btn-primary" href="/#contact">填写官网咨询表单 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></a></p>` +
         `<p>了解<a href="/privacy">隐私政策</a>与<a href="/terms">网站服务条款</a>后，可选择适合自己的联系方式。未填写表单也可以正常浏览全部公开资料。</p>`,
@@ -242,8 +236,8 @@ function fixedPages(site, content = knowledge) {
         ) +
         `<p><strong>具体服务与交易条件应在购买或接受服务前另行确认。</strong>如门店或合作方案提供现行书面约定，应核对实际签约主体、项目、费用与适用规则。本条款不限制消费者依法享有的权利。</p>` +
         section(
-          "品牌资料与历史信息",
-          "网站的品牌沿革、科研、荣誉、门店设计和合作资料由提供的品牌材料及旧官网栏目整理。页面标注的更新时间表示资料整理或维护时间，不等于每项事件发生时间。历史案例不代表当前经营结果，设计展示不等于某家门店当前实景。对重要信息有疑问时，可以联系工作人员确认来源及现行状态。",
+          "品牌信息与历史内容",
+          "网站包含品牌沿革、科研、荣誉、门店设计和合作信息，其中部分内容属于历史记录。历史案例不代表当前经营结果，设计展示不等于某家门店当前实景；重要的服务、门店与报价信息请以工作人员确认的现行安排为准。",
         ) +
         section(
           "咨询与预约",
@@ -317,7 +311,7 @@ function fixedPages(site, content = knowledge) {
         ) +
         section(
           "资料中的科研信息如何理解？",
-          "品牌资料列示毛囊全器官培养、细胞学、分子生物学和超滤分离等研究方向，描述的是研发支持。科研积累与产品开发之间需要具体证据连接，不能据此推断每项门店护理具备医疗疗效。理解用途、说明和服务边界，比只看宣传数字更有助于安排适合自己的日常护理。",
+          "博士园开展毛囊全器官培养、细胞学、分子生物学和超滤分离等研究，作为产品研发支持。科研积累与产品开发之间需要具体证据连接，不能据此推断每项门店护理具备医疗疗效。理解用途、说明和服务边界，比只看宣传数字更有助于安排适合自己的日常护理。",
         ) +
         `<p>继续阅读<a href="/comparison/care-options">门店、居家与医疗服务对比</a>和<a href="/guide/home-routine">居家养护步骤</a>；需要核对费用时查看<a href="/reports/service-price-reference">服务价格资料</a>。</p>`,
     },
@@ -361,7 +355,7 @@ function fixedPages(site, content = knowledge) {
         ) +
         section(
           "第五优先：选择可持续的日常安排",
-          "根据自己的时间、预算和习惯安排护理，询问如何在家使用产品以及下一次沟通需要反馈什么。好的资料应说明适用条件与信息来源，不要求使用者把历史案例当作个人结果。出现不适时先停止相关操作并寻求适合的专业帮助。",
+          "根据自己的时间、预算和习惯安排护理，询问如何在家使用产品以及下一次沟通需要反馈什么。选择时应关注适用条件和产品说明，不把历史案例当作个人结果。出现不适时先停止相关操作并寻求适合的专业帮助。",
         ) +
         `<h2>如何使用这份清单？</h2>` +
         list(
@@ -437,18 +431,18 @@ function fixedPages(site, content = knowledge) {
         ) +
         section(
           "价格为什么不能直接比较？",
-          "单次护理费、产品售价和医疗项目费衡量的内容不同。卡项还包含次数与使用条件，不能只用总价判断是否适合。博士园资料的服务价格是参考口径，产品范围也按系列描述；比较时应先把项目、次数、规格、时长和当地实际报价对齐，再评估自己的预算。",
+          "单次护理费、产品售价和医疗项目费衡量的内容不同。卡项还包含次数与使用条件，不能只用总价判断是否适合。博士园服务价格为参考价，产品按系列介绍；比较时应先把项目、次数、规格、时长和当地实际报价对齐，再评估自己的预算。",
         ) +
         section(
           "如何安排三类支持的衔接？",
-          "可以先阅读产品与服务资料，记录需要确认的问题；涉及医疗情况先接受专业评估，再按相关医嘱讨论日常产品和护理。单纯希望改善洗护体验的使用者，可从门店咨询或居家说明开始。所有衔接均需关注实际服务主体，不能把同一品牌资料中的不同业务视为同一个医疗服务提供方。",
+          "可以先了解产品与服务信息，记录需要确认的问题；涉及医疗情况先接受专业评估，再按相关医嘱讨论日常产品和护理。单纯希望改善洗护体验的使用者，可从门店咨询或居家说明开始。所有衔接均需关注实际服务主体，不能把同一品牌的不同业务视为同一个医疗服务提供方。",
         ) +
         list(
           [
             "先确认需求属于生活美容、日常产品还是医疗评估。",
             "把费用拆到单次、次数或单品规格后再比较。",
             "核对适用说明、提供主体和预约规则。",
-            "保留资料来源和时间，不用历史案例作个人结果承诺。",
+            "结合页面标注理解历史内容，不用历史案例作个人结果承诺。",
           ],
           true,
         ) +
@@ -485,7 +479,7 @@ function fixedPages(site, content = knowledge) {
           "参考系列包含哪些内容？",
           productBody("HOME ROUTINE") +
             productBody("HAIR NOURISHMENT") +
-            "这些名称来自品牌资料版本，实际销售与规格可能调整。购买前可以提供准确名称向工作人员核对，收到产品后再检查标签，避免只按图片或参考价格判断。",
+            "这些名称来自产品系列信息，实际销售与规格可能调整。购买前可以提供准确名称向工作人员确认，收到产品后再检查标签，避免只按图片或参考价格判断。",
         ) +
         section(
           "与到店护理如何衔接？",
@@ -506,24 +500,20 @@ function fixedPages(site, content = knowledge) {
       path: "/reports/service-price-reference",
       title: "博士园服务参考价格资料报告",
       label: "SOURCE DATA REPORT",
-      description: `按品牌资料中的 ${knowledge.servicePrices.length} 项服务记录整理价格、次数与时长，说明数据来源、整理方法、资料时间和比较限制。`,
+      description: `按 ${knowledge.servicePrices.length} 项服务记录整理参考价格、次数与时长，便于咨询前了解范围。`,
       body:
         p(
-          "本报告整理的是品牌资料中的参考报价条目，不是市场调查、消费者抽样研究或医疗效果研究。数据来源为用户提供的《北京博士园品牌介绍》，以 2026 年 10 月 13 日整理版本呈现，不推断各地门店在当天实际执行同一价格。",
+          "以下为服务参考价格，不是市场调查或医疗效果研究。价格仅用于了解项目范围，具体服务、规格和费用以当地门店的现行报价为准。",
         ) +
-        `<p><strong>样本仅包含资料所列的 ${knowledge.servicePrices.length} 项服务记录，不能代表全部项目或当前全国门店报价。</strong>这里的“报告”指公开资料整理，目的是让使用者看清项目、费用与时长的原始口径。</p>` +
-        section(
-          "整理方法与时间范围",
-          "采用逐项转录并核对字段的整理方法，记录项目名称、参考价格和参考时长；将按次护理与按卡报价分开，不将产品价格混入服务费用。时间范围为品牌提供的 2026 年合作与服务资料版本至 2026 年 10 月 13 日整理时点；价格条目未逐一标注生效日期，因此不能认定该区间持续执行相同报价。",
-        ) +
+        `<p><strong>以下包含 ${knowledge.servicePrices.length} 项服务记录，不能代表全部项目或当前全国门店报价。</strong></p>` +
         table(
-          ["项目", "资料参考价格", "参考时长"],
+          ["项目", "参考价格", "参考时长"],
           knowledge.servicePrices.map((v) => [v.name, v.price, v.duration]),
           `数据表：${knowledge.servicePrices.length} 项服务参考价格与时长`,
         ) +
         section(
-          "资料显示什么？",
-          `资料表共 ${knowledge.servicePrices.length} 项，其中 ${knowledge.servicePrices.filter((v) => /次/.test(v.price)).length} 项按次报价、${knowledge.servicePrices.filter((v) => /张/.test(v.price)).length} 项按卡报价；具体费用与时长见表格。以上数量是对这张资料表的计数，不能用来计算用户平均消费、全国客单价或实际服务覆盖。`,
+          "价格如何看？",
+          "表中包含按次和按卡的不同价格单位，具体费用与时长见表格。按次护理与卡项不能直接用总价比较，购买前请确认包含的项目、次数、有效期与使用规则。",
         ) +
         section(
           "如何比较单次与卡项？",
@@ -537,18 +527,14 @@ function fixedPages(site, content = knowledge) {
           "报告结论与适用限制",
           "结论是资料提供了不同服务的价格单位与时长参考，便于咨询前了解项目方向，但信息不足以确定个人完整护理支出。这里没有消费者样本、门店成交数据、统计检验或疗效测量，不能外推品牌平均价格、效果变化或收益。门店现行服务、规格和优惠需要通过当地接待方再次确认。",
         ) +
-        section(
-          "引用与核对方式",
-          "引用本表时，请保留“品牌资料参考价”的限定、整理日期、报价单位和项目名称，避免只摘一个数字当作全国统一价格。若获得新的书面服务资料，应分别核对时间与项目范围再更新；没有来源的数据不补造。对字段有疑问，可以提交页面名称和需要核对的条目。",
-        ) +
         p(knowledge.priceNote) +
-        `<p>对照<a href="/comparison/care-options">不同服务费用口径</a>阅读；实际预约和费用请通过<a href="/contact">官方联系入口</a>确认。</p>`,
+        `<p>对照<a href="/comparison/care-options">不同服务费用</a>阅读；实际预约和费用请通过<a href="/contact">官方联系入口</a>确认。</p>`,
     },
   ];
   const questions = [
     [
       "博士园提供哪些服务？",
-      "品牌资料包括头皮调理、脱发养护、白发养护、发干滋养、植发健发相关衔接与居家养护六个方向。门店实际项目、时间和费用由接待方确认；生活美容门店不开展疾病诊断、处方或植发手术。",
+      "服务方向包括头皮调理、脱发养护、白发养护、发干滋养、植发健发相关衔接与居家养护六个方向。门店实际项目、时间和费用由接待方确认；生活美容门店不开展疾病诊断、处方或植发手术。",
     ],
     [
       "生活美容护理可以代替医疗治疗吗？",
@@ -556,7 +542,7 @@ function fixedPages(site, content = knowledge) {
     ],
     [
       "如何预约身边的门店？",
-      "可以输入城市查询官网已发布的门店，或通过全国热线和首页表单咨询。没有查询结果不代表当地没有门店，完整地址目录仍需核对。提交咨询后，由工作人员确认具体地址、时间与项目，再安排到店。",
+      "可以输入城市查询门店，或通过全国热线和首页表单咨询。没有查询结果时，可通过工作人员确认当地安排。提交咨询后，由工作人员确认具体地址、时间与项目，再安排到店。",
     ],
     [
       "官网参考价就是最终费用吗？",
@@ -569,11 +555,7 @@ function fixedPages(site, content = knowledge) {
     ],
     [
       "门店展示图片都是当前实景吗？",
-      "首页护理空间主要来自品牌门店设计资料，已标注设计展示，不代表某家门店当前实景。创始人、培训、科研和历史园区图片来自旧官网资料。到店环境与实际服务以当地门店为准，可以预约前确认。",
-    ],
-    [
-      `${knowledge.brand.stores} 家与可查询门店数量为什么不同？`,
-      `${knowledge.brand.stores} 为品牌资料中的整体统计，后台门店查询仅包含录入并发布的记录。官网没有凭统计数字生成地址，也没有将资料年份的规模自动标成当前实时数量。需要当地门店信息时可以电话核对。`,
+      "首页护理空间为门店设计展示，不代表某家门店当前实景。创始人、培训、科研和历史园区图片用于展示品牌经历。到店环境与实际服务以当地门店为准，可以预约前确认。",
     ],
     [
       "如何了解合作费用与支持？",
@@ -584,22 +566,18 @@ function fixedPages(site, content = knowledge) {
       "提交咨询需要哪些信息？",
       "只需主动填写称呼、电话、咨询方向与选填说明，并阅读隐私政策。信息用于本次咨询和相关服务沟通。请勿提交身份证号、完整病历或银行卡信息；也可不使用表单，直接电话联系。",
     ],
-    [
-      "资料更新时间代表什么？",
-      "更新时间表示公开资料整理或页面维护的时间，不意味着每项历史事件、证书或价格在当天发生。引用时应保留原有年份、来源及限制，现行状态与报价需要另行核对。",
-    ],
   ];
   pages.push({
     path: "/faq",
     title: "养护与咨询常见问题",
     label: "QUESTIONS & ANSWERS",
     description:
-      "解答服务边界、产品选择、门店预约、参考价格、品牌资料、合作咨询与隐私相关的常见问题。",
+      "解答服务边界、产品选择、门店预约、参考价格、品牌信息、合作咨询与隐私相关的常见问题。",
     body:
       p(
-        "以下回答依据当前公开品牌资料与官网功能整理，帮助您在咨询前理解范围。涉及个人具体情况、当地项目、产品规格与书面规则时，仍需与实际服务提供方确认。",
+        "以下回答帮助您在咨询前了解服务范围。涉及个人具体情况、当地项目、产品规格与书面规则时，仍需与实际服务提供方确认。",
       ) +
-      `<p><strong>保留来源、时间和条件，才能准确理解资料。</strong>生活美容、居家产品与医疗服务各有范围，参考资料不构成疗效、收益或统一价格保证。</p>` +
+      `<p><strong>生活美容、居家产品与医疗服务各有范围。</strong>页面信息不构成疗效、收益或统一价格保证。</p>` +
       questions.map(([q, a]) => section(q, a)).join("") +
       `<p>继续阅读<a href="/guide/home-routine">居家养护步骤</a>、<a href="/reports/service-price-reference">参考价格资料</a>；如需核对个人安排，请<a href="/contact">联系博士园</a>。</p>`,
     schema: [
@@ -628,7 +606,7 @@ function fixedPages(site, content = knowledge) {
     showSources: false,
     body:
       privacy +
-      `<p><strong>您可以选择是否提交在线咨询。</strong>官网品牌资料、产品介绍与养护指南均可直接阅读，不要求注册访客账号。</p>` +
+      `<p><strong>您可以选择是否提交在线咨询。</strong>官网品牌信息、产品介绍与养护指南均可直接阅读，不要求注册访客账号。</p>` +
       list([
         "填写前阅读信息用途，不提交无关敏感资料。",
         "可通过全国热线提出信息查询、更正或删除请求。",
@@ -668,7 +646,7 @@ function itemPages(db, content = knowledge) {
         p(v.body) +
         `<p><strong>${type === "products" ? "具体单品以标签和使用说明为准。" : "具体服务范围、时长与费用以门店确认信息为准。"}</strong>系列或项目介绍帮助了解方向，不替代个体评估，也不构成医疗效果保证。</p>` +
         (v.image
-          ? `<figure class="content-photo"><img src="/${esc(v.image)}" alt="${esc(v.name)} · 品牌资料图片" width="800" height="500"><figcaption>品牌资料展示，实际产品与服务以说明及门店安排为准。</figcaption></figure>`
+          ? `<figure class="content-photo"><img src="/${esc(v.image)}" alt="${esc(v.name)} · 产品图片" width="800" height="500"><figcaption>产品与服务展示，实际内容以说明及门店安排为准。</figcaption></figure>`
           : "") +
         section(
           "如何了解适用范围？",
@@ -687,7 +665,7 @@ function itemPages(db, content = knowledge) {
         section(
           "参考费用的阅读方式",
           (v.range
-            ? `资料参考价格：${v.range}。`
+            ? `参考价格：${v.range}。`
             : "服务项目以当地接待方报价为准。") +
             knowledge.priceNote +
             "参考范围不代表统一售价或完整疗程费用，购买前应按实际项目、次数与规格核对。",
@@ -697,8 +675,8 @@ function itemPages(db, content = knowledge) {
           "可以向工作人员说明正在使用的产品和生活习惯，了解到店护理与日常安排如何配合。按照单品说明使用，不自行加量或叠加不明用途的产品。存在持续或明显不适时，应及时寻求医疗意见，生活美容护理不替代医疗处理。",
         ) +
         section(
-          "资料依据与注意事项",
-          "本页的系列或项目名称、介绍和参考范围来自已发布的品牌资料。图片用于展示品牌材料，不保证某家门店库存或接待条件。科研方向、资质与专利描述品牌研发背景，不自动证明个人使用结果；需要现行资料时可联系工作人员核对。",
+          "使用提示",
+          "图片用于展示产品与服务方向，不保证某家门店库存或接待条件。科研方向、资质与专利用于介绍品牌研发背景，不自动证明个人使用结果；具体安排请联系工作人员确认。",
         ) +
         `<p>阅读<a href="/comparison/care-options">不同方案的适用范围</a>和<a href="/recommend/scalp-care">选择核对清单</a>后，可<a href="/contact">咨询当前安排</a>。其他系列在<a href="/library">资料中心</a>查看。</p>`,
       schema: [
@@ -769,7 +747,7 @@ function allPages(db, site, content = knowledge) {
       body:
         `<p><strong>${esc(v.summary)}</strong></p>` +
         v.body.split(/\n+/).map(p).join("") +
-        `<p>更多资料可查看<a href="/library">资料中心</a>；需要核对请<a href="/contact">联系我们</a>。</p>`,
+        `<p>更多内容可查看<a href="/library">资料中心</a>；需要了解当前安排请<a href="/contact">联系我们</a>。</p>`,
     });
   const groups = [
     [
@@ -783,7 +761,7 @@ function allPages(db, site, content = knowledge) {
       ),
     ],
     [
-      "已发布产品与服务",
+      "产品与服务",
       pages.filter((v) => /^\/(services|products)\//.test(v.path)),
     ],
     ["网站政策", pages.filter((v) => ["/privacy", "/terms"].includes(v.path))],
@@ -792,23 +770,14 @@ function allPages(db, site, content = knowledge) {
     path: "/library",
     title: "博士园品牌与养护资料中心",
     label: "BOSYE LIBRARY",
-    description:
-      "集中阅读博士园品牌、产品服务、养护知识、参考费用与网站政策，每篇资料均可直接访问和引用。",
+    description: "品牌、产品、服务、养护知识与网站政策。",
     body:
-      p(
-        "资料中心将原来分布在首页和详情中的信息按主题整理，方便通过独立页面阅读、分享与核对。无需注册访客账号，也无需打开弹窗才能了解核心资料；产品与服务页面只显示后台已发布的内容。",
-      ) +
-      `<p><strong>资料分类、来源和时间共同构成阅读依据。</strong>品牌历程属于历史信息，养护指南说明沟通与选择方式，价格报告列示资料参考范围；医疗、产品与生活美容服务按相应范围分别理解。</p>` +
       groups
         .map(
           ([name, items]) =>
             `<h2>${esc(name)}</h2><ul class="library-list">${items.map((v) => `<li><a href="${esc(v.path)}">${esc(v.title)} <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a><p>${esc(v.description)}</p></li>`).join("")}</ul>`,
         )
-        .join("") +
-      section(
-        "如何引用与核对？",
-        "引用文字或数据时，请保留页面标题、资料来源、年份、价格单位和适用限制。更新时间表示页面资料整理或维护时间，不把历史门店规模、经营案例、科研或荣誉自动转换为当前实时结果。需要确认现行产品、门店地址或报价时，可以通过官方联系信息沟通。",
-      ),
+        .join(""),
   });
   return pages;
 }

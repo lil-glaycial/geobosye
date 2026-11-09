@@ -30,20 +30,8 @@ try {
     let added = 0;
     for (const item of source.items) {
       const id = `wechat-news-${String(item.sequence).padStart(3, "0")}`;
-      const summary = `${item.account}于${item.publishedDate}发布，原文包含${item.imageCount}张图片。点击查看微信公众号原文。`;
-      const body = [
-        `本文收录自“${item.account}”微信公众号文章清单。`,
-        "",
-        "## 原文信息",
-        "",
-        `- 发布账号：${item.account}`,
-        `- 发布时间：${item.publishedAt.replace("T", " ")}`,
-        `- 原文图片：${item.imageCount} 张`,
-        "",
-        `[在微信公众号中阅读原文](${item.sourceUrl})`,
-        "",
-        "本文为博士园官网历史文章索引，正文与图片以微信公众号原文为准。",
-      ].join("\n");
+      const summary = item.title;
+      const body = "";
       const data = {
         title: item.title,
         summary,

@@ -35,6 +35,9 @@ test("品牌资讯：后台发布、草稿隔离、分页、转义与删除", as
       publishedDate: "2026-10-29",
       image: "",
       sort: 0,
+      account: "博士园会员服务中心",
+      imageCount: 21,
+      sourceUrl: "https://mp.weixin.qq.com/s/example",
     };
     let res = await request("/api/admin/news", "POST", {
       data,
@@ -62,6 +65,8 @@ test("品牌资讯：后台发布、草稿隔离、分页、转义与删除", as
     const detail = await (await request("/news/" + id)).text();
     assert.match(detail, /&lt;script&gt;alert/);
     assert.match(detail, /<h2>品牌新闻<\/h2>/);
+    assert.doesNotMatch(detail, /来源账号|原文图片|微信公众号原文|摘要内容/);
+    assert.match(detail, /阅读完整资讯/);
     assert.ok(
       (await (await request("/sitemap.xml")).text()).includes("/news/" + id),
     );
