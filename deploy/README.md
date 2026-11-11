@@ -11,16 +11,29 @@
 
 ### 证书
 
-本次安装用户提供的阿里云证书包 `28444492_bosye.com_nginx.zip`，签发机构为 DigiCert，包含 `bosye.com` 和 `www.bosye.com`。
+两个域名均使用 Certbot 管理的 Let's Encrypt 证书，每份证书覆盖对应的裸域名和 `www` 域名。
 
 服务器安装路径：
 
-- 证书链：`/etc/nginx/ssl/bosye.com/bosye.com.pem`
-- 私钥：`/etc/nginx/ssl/bosye.com/bosye.com.key`
+| 域名 | 证书链 | 私钥 |
+| --- | --- | --- |
+| `bosye.com`、`www.bosye.com` | `/etc/letsencrypt/live/bosye.com/fullchain.pem` | `/etc/letsencrypt/live/bosye.com/privkey.pem` |
+| `bosyejm.com`、`www.bosyejm.com` | `/etc/letsencrypt/live/www.bosyejm.com/fullchain.pem` | `/etc/letsencrypt/live/www.bosyejm.com/privkey.pem` |
 
-目录权限为 `700`，两个文件均为 `root:root`、权限 `600`。证书和私钥不存入代码仓库。
+`live/` 下的文件由 Certbot 以符号链接管理，实际版本保存在 `/etc/letsencrypt/archive/`。不要手动覆盖这些文件；证书和私钥不存入代码仓库。
 
-证书于 **2027-05-12 07:59:59（北京时间）** 到期。这份手动安装的证书不属于现有 `bosyejm.com` 的 Certbot 自动续期任务，需要在到期前更新证书链和匹配的私钥，然后执行 `nginx -t && nginx -s reload`。
+自动续期共用 `/etc/cron.d/bosyejm-certbot` 中已有的任务，每天 **03:15 和 15:15（北京时间）** 执行 `/app/npm/certbot-renew.sh`，脚本对应仓库中的 [certbot-renew.sh](certbot-renew.sh)。任务名称沿用早期名称，但 `certbot renew` 会检查上述两份证书，在需要时续期，并通过 `/usr/sbin/nginx -t && /usr/bin/systemctl reload nginx` 加载新证书。使用绝对命令路径，兼容定时任务的环境。日志位于 `/var/log/bosyejm-certbot.log`。
+
+域名验证使用 HTTP-01，验证文件位于 `/var/www/acme/.well-known/acme-challenge/`。两个域名的 80 端口都为该路径保留直接访问，其余请求跳转到 HTTPS。
+
+手动验证自动续期流程：
+
+```bash
+/root/.local/bin/certbot renew --dry-run --no-random-sleep-on-renew \
+  --run-deploy-hooks --deploy-hook "/usr/sbin/nginx -t && /usr/bin/systemctl reload nginx"
+```
+
+原阿里云证书保留在 `/etc/nginx/ssl/bosye.com/`，仅用于回退，当前 Nginx 不再引用它。
 
 ### 已完成的验收
 
@@ -29,3 +42,4 @@
 - 两个域名的 HTTP 请求均按原路径和查询参数跳转到 HTTPS。
 - 浏览器检查首页、品牌资讯、资料中心、联系咨询，未发现页面脚本错误、同域请求失败或已加载图片损坏。
 - 两个 `bosyejm.com` 入口仍正常，Nginx 配置检查通过且没有域名冲突警告。
+- Certbot 对两份证书的模拟续期均成功，并执行了 Nginx 检查及重载流程。

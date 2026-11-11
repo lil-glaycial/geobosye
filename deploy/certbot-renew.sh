@@ -2,4 +2,4 @@
 set -euo pipefail
 
 /root/.local/bin/certbot renew --quiet --no-random-sleep-on-renew \
-  --deploy-hook "systemctl reload nginx"
+  --deploy-hook "/usr/sbin/nginx -t && /usr/bin/systemctl reload nginx"
