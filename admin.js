@@ -1186,12 +1186,12 @@
       endpoint: "admin/stores/import",
       permission: "stores.write",
       description:
-        "按模板填写门店资料，一次导入多条记录。导入前请确认城市、地址和电话完整，发布列填写“是”或“否”。",
+        "按模板填写门店资料，一次导入多条记录。城市和地址必填，门店电话可不填；发布列填写“是”或“否”。",
       columns: [
         ["name", "门店名称", true],
         ["city", "城市", true],
         ["address", "详细地址", true],
-        ["phone", "门店电话", true],
+        ["phone", "门店电话", false],
         ["hours", "营业时间", false],
         ["image", "展示图片", false],
         ["sort", "排序", false],
@@ -1216,7 +1216,9 @@
     },
   };
   function csvTemplate(config) {
-    const keys = config.columns.map(([, label]) => label);
+    const keys = config.columns.map(([, label, required]) =>
+      required ? `${label}*` : label,
+    );
     return "\uFEFF" + keys.join(",") + "\n";
   }
   function parseCsv(text) {
@@ -1296,7 +1298,7 @@
     showModal(
       config.title,
       form(
-        `<p class="modal-note">${config.description}</p><div class="bulk-import-actions"><button class="outline-btn" type="button" data-action="download-import-template" data-import-view="${view}">↓ 下载 CSV 模板</button><span>模板首行是字段名，请保留并从第二行开始填写。</span></div><p class="bulk-import-fields"><b>字段：</b>${config.columns.map(([, label, required]) => `${esc(label)}${required ? "（必填）" : "（可选）"}`).join("、")}</p><label class="edit-field bulk-import-file">选择 CSV / TSV 文件 <span class="required">*</span><input id="bulkImportFile" name="bulkImportFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" required></label><div id="bulkImportPreview" class="bulk-import-preview"><p class="modal-note">选择文件后，这里会显示前几行预览。</p></div><div id="bulkImportResult" class="bulk-import-result" aria-live="polite"></div>`,
+        `<p class="modal-note">${config.description}</p><div class="bulk-import-actions"><button class="outline-btn" type="button" data-action="download-import-template" data-import-view="${view}">↓ 下载 CSV 模板</button><span>模板首行是字段名，带红色 <b class="bulk-import-required">*</b> 的字段必填，请保留表头并从第二行开始填写。</span></div><div class="bulk-import-fields"><b>字段说明：</b><div class="bulk-import-field-list">${config.columns.map(([, label, required]) => `<span class="bulk-import-field"><span>${required ? '<b class="bulk-import-required" aria-hidden="true">*</b>' : ""}${esc(label)}</span><small>${required ? "必填" : "非必填"}</small></span>`).join("")}</div></div><label class="edit-field bulk-import-file">选择 CSV / TSV 文件 <span class="required">*</span><input id="bulkImportFile" name="bulkImportFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" required></label><div id="bulkImportPreview" class="bulk-import-preview"><p class="modal-note">选择文件后，这里会显示前几行预览。</p></div><div id="bulkImportResult" class="bulk-import-result" aria-live="polite"></div>`,
         "开始导入",
       ),
       async (_data, el) => {
@@ -1435,7 +1437,7 @@
           field("name", "门店名称", i.name, "text", true, 100) +
           field("city", "城市", i.city, "text", true, 40) +
           field("address", "详细地址", i.address, "text", true, 200) +
-          field("phone", "门店电话", i.phone, "tel", true, 30) +
+          field("phone", "门店电话", i.phone, "tel", false, 30) +
           field("hours", "营业时间", i.hours);
       if (view === "services" || view === "products")
         fields =

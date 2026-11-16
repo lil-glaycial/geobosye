@@ -28,6 +28,12 @@ test("内容发布 CSV 批量导入会整体校验并写入", async () => {
     assert.equal(login.status, 200);
     cookie = login.headers.get("set-cookie").split(";", 1)[0];
     csrf = (await login.json()).csrf;
+    const storeTemplate = await fetch(
+      `${base}/api/admin/stores/import-template`,
+      { headers: { Origin: base, Cookie: cookie } },
+    );
+    assert.equal(storeTemplate.status, 200);
+    assert.match(await storeTemplate.text(), /门店名称\*/);
     const csv = [
       "标题,栏目,摘要,正文,图片路径,排序,发布",
       'CSV 测试文章,毛发知识,"摘要，带逗号","正文第一行\n正文第二行",assets/care.jpg,1,是',
@@ -79,8 +85,8 @@ test("内容发布 CSV 批量导入会整体校验并写入", async () => {
       2,
     );
     const storeCsv = [
-      "门店名称,城市,详细地址,门店电话,营业时间,展示图片,排序,发布状态",
-      "批量门店,上海,上海市静安区示例路 2 号,021-12345678,09:00-18:00,assets/care.jpg,1,已发布",
+      "门店名称*,城市*,详细地址*,门店电话,营业时间,展示图片,排序,发布状态",
+      "批量门店,上海,上海市静安区示例路 2 号,,09:00-18:00,assets/care.jpg,1,已发布",
     ].join("\n");
     const storeForm = new FormData();
     storeForm.append(

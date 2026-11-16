@@ -1823,6 +1823,28 @@ button:disabled {
   font-size: 12px;
   line-height: 1.8;
 }
+.bulk-import-field-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 9px;
+  margin-top: 7px;
+}
+.bulk-import-field {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 4px 8px;
+  border: 1px solid #dbe8e3;
+  background: #fbfdfb;
+}
+.bulk-import-field small {
+  color: #87938d;
+  font-size: 11px;
+}
+.bulk-import-required {
+  color: #c33b32;
+  font-weight: 700;
+}
 .bulk-import-file input[type="file"] {
   padding: 9px 10px !important;
   background: #fff;

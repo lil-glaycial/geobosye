@@ -81,7 +81,7 @@ const schemas = {
       name: str(2, 100),
       city: str(1, 40),
       address: str(3, 200),
-      phone,
+      phone: phone.or(z.literal("")),
       hours: str(0, 100),
       image: imagePath,
       sort: z.number().int().min(0).max(9999),
@@ -916,10 +916,10 @@ function createApp(options = {}) {
           ? {
               label: "文章",
               headers: [
-                "文章标题",
-                "栏目",
-                "文章摘要",
-                "文章正文",
+                "文章标题*",
+                "栏目*",
+                "文章摘要*",
+                "文章正文*",
                 "展示图片",
                 "排序",
                 "发布状态",
@@ -943,9 +943,9 @@ function createApp(options = {}) {
           : {
               label: "门店",
               headers: [
-                "门店名称",
-                "城市",
-                "详细地址",
+                "门店名称*",
+                "城市*",
+                "详细地址*",
                 "门店电话",
                 "营业时间",
                 "展示图片",
@@ -974,7 +974,7 @@ function createApp(options = {}) {
           .replace(/^\ufeff/, "")
           .trim()
           .toLowerCase()
-          .replace(/[\s_\-\/（）()]/g, "");
+          .replace(/[\s_\-\/（）()*＊]/g, "");
       const importTemplate = [importConfig.headers];
       app.get(
         "/api/admin/" + type + "/import-template",
@@ -1024,7 +1024,7 @@ function createApp(options = {}) {
             const required =
               type === "articles"
                 ? ["title", "category", "summary", "body"]
-                : ["name", "city", "address", "phone"];
+                : ["name", "city", "address"];
             const headerKeys = new Set(
               Object.keys(sourceRows[0]).map(normalizeHeader),
             );
