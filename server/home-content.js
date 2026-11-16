@@ -223,6 +223,30 @@ function homeFields(html) {
     value: "品牌园区历史影像，展示品牌产学研布局；不对应新园区当前建设进度。",
     max: 300,
   });
+  const modalCopy = [
+    ["founderModalTitleSuffix", "创始人弹窗标题后缀", "从研究初心到博士园", 120],
+    ["brandResearchHeading", "品牌故事 · 研究初心标题", "创始人的研究初心", 120],
+    ["brandMissionHeading", "品牌故事 · 使命标题", "我们的使命", 120],
+    ["brandValuesHeading", "品牌故事 · 价值观标题", "品牌价值观", 120],
+    ["brandTimelineHeading", "品牌故事 · 发展历程标题", "品牌发展历程", 120],
+    ["qualificationModalTitle", "资质荣誉弹窗标题", "科研资质、荣誉与专利", 160],
+    ["qualificationResearchHeading", "资质荣誉 · 科研资质标题", "科研与品牌资质", 120],
+    ["qualificationAwardHeading", "资质荣誉 · 奖项影像标题", "旧官网奖项影像", 120],
+    ["qualificationHonorHeading", "资质荣誉 · 荣誉标题", "品牌荣誉", 120],
+    ["qualificationPatentHeading", "资质荣誉 · 专利标题", "专利资料", 120],
+    ["qualificationNote", "资质荣誉 · 资料说明", "资料依据品牌知识库整理，专利名称为登记名称，不代表生活美容门店提供相关医疗服务。具体权利状态及证书信息以公开登记为准。", 600],
+    ["priceModalTitle", "价格弹窗标题", "护理服务参考价格", 160],
+    ["priceTableService", "价格表 · 服务项目标题", "服务项目", 80],
+    ["priceTablePrice", "价格表 · 参考价格标题", "参考价格", 80],
+    ["priceTableDuration", "价格表 · 参考时长标题", "参考时长", 80],
+    ["trainingModalTitle", "培训弹窗标题", "人才培训与全周期支持", 160],
+    ["trainingSystemHeading", "培训弹窗 · 培训体系标题", "博士园智胜成长培训体系", 160],
+    ["trainingSupportHeading", "培训弹窗 · 合作支持标题", "六大合作支持", 120],
+    ["partnersModalTitle", "合作伙伴弹窗标题", "合作伙伴 · 历史案例", 160],
+    ["partnersNote", "合作伙伴 · 历史案例说明", "以上为品牌资料中的历史经营案例，不代表当前业绩或收益承诺；各地门店、投入与经营情况不同。", 500],
+  ];
+  for (const [key, label, value, max] of modalCopy)
+    fields.push({ key, group: "首页弹窗文案", type: "text", label, value, max });
   fields.push({
     key: "principles",
     group: "首页首屏 · 核心理念组",

@@ -165,12 +165,16 @@
       return;
     }
     const k = knowledge;
+    const copy = k.home || {};
     let title,
       body,
       category = "BOSYE · 品牌知识库";
     switch (key) {
       case "founder":
-        title = k.brand.founder + " · 从研究初心到博士园";
+        title =
+          k.brand.founder +
+          " · " +
+          (copy.founderModalTitleSuffix || "从研究初心到博士园");
         body =
           '<img src="' +
           esc(document.querySelector(".founder-card img").getAttribute("src")) +
@@ -183,13 +187,21 @@
         title = k.home?.brandStoryModalTitle || "博士园 · 品牌故事";
         body =
           paragraph(k.brand.description) +
-          "<h3>创始人的研究初心</h3>" +
+          "<h3>" +
+          esc(copy.brandResearchHeading || "创始人的研究初心") +
+          "</h3>" +
           paragraph(k.brand.founderResearch || k.brand.founderBody) +
-          "<h3>我们的使命</h3>" +
+          "<h3>" +
+          esc(copy.brandMissionHeading || "我们的使命") +
+          "</h3>" +
           paragraph(k.brand.mission) +
-          "<h3>品牌价值观</h3>" +
+          "<h3>" +
+          esc(copy.brandValuesHeading || "品牌价值观") +
+          "</h3>" +
           paragraph(k.brand.values) +
-          "<h3>品牌发展历程</h3>" +
+          "<h3>" +
+          esc(copy.brandTimelineHeading || "品牌发展历程") +
+          "</h3>" +
           entries(
             k.timeline,
             (v) =>
@@ -209,9 +221,11 @@
           );
         break;
       case "qualifications":
-        title = "科研资质、荣誉与专利";
+        title = copy.qualificationModalTitle || "科研资质、荣誉与专利";
         body =
-          "<h3>科研与品牌资质</h3>" +
+          "<h3>" +
+          esc(copy.qualificationResearchHeading || "科研与品牌资质") +
+          "</h3>" +
           entries(
             k.qualifications,
             (v) =>
@@ -222,11 +236,17 @@
               "</small>" +
               paragraph(v.detail),
           ) +
-          '<h3>旧官网奖项影像</h3><img loading="lazy" src="' +
+          "<h3>" +
+          esc(copy.qualificationAwardHeading || "旧官网奖项影像") +
+          '</h3><img loading="lazy" src="' +
           esc(k.home?.awardImage || "assets/bosye-kylb12.png") +
-          '" alt="旧官网展示的品牌奖项证书资料"><h3>品牌荣誉</h3><ul>' +
+          '" alt="旧官网展示的品牌奖项证书资料"><h3>' +
+          esc(copy.qualificationHonorHeading || "品牌荣誉") +
+          "</h3><ul>" +
           k.honors.map((v) => "<li>" + esc(v) + "</li>").join("") +
-          "</ul><h3>专利资料</h3>" +
+          "</ul><h3>" +
+          esc(copy.qualificationPatentHeading || "专利资料") +
+          "</h3>" +
           entries(
             k.patents,
             (v) =>
@@ -236,13 +256,24 @@
               esc(v.number) +
               "</p>",
           ) +
-          '<p class="note">资料依据品牌知识库整理，专利名称为登记名称，不代表生活美容门店提供相关医疗服务。具体权利状态及证书信息以公开登记为准。</p>';
+          '<p class="note">' +
+          esc(
+            copy.qualificationNote ||
+              "资料依据品牌知识库整理，专利名称为登记名称，不代表生活美容门店提供相关医疗服务。具体权利状态及证书信息以公开登记为准。",
+          ) +
+          "</p>";
         break;
       case "prices":
-        title = "护理服务参考价格";
+        title = copy.priceModalTitle || "护理服务参考价格";
         category = "BOSYE · 服务指南";
         body =
-          '<table><thead><tr><th scope="col">服务项目</th><th scope="col">参考价格</th><th scope="col">参考时长</th></tr></thead><tbody>' +
+          '<table><thead><tr><th scope="col">' +
+          esc(copy.priceTableService || "服务项目") +
+          '</th><th scope="col">' +
+          esc(copy.priceTablePrice || "参考价格") +
+          '</th><th scope="col">' +
+          esc(copy.priceTableDuration || "参考时长") +
+          "</th></tr></thead><tbody>" +
           k.servicePrices
             .map(
               (v) =>
@@ -260,28 +291,37 @@
           "</p>";
         break;
       case "training":
-        title = "人才培训与全周期支持";
+        title = copy.trainingModalTitle || "人才培训与全周期支持";
         body =
           '<img src="' +
           esc(
             document.querySelector(".learning-layout img").getAttribute("src"),
           ) +
-          '" alt="博士园培训课堂"><h3>博士园智胜成长培训体系</h3>' +
+          '" alt="博士园培训课堂"><h3>' +
+          esc(copy.trainingSystemHeading || "博士园智胜成长培训体系") +
+          "</h3>" +
           entries(
             k.learning,
             (v) => "<h4>" + esc(v.name) + "</h4>" + paragraph(v.text),
           ) +
-          "<h3>六大合作支持</h3>" +
+          "<h3>" +
+          esc(copy.trainingSupportHeading || "六大合作支持") +
+          "</h3>" +
           entries(
             k.support,
             (v) => "<h4>" + esc(v.name) + "</h4>" + paragraph(v.text),
           );
         break;
       case "partners":
-        title = "合作伙伴 · 历史案例";
+        title = copy.partnersModalTitle || "合作伙伴 · 历史案例";
         body =
           entries(k.partners, partnerMarkup) +
-          '<p class="note">以上为品牌资料中的历史经营案例，不代表当前业绩或收益承诺；各地门店、投入与经营情况不同。</p>';
+          '<p class="note">' +
+          esc(
+            copy.partnersNote ||
+              "以上为品牌资料中的历史经营案例，不代表当前业绩或收益承诺；各地门店、投入与经营情况不同。",
+          ) +
+          "</p>";
         break;
       default:
         return;
