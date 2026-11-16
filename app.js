@@ -315,7 +315,7 @@
       case "partners":
         title = copy.partnersModalTitle || "合作伙伴 · 历史案例";
         body =
-          entries(k.partners, partnerMarkup) +
+          entries(k.partners, (v) => partnerMarkup(v, copy)) +
           '<p class="note">' +
           esc(
             copy.partnersNote ||
@@ -328,12 +328,20 @@
     }
     showDetail({ title, category }, body);
   }
-  function partnerMarkup(v) {
+  function partnerMarkup(v, copy = {}) {
     return (
       "<h4>" +
       esc(v.name + " · " + v.city) +
       "</h4><small>" +
-      esc(v.joined + " 年加入 · " + v.metric + " " + v.unit) +
+      esc(
+        v.joined +
+          " " +
+          (copy.partnerJoinedSuffix || "年加入") +
+          " · " +
+          v.metric +
+          " " +
+          v.unit,
+      ) +
       "</small>" +
       paragraph(v.text)
     );
@@ -341,6 +349,10 @@
   function renderKnowledgeBlocks(k) {
     if (!k) return;
     const home = k.home || {};
+    const shopModelUnit = home.shopModelUnit || "万元";
+    const shopModelNote = home.shopModelNote || "资料所列标准投资";
+    const partnerJoinedSuffix = home.partnerJoinedSuffix || "年加入";
+    const partnerRoleSuffix = home.partnerRoleSuffix || "合作伙伴";
     const principles =
       Array.isArray(home.principles) && home.principles.length
         ? home.principles
@@ -431,7 +443,7 @@
       models.innerHTML = (k.shopModels || [])
         .map(
           (v) =>
-            `<article class="model-card"><div><h4>${esc(v.name)}</h4><span>${esc(v.size)}</span></div><p class="model-price"><strong>${esc(v.investment)}</strong> 万元</p><p>资料所列标准投资</p><ul><li>${esc(v.products)}</li><li>${esc(v.equipment)}</li></ul><a class="text-link" href="#contact" data-consult="合作加盟咨询">了解合作方案 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a></article>`,
+            `<article class="model-card"><div><h4>${esc(v.name)}</h4><span>${esc(v.size)}</span></div><p class="model-price"><strong>${esc(v.investment)}</strong> ${esc(shopModelUnit)}</p><p>${esc(shopModelNote)}</p><ul><li>${esc(v.products)}</li><li>${esc(v.equipment)}</li></ul><a class="text-link" href="#contact" data-consult="合作加盟咨询">了解合作方案 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a></article>`,
         )
         .join("");
     const learning = document.querySelector("#learningTracks");
@@ -447,7 +459,7 @@
       partners.innerHTML = (k.partners || [])
         .map(
           (v, i) =>
-            `<button class="partner-card" data-partner-index="${i}"><div><span>${esc(v.city)}</span><small>${esc(v.joined)} 年加入</small></div><p><strong>${esc(v.metric)}</strong>${esc(v.unit)}</p><h4>${esc(v.name)} · 合作伙伴 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></h4></button>`,
+            `<button class="partner-card" data-partner-index="${i}"><div><span>${esc(v.city)}</span><small>${esc(v.joined)} ${esc(partnerJoinedSuffix)}</small></div><p><strong>${esc(v.metric)}</strong>${esc(v.unit)}</p><h4>${esc(v.name)} · ${esc(partnerRoleSuffix)} <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></h4></button>`,
         )
         .join("");
     const thumbs = document.querySelector("#galleryThumbs");

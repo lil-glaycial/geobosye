@@ -247,6 +247,14 @@ function homeFields(html) {
   ];
   for (const [key, label, value, max] of modalCopy)
     fields.push({ key, group: "首页弹窗文案", type: "text", label, value, max });
+  const fixedLabels = [
+    ["shopModelUnit", "合作店型 · 投资单位", "万元", 40],
+    ["shopModelNote", "合作店型 · 投资说明", "资料所列标准投资", 120],
+    ["partnerJoinedSuffix", "合作伙伴 · 加入年份后缀", "年加入", 40],
+    ["partnerRoleSuffix", "合作伙伴 · 身份后缀", "合作伙伴", 80],
+  ];
+  for (const [key, label, value, max] of fixedLabels)
+    fields.push({ key, group: "首页模块固定标签", type: "text", label, value, max });
   fields.push({
     key: "principles",
     group: "首页首屏 · 核心理念组",
@@ -343,6 +351,10 @@ function renderHome(html, content, fields, site) {
     Array.isArray(home.serviceProcess) && home.serviceProcess.length
       ? home.serviceProcess
       : defaultBlocks.serviceProcess;
+  const shopModelUnit = home.shopModelUnit || "万元";
+  const shopModelNote = home.shopModelNote || "资料所列标准投资";
+  const partnerJoinedSuffix = home.partnerJoinedSuffix || "年加入";
+  const partnerRoleSuffix = home.partnerRoleSuffix || "合作伙伴";
   if (site) {
     document.querySelectorAll("[data-phone]").forEach((el) => {
       el.textContent = site.phone;
@@ -401,7 +413,7 @@ function renderHome(html, content, fields, site) {
     "shopModels",
     content.shopModels,
     (v) =>
-      `<article class="model-card"><div><h4>${e(v.name)}</h4><span>${e(v.size)}</span></div><p class="model-price"><strong>${e(v.investment)}</strong> 万元</p><p>标准投资参考</p><ul><li>${e(v.products)}</li><li>${e(v.equipment)}</li></ul><a class="text-link" href="#contact" data-consult="合作加盟咨询">了解合作方案 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a></article>`,
+      `<article class="model-card"><div><h4>${e(v.name)}</h4><span>${e(v.size)}</span></div><p class="model-price"><strong>${e(v.investment)}</strong> ${e(shopModelUnit)}</p><p>${e(shopModelNote)}</p><ul><li>${e(v.products)}</li><li>${e(v.equipment)}</li></ul><a class="text-link" href="#contact" data-consult="合作加盟咨询">了解合作方案 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a></article>`,
   );
   block(
     "learningTracks",
@@ -413,7 +425,7 @@ function renderHome(html, content, fields, site) {
     "partnerGrid",
     content.partners,
     (v, i) =>
-      `<button class="partner-card" data-partner-index="${i}"><div><span>${e(v.city)}</span><small>${e(v.joined)} 年加入</small></div><p><strong>${e(v.metric)}</strong>${e(v.unit)}</p><h4>${e(v.name)} · 合作伙伴 <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></h4></button>`,
+      `<button class="partner-card" data-partner-index="${i}"><div><span>${e(v.city)}</span><small>${e(v.joined)} ${e(partnerJoinedSuffix)}</small></div><p><strong>${e(v.metric)}</strong>${e(v.unit)}</p><h4>${e(v.name)} · ${e(partnerRoleSuffix)} <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></h4></button>`,
   );
   block(
     "galleryThumbs",
