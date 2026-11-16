@@ -181,11 +181,20 @@ try {
       "## 后台新增问题？\n\n后台填写的回答。\n\n<script>alert('unsafe')</script>\n\n[不安全链接](javascript:alert)",
     );
   assert.equal(await faq.locator("input[type=checkbox]").isChecked(), true);
+  const library = page
+    .locator("[data-page-editor]")
+    .filter({ has: page.locator('input[value="/library"]') });
+  await library.locator("xpath=ancestor::details").locator("summary").click();
+  await library
+    .locator('input[name$="_accent"]')
+    .fill("从后台编辑的资料中心副标题");
   await save("websitePagesForm", "/api/admin/page-content");
   const faqHTML = await (await page.request.get(base + "/faq")).text();
   assert.match(faqHTML, /后台新增问题/);
   assert.doesNotMatch(faqHTML, /<script>alert|href="javascript:/);
   assert.match(faqHTML, /"name":"后台新增问题？"/);
+  const libraryHTML = await (await page.request.get(base + "/library")).text();
+  assert.match(libraryHTML, /从后台编辑的资料中心副标题/);
   // A later knowledge save preserves separately maintained home/page edits.
   await save("websiteContentForm", "/api/admin/content");
   const stored = await (

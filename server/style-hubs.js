@@ -47,7 +47,7 @@ function styleHubs(html, page, site) {
   heading.querySelector(".eyebrow").textContent = "BOSYE / " + config.label;
   const sub = document.createElement("p");
   sub.className = "hub-tagline";
-  sub.textContent = config.accent;
+  sub.textContent = page.accent || config.accent;
   heading.querySelector("h1").after(sub);
   const meta = heading.querySelector(".content-meta");
   const hero = document.createElement("section");
@@ -128,4 +128,5 @@ function styleHubs(html, page, site) {
   });
   return "<!doctype html>" + document.documentElement.outerHTML;
 }
-module.exports = { styleHubs };
+const hubAccent = (path) => hubs[path]?.accent || "";
+module.exports = { styleHubs, hubAccent };

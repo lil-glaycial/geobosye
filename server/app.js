@@ -13,6 +13,7 @@ const {
   registerPublicContent,
   homepageContent,
   originFor,
+  allPages,
   fixedPages,
 } = require("./public-content");
 const { randomBytes, randomUUID, createHash } = require("node:crypto");
@@ -243,6 +244,7 @@ const pageContentSchema = z
           .object({
             path: str(1, 200),
             title: str(1, 160),
+            accent: str(0, 200).optional(),
             description: str(1, 400),
             body: str(0, 60000),
             enabled: z.boolean(),
@@ -844,19 +846,26 @@ function createApp(options = {}) {
       .all()
       .map(publicItem)
       .sort((a, b) => a.sort - b.sort);
-    const pages = fixedPages(site, {
+    const editablePaths = new Set([
+      ...fixedPages(site, current).map((p) => p.path),
+      "/library",
+    ]);
+    const pages = allPages(db, site, {
       ...current,
       products: activeProducts,
-    }).map((p) => {
-      const custom = current.pages?.[p.path];
-      return {
-        path: p.path,
-        title: custom?.title || p.title,
-        description: custom?.description || p.description,
-        body: custom?.body ?? htmlToText(p.body),
-        enabled: !!custom?.enabled,
-      };
-    });
+    })
+      .filter((p) => editablePaths.has(p.path))
+      .map((p) => {
+        const custom = current.pages?.[p.path];
+        return {
+          path: p.path,
+          title: custom?.title || p.title,
+          accent: custom?.accent ?? p.accent ?? "",
+          description: custom?.description || p.description,
+          body: custom?.body ?? htmlToText(p.body),
+          enabled: !!custom?.enabled,
+        };
+      });
     res.json({ pages });
   });
   app.put("/api/admin/page-content", allow("site.write"), (req, res, next) => {
@@ -869,7 +878,10 @@ function createApp(options = {}) {
       const site = JSON.parse(
         db.prepare("SELECT data FROM settings WHERE key='site'").get().data,
       );
-      const allowed = new Set(fixedPages(site, current).map((p) => p.path));
+      const allowed = new Set([
+        ...fixedPages(site, current).map((p) => p.path),
+        "/library",
+      ]);
       const pages = { ...(current.pages || {}) };
       for (const page of input.pages) {
         if (!allowed.has(page.path)) throw fail(400, "资料页面不存在");

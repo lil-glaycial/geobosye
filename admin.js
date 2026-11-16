@@ -508,7 +508,7 @@
       const pageFields = pageData.pages
         .map(
           (page, i) =>
-            `<details class="home-edit-group"><summary>${esc(page.title)} · ${esc(page.path)}</summary><div class="content-page-field" data-page-editor="${i}"><input type="hidden" name="page_${i}_path" value="${esc(page.path)}"><label class="check-row"><input name="page_${i}_enabled" type="checkbox" ${page.enabled ? "checked" : ""}>使用自定义内容（关闭则同步品牌知识库默认资料）</label>${field(`page_${i}_title`, "页面标题", page.title, "text", true, 160)}${field(`page_${i}_description`, "页面简介 / 搜索摘要", page.description, "textarea", true, 400)}${field(`page_${i}_body`, "页面正文", page.body, "textarea", false, 60000)}<small class="modal-note">支持 ## 标题、- 列表、**强调**、[文字](链接) 和 ![说明](图片路径)。修改正文会自动启用自定义内容。</small></div></details>`,
+            `<details class="home-edit-group"><summary>${esc(page.title)} · ${esc(page.path)}</summary><div class="content-page-field" data-page-editor="${i}"><input type="hidden" name="page_${i}_path" value="${esc(page.path)}"><label class="check-row"><input name="page_${i}_enabled" type="checkbox" ${page.enabled ? "checked" : ""}>使用自定义内容（关闭则同步品牌知识库默认资料）</label>${field(`page_${i}_title`, "页面标题", page.title, "text", true, 160)}${["/library", "/about", "/contact"].includes(page.path) ? field(`page_${i}_accent`, "页面副标题 / 横幅标语", page.accent, "text", false, 200) : ""}${field(`page_${i}_description`, "页面简介 / 搜索摘要", page.description, "textarea", true, 400)}${field(`page_${i}_body`, "页面正文", page.body, "textarea", false, 60000)}<small class="modal-note">支持 ## 标题、- 列表、**强调**、[文字](链接) 和 ![说明](图片路径)。修改正文或副标题会自动启用自定义内容。</small></div></details>`,
         )
         .join("");
       html =
@@ -620,7 +620,7 @@
     const pageFields = (pageData.pages || [])
       .map(
         (page, i) =>
-          `<details class="home-edit-group"><summary>${esc(page.title)} · ${esc(page.path)}</summary><div class="content-page-field" data-page-editor="${i}"><input type="hidden" name="page_${i}_path" value="${esc(page.path)}"><label class="check-row"><input name="page_${i}_enabled" type="checkbox" ${page.enabled ? "checked" : ""}>使用自定义内容（关闭则使用默认内容）</label>${field(`page_${i}_title`, "页面标题", page.title, "text", true, 160)}${field(`page_${i}_description`, "页面简介 / 搜索摘要", page.description, "textarea", true, 400)}${field(`page_${i}_body`, "页面正文", page.body, "textarea", false, 60000)}<small class="modal-note">支持 ## 标题、- 列表、**强调**、[文字](链接) 和 ![说明](图片路径)。修改正文会自动启用自定义内容。</small></div></details>`,
+          `<details class="home-edit-group"><summary>${esc(page.title)} · ${esc(page.path)}</summary><div class="content-page-field" data-page-editor="${i}"><input type="hidden" name="page_${i}_path" value="${esc(page.path)}"><label class="check-row"><input name="page_${i}_enabled" type="checkbox" ${page.enabled ? "checked" : ""}>使用自定义内容（关闭则使用默认内容）</label>${field(`page_${i}_title`, "页面标题", page.title, "text", true, 160)}${["/library", "/about", "/contact"].includes(page.path) ? field(`page_${i}_accent`, "页面副标题 / 横幅标语", page.accent, "text", false, 200) : ""}${field(`page_${i}_description`, "页面简介 / 搜索摘要", page.description, "textarea", true, 400)}${field(`page_${i}_body`, "页面正文", page.body, "textarea", false, 60000)}<small class="modal-note">支持 ## 标题、- 列表、**强调**、[文字](链接) 和 ![说明](图片路径)。修改正文或副标题会自动启用自定义内容。</small></div></details>`,
       )
       .join("");
     const dynamic = [
@@ -1561,6 +1561,7 @@
               return {
                 path: data[prefix + "path"],
                 title: data[prefix + "title"],
+                accent: data[prefix + "accent"] || "",
                 description: data[prefix + "description"],
                 body: data[prefix + "body"] || "",
                 enabled: el.elements[prefix + "enabled"].checked,

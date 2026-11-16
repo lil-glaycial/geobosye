@@ -1,5 +1,5 @@
 const { siteHeader } = require("./site-header");
-const { styleHubs } = require("./style-hubs");
+const { styleHubs, hubAccent } = require("./style-hubs");
 const fs = require("node:fs");
 const path = require("node:path");
 const knowledge = require("../content/knowledge.json");
@@ -616,6 +616,7 @@ function fixedPages(site, content = knowledge) {
   });
   return pages.map((page) => ({
     ...page,
+    ...(hubAccent(page.path) ? { accent: hubAccent(page.path) } : {}),
     modifiedAt: knowledge.version || updated,
   }));
 }
@@ -705,6 +706,39 @@ function itemPages(db, content = knowledge) {
   );
 }
 
+function libraryPage(pages) {
+  const groups = [
+    [
+      "品牌与服务信息",
+      pages.filter((v) => ["/about", "/contact", "/faq"].includes(v.path)),
+    ],
+    [
+      "养护指南与资料",
+      pages.filter((v) =>
+        /^\/(articles|recommend|comparison|guide|reports)\//.test(v.path),
+      ),
+    ],
+    [
+      "产品与服务",
+      pages.filter((v) => /^\/(services|products)\//.test(v.path)),
+    ],
+    ["网站政策", pages.filter((v) => ["/privacy", "/terms"].includes(v.path))],
+  ];
+  return {
+    path: "/library",
+    title: "博士园品牌与养护资料中心",
+    accent: hubAccent("/library"),
+    label: "BOSYE LIBRARY",
+    description: "品牌、产品、服务、养护知识与网站政策。",
+    body: groups
+      .map(
+        ([name, items]) =>
+          `<h2>${esc(name)}</h2><ul class="library-list">${items.map((v) => `<li><a href="${esc(v.path)}">${esc(v.title)} <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a><p>${esc(v.description)}</p></li>`).join("")}</ul>`,
+      )
+      .join(""),
+  };
+}
+
 function allPages(db, site, content = knowledge) {
   const pages = [
     ...fixedPages(site, content),
@@ -715,6 +749,7 @@ function allPages(db, site, content = knowledge) {
     const custom = content.pages?.[page.path];
     if (!custom?.enabled) continue;
     page.title = custom.title;
+    if (custom.accent) page.accent = custom.accent;
     page.description = custom.description;
     page.body = renderText(custom.body);
     page.modifiedAt = custom.updatedAt;
@@ -749,36 +784,16 @@ function allPages(db, site, content = knowledge) {
         v.body.split(/\n+/).map(p).join("") +
         `<p>更多内容可查看<a href="/library">资料中心</a>；需要了解当前安排请<a href="/contact">联系我们</a>。</p>`,
     });
-  const groups = [
-    [
-      "品牌与服务信息",
-      pages.filter((v) => ["/about", "/contact", "/faq"].includes(v.path)),
-    ],
-    [
-      "养护指南与资料",
-      pages.filter((v) =>
-        /^\/(articles|recommend|comparison|guide|reports)\//.test(v.path),
-      ),
-    ],
-    [
-      "产品与服务",
-      pages.filter((v) => /^\/(services|products)\//.test(v.path)),
-    ],
-    ["网站政策", pages.filter((v) => ["/privacy", "/terms"].includes(v.path))],
-  ];
-  pages.push({
-    path: "/library",
-    title: "博士园品牌与养护资料中心",
-    label: "BOSYE LIBRARY",
-    description: "品牌、产品、服务、养护知识与网站政策。",
-    body:
-      groups
-        .map(
-          ([name, items]) =>
-            `<h2>${esc(name)}</h2><ul class="library-list">${items.map((v) => `<li><a href="${esc(v.path)}">${esc(v.title)} <span aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a><p>${esc(v.description)}</p></li>`).join("")}</ul>`,
-        )
-        .join(""),
-  });
+  const library = libraryPage(pages);
+  const customLibrary = content.pages?.["/library"];
+  if (customLibrary?.enabled) {
+    library.title = customLibrary.title;
+    library.accent = customLibrary.accent || library.accent;
+    library.description = customLibrary.description;
+    library.body = renderText(customLibrary.body);
+    library.modifiedAt = customLibrary.updatedAt;
+  }
+  pages.push(library);
   return pages;
 }
 
@@ -922,5 +937,6 @@ module.exports = {
   originFor,
   itemPath,
   fixedPages,
+  allPages,
   esc,
 };
