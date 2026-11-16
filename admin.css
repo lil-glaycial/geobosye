@@ -2611,6 +2611,137 @@ button:disabled {
   bottom: 16px;
   box-shadow: 0 4px 16px #173c3a24;
 }
+.website-editor-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 28px;
+}
+.website-editor-nav a {
+  color: #17615d;
+  background: #e8f4f1;
+  border: 1px solid #c7e1dc;
+  border-radius: 99px;
+  padding: 7px 13px;
+  font-size: 12px;
+}
+.website-section {
+  scroll-margin-top: 24px;
+  margin: 36px 0 56px;
+}
+.website-section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.website-section-heading > span {
+  color: #006f6a;
+  font-family: var(--serif);
+  font-size: 23px;
+  line-height: 1;
+  padding-top: 5px;
+}
+.website-section-heading h2 {
+  margin: 0;
+  font-size: 23px;
+  color: #173f40;
+}
+.website-section-heading p {
+  margin: 5px 0 0;
+  color: #526b65;
+}
+.website-form {
+  padding: 24px;
+  margin: 0;
+}
+.website-form .primary-action {
+  position: sticky;
+  bottom: 16px;
+  z-index: 2;
+  box-shadow: 0 4px 16px #173c3a24;
+}
+.website-form-subtitle {
+  margin: 28px 0 12px;
+  color: #245653;
+}
+.website-module {
+  padding: 22px;
+  background: #fff;
+  border: 1px solid #dbe6e5;
+  border-radius: 12px;
+  margin: 16px 0;
+}
+.website-module-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.website-module-head h3 {
+  margin: 0;
+  color: #164d4a;
+  font-size: 17px;
+}
+.website-module-head p {
+  margin: 5px 0 0;
+  color: #526b65;
+}
+.website-module-head > div:last-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+.website-item-list {
+  display: grid;
+  gap: 8px;
+}
+.website-item-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid #e3edeb;
+  border-radius: 8px;
+  background: #fbfdfc;
+}
+.website-item-row b,
+.website-item-row p {
+  overflow-wrap: anywhere;
+}
+.website-item-row p {
+  margin: 3px 0 0;
+  color: #526b65;
+  font-size: 12px;
+}
+@media (max-width: 620px) {
+  .website-section {
+    margin-block: 28px 42px;
+  }
+  .website-section-heading h2 {
+    font-size: 20px;
+  }
+  .website-form,
+  .website-module {
+    padding: 16px;
+  }
+  .website-module-head {
+    display: block;
+  }
+  .website-module-head > div:last-child {
+    margin-top: 12px;
+  }
+  .website-item-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .website-item-row .text-btn {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
 @media (max-width: 620px) {
   .content-form {
     padding: 16px;

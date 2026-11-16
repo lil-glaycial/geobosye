@@ -30,6 +30,9 @@
     status: "",
     roles: [],
     catalog: {},
+    websiteItems: {},
+    modalView: "",
+    returnView: "",
   };
   const menu = [
     ["dashboard", "仪表盘", "⌂", "dashboard.read"],
@@ -40,8 +43,7 @@
     ["articles", "内容发布", "▤", "articles.read"],
     ["news", "品牌资讯", "▤", "articles.read"],
     ["media", "媒体资源", "▧", "media.read"],
-    ["site", "官网设置", "⚙", "site.read"],
-    ["content", "官网内容", "✎", "site.read"],
+    ["website", "官网编辑", "✎", "site.read"],
     ["users", "管理员管理", "♙", "users.read"],
     ["roles", "角色与权限", "⊞", "roles.read"],
     ["audit", "操作日志", "≡", "audit.read"],
@@ -126,6 +128,7 @@
       return;
     }
     let page = location.hash.slice(1);
+    if (page === "site" || page === "content") page = "website";
     if (!menu.some((m) => m[0] === page && can(m[3])))
       page = menu.find((m) => can(m[3]))?.[0];
     if (page) navigate(page);
@@ -340,6 +343,31 @@
         ) +
         `<div class="media-grid">${d.items.map((m) => `<article class="media-item"><button class="media-thumbnail" type="button" data-action="preview-media" data-id="${esc(m.id)}" aria-label="预览${esc(m.name)}"><img loading="lazy" src="/${esc(m.url)}" alt="${esc(m.name)}"><span>查看大图 ↗</span></button><div><b>${esc(m.name)}</b><small>${(m.size / 1024).toFixed(0)} KB · ${date(m.created_at)}</small><button class="text-btn" data-action="copy" data-url="${esc(m.url)}">复制图片路径</button></div></article>`).join("")}</div>` +
         (d.items.length ? "" : empty("还没有上传媒体图片。"));
+    } else if (view === "website") {
+      const read = (path, permission) =>
+        can(permission)
+          ? api(path).catch(() => ({ items: [] }))
+          : Promise.resolve({ items: [] });
+      const [site, content, homeData, pageData, stores, services, products, articles, news] =
+        await Promise.all([
+          api("admin/site"),
+          api("admin/content"),
+          api("admin/home-fields"),
+          api("admin/page-content"),
+          read("admin/stores", "stores.read"),
+          read("admin/services", "services.read"),
+          read("admin/products", "products.read"),
+          read("admin/articles", "articles.read"),
+          read("admin/news", "articles.read"),
+        ]);
+      state.websiteItems = {
+        stores: stores.items || [],
+        services: services.items || [],
+        products: products.items || [],
+        articles: articles.items || [],
+        news: news.items || [],
+      };
+      html = renderWebsiteEditor({ site, content, homeData, pageData });
     } else if (view === "site") {
       const d = await api("admin/site");
       html =
@@ -507,8 +535,141 @@
         $("#siteForm")
           ?.querySelectorAll("input,textarea")
           .forEach((i) => (i.disabled = true));
+      if (view === "website" && !can("site.write"))
+        $("#adminContent")
+          .querySelectorAll(
+            "#websiteSiteForm input,#websiteSiteForm textarea,#websiteHomeForm input,#websiteHomeForm textarea,#websiteContentForm input,#websiteContentForm textarea,#websitePagesForm input,#websitePagesForm textarea",
+          )
+          .forEach((i) => (i.disabled = true));
     }
   }
+  function renderWebsiteEditor({ site, content: d, homeData, pageData }) {
+    const write = can("site.write");
+    const b = d.brand || {};
+    const siteFields =
+      field("heroTitle", "首页主标题", site.heroTitle, "text", true, 40) +
+      field("heroAccent", "首页副标题", site.heroAccent, "text", true, 40) +
+      field("heroDescription", "首页介绍", site.heroDescription, "textarea", true, 400) +
+      field("brandIntro", "品牌简介（与品牌资料同步）", site.brandIntro, "textarea", true, 2000) +
+      field("phone", "咨询电话", site.phone, "text", true, 30) +
+      field("address", "总部地址", site.address, "text", true, 200) +
+      field("seoTitle", "搜索结果标题", site.seoTitle, "text", true, 100) +
+      field("seoDescription", "搜索结果描述", site.seoDescription, "textarea", true, 300) +
+      field("icp", "ICP备案号", site.icp) +
+      field("police", "公安备案号", site.police);
+
+    const homeGroups = [];
+    for (const value of homeData.fields || []) {
+      let group = homeGroups.find((item) => item.name === value.group);
+      if (!group) {
+        group = { name: value.group, fields: [] };
+        homeGroups.push(group);
+      }
+      group.fields.push(value);
+    }
+    const homeFields = homeGroups
+      .map(
+        (group) =>
+          `<details class="home-edit-group" open><summary>${esc(group.name)}</summary><div class="content-basic-grid">${group.fields
+            .map((f) => renderWebsiteHomeField(f, write))
+            .join("")}</div></details>`,
+      )
+      .join("");
+
+    const basic = [
+      [
+        "品牌基础信息",
+        [
+          field("brand_name", "品牌名称", b.name, "text", true, 80),
+          field("brand_established", "成立年份", b.established, "text", true, 20),
+          field("brand_mission", "品牌使命", b.mission, "textarea", true, 300),
+          field("brand_values", "品牌价值观", b.values, "textarea", true, 500),
+          field("brand_description", "品牌介绍", b.description, "textarea", true, 2000),
+        ],
+      ],
+      [
+        "创始人信息",
+        [
+          field("brand_founder", "创始人", b.founder, "text", true, 80),
+          field("brand_founderRole", "创始人身份", b.founderRole, "text", true, 120),
+          field("brand_founderBody", "创始人简介", b.founderBody, "textarea", true, 3000),
+          field("brand_founderResearch", "研究初心与成果", b.founderResearch, "textarea", true, 5000),
+        ],
+      ],
+      [
+        "品牌规模指标",
+        [
+          field("brand_researchYears", "研究积累指标", b.researchYears, "text", true, 30),
+          field("brand_stores", "品牌门店指标", b.stores, "text", true, 30),
+          field("brand_series", "产品系列指标", b.series, "text", true, 30),
+          field("brand_offices", "办事处指标", b.offices, "text", true, 30),
+        ],
+      ],
+    ]
+      .map(
+        ([title, fields]) =>
+          `<details class="home-edit-group" open><summary>${title}</summary><div class="content-basic-grid">${fields.join("")}</div></details>`,
+      )
+      .join("");
+    const collections = contentLists
+      .map(
+        ([key, label]) =>
+          `<details class="home-edit-group"><summary>${label} · ${(d[key] || []).length} 项</summary><div data-content-list="${key}">${(d[key] || []).map((v) => contentRow(key, v)).join("")}</div>${write ? `<button type="button" class="outline-btn" data-action="content-add" data-list="${key}">＋ 添加到${label}</button>` : ""}</details>`,
+      )
+      .join("");
+    const pageFields = (pageData.pages || [])
+      .map(
+        (page, i) =>
+          `<details class="home-edit-group"><summary>${esc(page.title)} · ${esc(page.path)}</summary><div class="content-page-field" data-page-editor="${i}"><input type="hidden" name="page_${i}_path" value="${esc(page.path)}"><label class="check-row"><input name="page_${i}_enabled" type="checkbox" ${page.enabled ? "checked" : ""}>使用自定义内容（关闭则使用默认内容）</label>${field(`page_${i}_title`, "页面标题", page.title, "text", true, 160)}${field(`page_${i}_description`, "页面简介 / 搜索摘要", page.description, "textarea", true, 400)}${field(`page_${i}_body`, "页面正文", page.body, "textarea", false, 60000)}<small class="modal-note">支持 ## 标题、- 列表、**强调**、[文字](链接) 和 ![说明](图片路径)。修改正文会自动启用自定义内容。</small></div></details>`,
+      )
+      .join("");
+    const dynamic = [
+      ["stores", "门店查询", "stores.read", "stores.write", "门店地址、电话和营业时间。"],
+      ["services", "服务项目", "services.read", "services.write", "首页服务卡片和服务详情弹窗。"],
+      ["products", "产品系列", "products.read", "products.write", "首页产品栏目和产品详情。"],
+      ["articles", "内容发布", "articles.read", "articles.write", "用于文章类内容。"],
+      ["news", "品牌资讯", "articles.read", "articles.write", "公众号文章需要在这里手动提交，保存并发布后才会出现在官网。"],
+    ]
+      .filter(([, , permission]) => can(permission))
+      .map(([key, title, permission, writePermission, note]) => {
+        const items = state.websiteItems[key] || [];
+        const canWrite = can(writePermission);
+        return `<section class="website-module" id="website-${key}"><div class="website-module-head"><div><h3>${title}</h3><p>${note}</p></div><div><span class="block-count">${items.length} 项</span>${canWrite ? `<button type="button" class="outline-btn" data-action="website-edit" data-module="${key}">＋ 添加</button>` : ""}</div></div><div class="website-item-list">${items.length ? items.map((item) => `<article class="website-item-row"><div><b>${esc(item.name || item.title)}</b><p>${esc(item.address || item.summary || item.city || item.category || "")}</p></div><span class="status ${item.published ? "done" : "pending"}">${item.published ? "已发布" : "草稿"}</span><button type="button" class="text-btn" data-action="website-edit" data-module="${key}" data-id="${esc(item.id)}">${canWrite ? "编辑" : "查看"}</button></article>`).join("") : empty("暂时没有记录")}</div></section>`;
+      })
+      .join("");
+
+    return (
+      heading(
+        "官网编辑",
+        "按官网从上到下的展示顺序集中维护。首页文字、品牌资料、服务产品、门店、资讯和资料详情页都在这一页查找。",
+        '<a class="outline-btn" href="/" target="_blank" rel="noopener">预览官网 ↗</a>',
+      ) +
+      `<nav class="website-editor-nav" aria-label="官网编辑模块"><a href="#website-site">顶部与首屏</a><a href="#website-home">首页模块</a><a href="#website-brand">品牌故事</a><a href="#website-dynamic">服务、产品、门店与资讯</a><a href="#website-pages">资料详情页</a></nav>` +
+      `<div class="website-editor"><section class="website-section" id="website-site"><div class="website-section-heading"><span>01</span><div><h2>顶部与首页首屏</h2><p>导航、首页标题、联系方式、搜索摘要和备案信息。</p></div></div><form class="website-form panel" id="websiteSiteForm">${siteFields}<p class="form-error" role="alert"></p>${write ? '<button class="primary-action" type="submit">保存顶部与首屏</button>' : ""}</form></section>` +
+      `<section class="website-section" id="website-home"><div class="website-section-heading"><span>02</span><div><h2>首页模块文字与图片</h2><p>按首页布局顺序编辑品牌、服务、科研、产品、门店、合作、咨询和资料入口等内容。</p></div></div><form class="website-form panel" id="websiteHomeForm">${homeFields}<p class="form-error" role="alert"></p>${write ? '<button class="primary-action" type="submit">保存首页模块</button>' : ""}</form></section>` +
+      `<section class="website-section" id="website-brand"><div class="website-section-heading"><span>03</span><div><h2>品牌资料与结构化模块</h2><p>发展历程、科研数据、资质荣誉、服务参考价、合作店型、伙伴和图库。客户文档中标注的“中精特新”、伙伴姓名和重复资料都在对应条目中修改。</p></div></div><form class="website-form panel" id="websiteContentForm"><div class="content-basic-grid">${basic}</div><h3 class="website-form-subtitle">按官网顺序维护模块</h3>${collections}<label class="edit-field">参考价格说明<textarea name="priceNote" rows="4" maxlength="1000">${esc(d.priceNote)}</textarea></label><label class="edit-field">合作政策说明<textarea name="investmentNote" rows="5" maxlength="1600">${esc(d.investmentNote)}</textarea></label><p class="form-error" role="alert"></p>${write ? '<button class="primary-action" type="submit">保存品牌资料</button>' : ""}</form></section>` +
+      `<section class="website-section" id="website-dynamic"><div class="website-section-heading"><span>04</span><div><h2>服务、产品、门店与资讯</h2><p>每个模块都在本页列出；点击“编辑”会打开对应的完整表单，保存后立即同步官网。</p></div></div>${dynamic || empty("当前账号没有可查看的内容模块")}</section>` +
+      `<section class="website-section" id="website-pages"><div class="website-section-heading"><span>05</span><div><h2>资料详情页</h2><p>关于我们、联系咨询、资料中心、养护指南、服务对比、价格报告、常见问题、隐私与条款等页面统一在这里修改。</p></div></div><form class="website-form panel" id="websitePagesForm"><div class="content-page-grid">${pageFields}</div><p class="form-error" role="alert"></p>${write ? '<button class="primary-action" type="submit">保存资料详情页</button>' : ""}</form></section></div>`
+    );
+  }
+
+  function renderWebsiteHomeField(f, editable) {
+    if (f.type === "collection") return homeCollectionField(f, editable);
+    const meta = esc(
+      JSON.stringify({
+        key: f.key,
+        selector: f.selector || "",
+        type: f.type,
+        label: f.label,
+        group: f.group,
+        max: f.max || 2000,
+      }),
+    );
+    if (f.type === "image")
+      return `<div class="home-image-edit edit-field"><span>${esc(f.label)}</span><input type="hidden" name="${esc(f.key)}" value="${esc(f.value || "")}"><input type="hidden" name="__meta_${esc(f.key)}" value="${meta}"><button type="button" class="image-field-preview" data-action="home-image" data-key="${esc(f.key)}" ${editable ? "" : "disabled"}>${f.value ? `<img src="/${esc(f.value)}" alt="${esc(f.label)}"><span>${editable ? "点击更换图片" : "点击预览图片"}</span>` : '<span class="image-field-empty">暂无图片</span>'}</button></div>`;
+    return `<label class="edit-field">${esc(f.label)}<textarea name="${esc(f.key)}" rows="${f.type === "text" ? 3 : 2}" maxlength="${f.max || 2000}" ${editable ? "" : "disabled"}>${esc(f.value || "")}</textarea><input type="hidden" name="__meta_${esc(f.key)}" value="${meta}"></label>`;
+  }
+
   function field(
     name,
     label,
@@ -879,6 +1040,8 @@
     );
   }
   async function edit(view, item) {
+    state.returnView = state.view;
+    state.modalView = view;
     if (view === "leads") {
       if (!item) {
         showModal(
@@ -1039,7 +1202,7 @@
           });
           closeModal();
           toast("已保存，官网内容同步更新");
-          navigate(view, false);
+          navigate(state.returnView === "website" ? "website" : view, false);
         },
       );
       if (!write)
@@ -1097,7 +1260,7 @@
         products: "产品系列",
         articles: "内容发布",
         media: "媒体资源",
-        site: "官网内容与设置",
+        site: "官网编辑",
         users: "管理员管理",
         roles: "角色权限",
         audit: "操作日志",
@@ -1148,7 +1311,12 @@
     const btn = e.target.closest("[data-action]");
     if (!btn) return;
     const action = btn.dataset.action,
-      item = state.items.find((i) => i.id === btn.dataset.id);
+      item =
+        action === "website-edit"
+          ? (state.websiteItems[btn.dataset.module] || []).find(
+              (i) => i.id === btn.dataset.id,
+            )
+          : state.items.find((i) => i.id === btn.dataset.id);
     try {
       if (action === "content-tab") {
         document
@@ -1215,7 +1383,8 @@
         syncHomeCollection(block);
       } else if (action === "choose-image") {
         const field = btn.closest(".image-field");
-        if (can(state.view + ".write")) await openMediaPicker(field);
+        const activeView = state.view === "website" ? state.modalView : state.view;
+        if (can(activeView + ".write")) await openMediaPicker(field);
         else {
           const url = field.querySelector('[name="image"]').value;
           await openMediaPicker(
@@ -1224,10 +1393,13 @@
           );
         }
       } else if (action === "clear-image") {
-        if (can(state.view + ".write"))
+        const activeView = state.view === "website" ? state.modalView : state.view;
+        if (can(activeView + ".write"))
           updateImageField(btn.closest(".image-field"), "");
       } else if (action === "upload-media") $("#mediaUpload").click();
       else if (action === "preview-media") await openMediaPicker(null, item);
+      else if (action === "website-edit")
+        await edit(btn.dataset.module, item);
       else if (action === "new") await edit(state.view);
       else if (action === "new-lead") await edit("leads");
       else if (action === "edit") await edit(state.view, item);
@@ -1305,6 +1477,10 @@
         "contentForm",
         "homeForm",
         "pageForm",
+        "websiteSiteForm",
+        "websiteHomeForm",
+        "websiteContentForm",
+        "websitePagesForm",
       ].includes(e.target.id)
     ) {
       e.preventDefault();
@@ -1314,15 +1490,15 @@
       if (btn) btn.disabled = true;
       errorEl.textContent = "";
       try {
-        if (el.id === "homeForm")
+        if (el.id === "homeForm" || el.id === "websiteHomeForm")
           el.querySelectorAll("[data-home-collection]").forEach(
             syncHomeCollection,
           );
         const data = Object.fromEntries(new FormData(el));
-        if (el.id === "siteForm") {
+        if (el.id === "siteForm" || el.id === "websiteSiteForm") {
           await api("admin/site", { method: "PUT", body: data });
-          toast("官网设置已保存");
-        } else if (el.id === "contentForm") {
+          toast(el.id === "websiteSiteForm" ? "顶部与首屏已保存" : "官网设置已保存");
+        } else if (el.id === "contentForm" || el.id === "websiteContentForm") {
           const collections = {};
           for (const [key] of contentLists) {
             collections[key] = [
@@ -1366,9 +1542,10 @@
           delete data.source;
           delete data.products;
           delete data.contentForm;
+          delete data.websiteContentForm;
           await api("admin/content", { method: "PUT", body: data });
-          toast("官网内容已保存并更新");
-        } else if (el.id === "homeForm") {
+          toast(el.id === "websiteContentForm" ? "品牌资料已保存并更新" : "官网内容已保存并更新");
+        } else if (el.id === "homeForm" || el.id === "websiteHomeForm") {
           const fields = [];
           for (const metaEl of el.querySelectorAll('[name^="__meta_"]')) {
             const meta = JSON.parse(metaEl.value);
@@ -1376,8 +1553,8 @@
             delete data[meta.key];
           }
           await api("admin/home-fields", { method: "PUT", body: { fields } });
-          toast("首页内容已保存并更新");
-        } else if (el.id === "pageForm") {
+          toast(el.id === "websiteHomeForm" ? "首页模块已保存并更新" : "首页内容已保存并更新");
+        } else if (el.id === "pageForm" || el.id === "websitePagesForm") {
           const pages = [...el.querySelectorAll("[data-page-editor]")].map(
             (editor) => {
               const prefix = `page_${editor.dataset.pageEditor}_`;
@@ -1391,7 +1568,7 @@
             },
           );
           await api("admin/page-content", { method: "PUT", body: { pages } });
-          toast("资料页内容已保存并更新");
+          toast(el.id === "websitePagesForm" ? "资料详情页已保存并更新" : "资料页内容已保存并更新");
         } else await onModalSubmit?.(data, el);
       } catch (error) {
         errorEl.textContent = error.message;

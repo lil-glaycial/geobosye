@@ -46,8 +46,8 @@ const login = async (target, username, password) => {
   await target.locator("#loginForm [name=password]").fill(password);
   await target.locator("#loginForm button").click();
   await target.locator("#adminShell").waitFor();
-  await target.locator('#sideNav [data-view="content"]').click();
-  await target.locator("#contentForm").waitFor();
+  await target.locator('#sideNav [data-view="website"]').click();
+  await target.locator("#websiteContentForm").waitFor();
 };
 const save = async (form, endpoint) => {
   const responsePromise = page.waitForResponse(
@@ -76,12 +76,12 @@ try {
   );
   await login(page, "editor-test", "ContentEditor!123");
   assert.equal(
-    await page.locator('#contentForm [name="brand_mission"]').inputValue(),
+    await page.locator('#websiteContentForm [name="brand_mission"]').inputValue(),
     "匠心毛发健康，专注养防植健，成就美好人生",
   );
   await a11y(page);
   await page
-    .locator('#contentForm [name="brand_mission"]')
+    .locator('#websiteContentForm [name="brand_mission"]')
     .fill("后台编辑验收 · 使命");
   const timeline = page.locator('[data-content-list="timeline"]');
   await timeline.locator("..").locator("summary").click();
@@ -95,7 +95,7 @@ try {
     .locator('[data-row-field="text"]')
     .fill("通过后台添加、排序并保存的资料。");
   await last.locator('[data-action="content-up"]').click();
-  await save("contentForm", "/api/admin/content");
+  await save("websiteContentForm", "/api/admin/content");
   const publicData = await (
     await page.request.get(base + "/api/public/site")
   ).json();
@@ -107,9 +107,6 @@ try {
   const heading = homeData.fields.find(
     (f) => f.group === "品牌故事" && f.label.startsWith("标题："),
   );
-  await page
-    .getByRole("button", { name: "首页文案与图片", exact: true })
-    .click();
   const principles = page.locator('[data-home-collection="principles"]');
   assert.equal(await principles.locator("[data-collection-row]").count(), 4);
   await principles
@@ -128,7 +125,7 @@ try {
     .last()
     .locator('[data-collection-field="label"]')
     .fill("新增理念");
-  const homeHeading = page.locator(`#homeForm [name="${heading.key}"]`);
+  const homeHeading = page.locator(`#websiteHomeForm [name="${heading.key}"]`);
   const headingGroup = homeHeading.locator("xpath=ancestor::details");
   if (!(await headingGroup.evaluate((details) => details.open)))
     await headingGroup.locator("summary").click();
@@ -147,7 +144,7 @@ try {
     await homeHeading.inputValue(),
     "从后台更新的品牌栏目\n标题第二行",
   );
-  await save("homeForm", "/api/admin/home-fields");
+  await save("websiteHomeForm", "/api/admin/home-fields");
   const afterHome = await (
     await page.request.get(base + "/api/public/site")
   ).json();
@@ -174,7 +171,6 @@ try {
       .campusImage,
     selected,
   );
-  await page.getByRole("button", { name: "资料详情页", exact: true }).click();
   const faq = page
     .locator("[data-page-editor]")
     .filter({ has: page.locator('input[value="/faq"]') });
@@ -185,16 +181,13 @@ try {
       "## 后台新增问题？\n\n后台填写的回答。\n\n<script>alert('unsafe')</script>\n\n[不安全链接](javascript:alert)",
     );
   assert.equal(await faq.locator("input[type=checkbox]").isChecked(), true);
-  await save("pageForm", "/api/admin/page-content");
+  await save("websitePagesForm", "/api/admin/page-content");
   const faqHTML = await (await page.request.get(base + "/faq")).text();
   assert.match(faqHTML, /后台新增问题/);
   assert.doesNotMatch(faqHTML, /<script>alert|href="javascript:/);
   assert.match(faqHTML, /"name":"后台新增问题？"/);
   // A later knowledge save preserves separately maintained home/page edits.
-  await page
-    .getByRole("button", { name: "品牌与模块资料", exact: true })
-    .click();
-  await save("contentForm", "/api/admin/content");
+  await save("websiteContentForm", "/api/admin/content");
   const stored = await (
     await page.request.get(base + "/api/admin/content")
   ).json();
@@ -218,7 +211,7 @@ try {
   const viewer = await browser.newPage();
   await login(viewer, "viewer-test", "ContentViewer!123");
   assert.equal(
-    await viewer.locator('#contentForm [name="brand_mission"]').isDisabled(),
+    await viewer.locator('#websiteContentForm [name="brand_mission"]').isDisabled(),
     true,
   );
   const me = await (await viewer.request.get(base + "/api/auth/me")).json();

@@ -143,12 +143,12 @@ try {
     .fill("验收：日常防脱养护产品介绍");
   await page.locator("#editorForm button[type=submit]").click();
   await page.getByText("验收：日常防脱养护产品介绍", { exact: true }).waitFor();
-  await page.locator("#sideNav [data-view=site]").click();
+  await page.locator("#sideNav [data-view=website]").click();
   await page
-    .locator("#siteForm [name=heroTitle]")
+    .locator("#websiteSiteForm [name=heroTitle]")
     .fill("以专业，照顾每一根发丝");
-  await page.getByRole("button", { name: "保存并更新官网" }).click();
-  await page.getByText("官网设置已保存", { exact: true }).waitFor();
+  await page.getByRole("button", { name: "保存顶部与首屏" }).click();
+  await page.getByText("顶部与首屏已保存", { exact: true }).waitFor();
   await page.locator("#sideNav [data-view=articles]").click();
   await page.getByRole("button", { name: "新建文章" }).click();
   await page.locator("#editorForm [name=title]").fill("日常护理知识");
