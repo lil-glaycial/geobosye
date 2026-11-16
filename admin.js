@@ -508,7 +508,7 @@
       const pageFields = pageData.pages
         .map(
           (page, i) =>
-            `<details class="home-edit-group"><summary>${esc(page.title)} · ${esc(page.path)}</summary><div class="content-page-field" data-page-editor="${i}"><input type="hidden" name="page_${i}_path" value="${esc(page.path)}"><label class="check-row"><input name="page_${i}_enabled" type="checkbox" ${page.enabled ? "checked" : ""}>使用自定义内容（关闭则同步品牌知识库默认资料）</label>${field(`page_${i}_title`, "页面标题", page.title, "text", true, 160)}${["/library", "/about", "/contact"].includes(page.path) ? field(`page_${i}_accent`, "页面副标题 / 横幅标语", page.accent, "text", false, 200) : ""}${field(`page_${i}_description`, "页面简介 / 搜索摘要", page.description, "textarea", true, 400)}${field(`page_${i}_body`, "页面正文", page.body, "textarea", false, 60000)}<small class="modal-note">支持 ## 标题、- 列表、**强调**、[文字](链接) 和 ![说明](图片路径)。修改正文或副标题会自动启用自定义内容。</small></div></details>`,
+            `<details class="home-edit-group"><summary>${esc(page.title)} · ${esc(page.path)}</summary><div class="content-page-field" data-page-editor="${i}"><input type="hidden" name="page_${i}_path" value="${esc(page.path)}"><label class="check-row"><input name="page_${i}_enabled" type="checkbox" ${page.enabled ? "checked" : ""}>使用自定义内容（关闭则同步品牌知识库默认资料）</label>${field(`page_${i}_title`, "页面标题", page.title, "text", true, 160)}${["/library", "/about", "/contact"].includes(page.path) ? field(`page_${i}_accent`, "页面副标题 / 横幅标语", page.accent, "text", false, 200) + pageHubCopyFields(page, i) : ""}${field(`page_${i}_description`, "页面简介 / 搜索摘要", page.description, "textarea", true, 400)}${field(`page_${i}_body`, "页面正文", page.body, "textarea", false, 60000)}<small class="modal-note">支持 ## 标题、- 列表、**强调**、[文字](链接) 和 ![说明](图片路径)。修改正文、副标题或页面卡片文案会自动启用自定义内容。</small></div></details>`,
         )
         .join("");
       html =
@@ -620,7 +620,7 @@
     const pageFields = (pageData.pages || [])
       .map(
         (page, i) =>
-          `<details class="home-edit-group"><summary>${esc(page.title)} · ${esc(page.path)}</summary><div class="content-page-field" data-page-editor="${i}"><input type="hidden" name="page_${i}_path" value="${esc(page.path)}"><label class="check-row"><input name="page_${i}_enabled" type="checkbox" ${page.enabled ? "checked" : ""}>使用自定义内容（关闭则使用默认内容）</label>${field(`page_${i}_title`, "页面标题", page.title, "text", true, 160)}${["/library", "/about", "/contact"].includes(page.path) ? field(`page_${i}_accent`, "页面副标题 / 横幅标语", page.accent, "text", false, 200) : ""}${field(`page_${i}_description`, "页面简介 / 搜索摘要", page.description, "textarea", true, 400)}${field(`page_${i}_body`, "页面正文", page.body, "textarea", false, 60000)}<small class="modal-note">支持 ## 标题、- 列表、**强调**、[文字](链接) 和 ![说明](图片路径)。修改正文或副标题会自动启用自定义内容。</small></div></details>`,
+          `<details class="home-edit-group"><summary>${esc(page.title)} · ${esc(page.path)}</summary><div class="content-page-field" data-page-editor="${i}"><input type="hidden" name="page_${i}_path" value="${esc(page.path)}"><label class="check-row"><input name="page_${i}_enabled" type="checkbox" ${page.enabled ? "checked" : ""}>使用自定义内容（关闭则使用默认内容）</label>${field(`page_${i}_title`, "页面标题", page.title, "text", true, 160)}${["/library", "/about", "/contact"].includes(page.path) ? field(`page_${i}_accent`, "页面副标题 / 横幅标语", page.accent, "text", false, 200) + pageHubCopyFields(page, i) : ""}${field(`page_${i}_description`, "页面简介 / 搜索摘要", page.description, "textarea", true, 400)}${field(`page_${i}_body`, "页面正文", page.body, "textarea", false, 60000)}<small class="modal-note">支持 ## 标题、- 列表、**强调**、[文字](链接) 和 ![说明](图片路径)。修改正文、副标题或页面卡片文案会自动启用自定义内容。</small></div></details>`,
       )
       .join("");
     const dynamic = [
@@ -668,6 +668,31 @@
     if (f.type === "image")
       return `<div class="home-image-edit edit-field"><span>${esc(f.label)}</span><input type="hidden" name="${esc(f.key)}" value="${esc(f.value || "")}"><input type="hidden" name="__meta_${esc(f.key)}" value="${meta}"><button type="button" class="image-field-preview" data-action="home-image" data-key="${esc(f.key)}" ${editable ? "" : "disabled"}>${f.value ? `<img src="/${esc(f.value)}" alt="${esc(f.label)}"><span>${editable ? "点击更换图片" : "点击预览图片"}</span>` : '<span class="image-field-empty">暂无图片</span>'}</button></div>`;
     return `<label class="edit-field">${esc(f.label)}<textarea name="${esc(f.key)}" rows="${f.type === "text" ? 3 : 2}" maxlength="${f.max || 2000}" ${editable ? "" : "disabled"}>${esc(f.value || "")}</textarea><input type="hidden" name="__meta_${esc(f.key)}" value="${meta}"></label>`;
+  }
+
+  function pageHubCopyFields(page, index) {
+    const specs =
+      page.path === "/about"
+        ? [["storyImageCaption", "关于页 · 科研图片说明", "text", 240]]
+        : page.path === "/contact"
+          ? [
+              ["contactPhoneTitle", "联系页 · 电话卡标题", "text", 120],
+              ["contactPhoneDescription", "联系页 · 电话卡说明", "textarea", 300],
+              ["contactPhoneLink", "联系页 · 电话卡按钮", "text", 120],
+              ["contactFormTitle", "联系页 · 表单卡标题", "text", 120],
+              ["contactFormDescription", "联系页 · 表单卡说明", "textarea", 400],
+              ["contactFormLink", "联系页 · 表单卡按钮", "text", 120],
+              ["contactStoreTitle", "联系页 · 门店卡标题", "text", 120],
+              ["contactStoreDescription", "联系页 · 门店卡说明", "textarea", 400],
+              ["contactStoreLink", "联系页 · 门店卡按钮", "text", 120],
+            ]
+          : [];
+    const copy = page.hubCopy || {};
+    return specs
+      .map(([key, label, type, max]) =>
+        field(`page_${index}_hub_${key}`, label, copy[key] || "", type, false, max),
+      )
+      .join("");
   }
 
   function field(
@@ -1558,10 +1583,16 @@
           const pages = [...el.querySelectorAll("[data-page-editor]")].map(
             (editor) => {
               const prefix = `page_${editor.dataset.pageEditor}_`;
+              const hubCopy = {};
+              for (const [key, value] of Object.entries(data)) {
+                const marker = prefix + "hub_";
+                if (key.startsWith(marker)) hubCopy[key.slice(marker.length)] = value;
+              }
               return {
                 path: data[prefix + "path"],
                 title: data[prefix + "title"],
                 accent: data[prefix + "accent"] || "",
+                hubCopy,
                 description: data[prefix + "description"],
                 body: data[prefix + "body"] || "",
                 enabled: el.elements[prefix + "enabled"].checked,

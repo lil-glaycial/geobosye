@@ -21,6 +21,7 @@ const hubs = {
     accent: "以专注为起点，与美好同行",
     image: "brand-campus.webp",
     label: "THE BOSYE STORY",
+    copy: { storyImageCaption: "专注毛发健康 · 连接研究与日常" },
   },
   "/contact": {
     key: "contact",
@@ -28,11 +29,23 @@ const hubs = {
     accent: "从一次沟通，开始了解彼此",
     image: "brand-space-2.webp",
     label: "LET’S CONNECT",
+    copy: {
+      contactPhoneTitle: "全国咨询热线",
+      contactPhoneDescription: "门店预约 · 产品咨询 · 合作沟通",
+      contactPhoneLink: "拨打电话",
+      contactFormTitle: "在线预约咨询",
+      contactFormDescription: "留下您的称呼、联系方式与需求，让我们为您提供更有针对性的信息。",
+      contactFormLink: "填写咨询表单",
+      contactStoreTitle: "寻找身边的博士园",
+      contactStoreDescription: "按城市查看门店信息，了解地址与联系信息，到店前请先确认预约。",
+      contactStoreLink: "查询附近门店",
+    },
   },
 };
 function styleHubs(html, page, site) {
   const config = hubs[page.path];
   if (!config) return html;
+  const copy = { ...(config.copy || {}), ...(page.hubCopy || {}) };
   const { document } = parseHTML(html);
   document.body.classList.add("hub-page", "hub-" + config.key);
   const heading = document.querySelector(".content-heading");
@@ -99,7 +112,9 @@ function styleHubs(html, page, site) {
     const img = document.createElement("figure");
     img.className = "hub-story-photo";
     img.innerHTML =
-      '<img src="/assets/brand-laboratory.webp" alt="博士园科研空间" loading="lazy"><figcaption>专注毛发健康 · 连接研究与日常</figcaption>';
+      '<img src="/assets/brand-laboratory.webp" alt="博士园科研空间" loading="lazy"><figcaption>' +
+      esc(copy.storyImageCaption || "专注毛发健康 · 连接研究与日常") +
+      "</figcaption>";
     body.querySelector(".hub-intro").append(img);
     body.querySelectorAll(".hub-panel").forEach((section) => {
       if (section.querySelector("h2")?.textContent === "创始人与研究积累") {
@@ -115,7 +130,7 @@ function styleHubs(html, page, site) {
   if (config.key === "contact") {
     const cards = document.createElement("div");
     cards.className = "hub-contact-cards";
-    cards.innerHTML = `<a class="hub-contact-card" href="tel:${esc(site.phone.replace(/[^+\d]/g, ""))}"><span class="hub-card-icon" aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span><span class="eyebrow">CALL US</span><h2>全国咨询热线</h2><strong>${esc(site.phone)}</strong><p>门店预约 · 产品咨询 · 合作沟通</p><span class="hub-card-link">拨打电话 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a><a class="hub-contact-card" href="/#contact"><span class="hub-card-icon" aria-hidden="true">✎</span><span class="eyebrow">LEAVE A MESSAGE</span><h2>在线预约咨询</h2><p>留下您的称呼、联系方式与需求，让我们为您提供更有针对性的信息。</p><span class="hub-card-link">填写咨询表单 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a><a class="hub-contact-card" href="/#network"><span class="hub-card-icon" aria-hidden="true">⌖</span><span class="eyebrow">FIND A STORE</span><h2>寻找身边的博士园</h2><p>按城市查看门店信息，了解地址与联系信息，到店前请先确认预约。</p><span class="hub-card-link">查询附近门店 <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a>`;
+    cards.innerHTML = `<a class="hub-contact-card" href="tel:${esc(site.phone.replace(/[^+\d]/g, ""))}"><span class="hub-card-icon" aria-hidden="true"><svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span><span class="eyebrow">CALL US</span><h2>${esc(copy.contactPhoneTitle || "全国咨询热线")}</h2><strong>${esc(site.phone)}</strong><p>${esc(copy.contactPhoneDescription || "门店预约 · 产品咨询 · 合作沟通")}</p><span class="hub-card-link">${esc(copy.contactPhoneLink || "拨打电话")} <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a><a class="hub-contact-card" href="/#contact"><span class="hub-card-icon" aria-hidden="true">✎</span><span class="eyebrow">LEAVE A MESSAGE</span><h2>${esc(copy.contactFormTitle || "在线预约咨询")}</h2><p>${esc(copy.contactFormDescription || "留下您的称呼、联系方式与需求，让我们为您提供更有针对性的信息。")}</p><span class="hub-card-link">${esc(copy.contactFormLink || "填写咨询表单")} <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a><a class="hub-contact-card" href="/#network"><span class="hub-card-icon" aria-hidden="true">⌖</span><span class="eyebrow">FIND A STORE</span><h2>${esc(copy.contactStoreTitle || "寻找身边的博士园")}</h2><p>${esc(copy.contactStoreDescription || "按城市查看门店信息，了解地址与联系信息，到店前请先确认预约。")}</p><span class="hub-card-link">${esc(copy.contactStoreLink || "查询附近门店")} <svg class="icon-arrow-up-right" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow-up-right"></use></svg></span></a>`;
     body.prepend(cards);
   }
   if (meta) {
@@ -129,4 +144,5 @@ function styleHubs(html, page, site) {
   return "<!doctype html>" + document.documentElement.outerHTML;
 }
 const hubAccent = (path) => hubs[path]?.accent || "";
-module.exports = { styleHubs, hubAccent };
+const hubCopy = (path) => hubs[path]?.copy || {};
+module.exports = { styleHubs, hubAccent, hubCopy };

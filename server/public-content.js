@@ -1,5 +1,5 @@
 const { siteHeader } = require("./site-header");
-const { styleHubs, hubAccent } = require("./style-hubs");
+const { styleHubs, hubAccent, hubCopy } = require("./style-hubs");
 const fs = require("node:fs");
 const path = require("node:path");
 const knowledge = require("../content/knowledge.json");
@@ -617,6 +617,9 @@ function fixedPages(site, content = knowledge) {
   return pages.map((page) => ({
     ...page,
     ...(hubAccent(page.path) ? { accent: hubAccent(page.path) } : {}),
+    ...(Object.keys(hubCopy(page.path)).length
+      ? { hubCopy: hubCopy(page.path) }
+      : {}),
     modifiedAt: knowledge.version || updated,
   }));
 }
@@ -750,6 +753,7 @@ function allPages(db, site, content = knowledge) {
     if (!custom?.enabled) continue;
     page.title = custom.title;
     if (custom.accent) page.accent = custom.accent;
+    if (custom.hubCopy) page.hubCopy = custom.hubCopy;
     page.description = custom.description;
     page.body = renderText(custom.body);
     page.modifiedAt = custom.updatedAt;
