@@ -2788,6 +2788,19 @@ button:disabled {
   font-size: 12px;
 }
 @media (max-width: 620px) {
+  .admin-modal.bulk-import-modal {
+    max-height: calc(100dvh - 20px);
+    padding: 22px 18px;
+  }
+  .bulk-import-actions {
+    display: block;
+  }
+  .bulk-import-actions span {
+    display: block;
+    margin-top: 8px;
+  }
+}
+@media (max-width: 620px) {
   .website-section {
     margin-block: 28px 42px;
   }
