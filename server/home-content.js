@@ -324,6 +324,14 @@ function homeFields(html) {
     value: "全部品牌与养护资料",
     max: 120,
   });
+  fields.push({
+    key: "resourceLinkDescription",
+    group: "资料中心入口",
+    type: "text",
+    label: "全部资料入口说明",
+    value: "品牌、产品、服务与参考资料，一处阅读。",
+    max: 240,
+  });
   return fields;
 }
 

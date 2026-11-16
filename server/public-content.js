@@ -911,7 +911,9 @@ function homepageContent(db, site, req, html) {
     {
       path: "/library",
       title: content.home?.resourceLinkTitle || "全部品牌与养护资料",
-      description: "品牌、产品、服务与参考资料，一处阅读。",
+      description:
+        content.home?.resourceLinkDescription ||
+        "品牌、产品、服务与参考资料，一处阅读。",
     },
     ...allPages(db, site, content).filter((v) =>
       /^\/(recommend|comparison|guide|reports)\//.test(v.path),
