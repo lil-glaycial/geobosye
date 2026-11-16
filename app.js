@@ -180,7 +180,7 @@
           paragraph(k.brand.founderBody);
         break;
       case "brand":
-        title = "博士园 · 品牌故事";
+        title = k.home?.brandStoryModalTitle || "博士园 · 品牌故事";
         body =
           paragraph(k.brand.description) +
           "<h3>创始人的研究初心</h3>" +
@@ -198,11 +198,14 @@
               "</h4>" +
               paragraph(v.text),
           ) +
-          '<h3>品牌园区历史影像</h3><img loading="lazy" src="' +
+          "<h3>" +
+          esc(k.home?.brandCampusHeading || "品牌园区历史影像") +
+          '</h3><img loading="lazy" src="' +
           esc(k.home?.campusImage || "assets/brand-campus.webp") +
           '" alt="旧官网展示的品牌园区历史图片">' +
           paragraph(
-            "品牌园区历史影像，展示品牌产学研布局；不对应新园区当前建设进度。",
+            k.home?.brandCampusCaption ||
+              "品牌园区历史影像，展示品牌产学研布局；不对应新园区当前建设进度。",
           );
         break;
       case "qualifications":

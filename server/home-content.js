@@ -200,6 +200,30 @@ function homeFields(html) {
     max: 250,
   });
   fields.push({
+    key: "brandStoryModalTitle",
+    group: "品牌故事",
+    type: "text",
+    label: "品牌故事详情 · 弹窗标题",
+    value: "博士园 · 品牌故事",
+    max: 120,
+  });
+  fields.push({
+    key: "brandCampusHeading",
+    group: "品牌故事",
+    type: "text",
+    label: "品牌故事详情 · 园区影像标题",
+    value: "品牌园区历史影像",
+    max: 120,
+  });
+  fields.push({
+    key: "brandCampusCaption",
+    group: "品牌故事",
+    type: "text",
+    label: "品牌故事详情 · 园区影像说明",
+    value: "品牌园区历史影像，展示品牌产学研布局；不对应新园区当前建设进度。",
+    max: 300,
+  });
+  fields.push({
     key: "principles",
     group: "首页首屏 · 核心理念组",
     type: "collection",

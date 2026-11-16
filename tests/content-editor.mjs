@@ -79,6 +79,12 @@ try {
     await page.locator('#websiteContentForm [name="brand_mission"]').inputValue(),
     "匠心毛发健康，专注养防植健，成就美好人生",
   );
+  assert.equal(
+    await page
+      .locator('#websiteHomeForm [name="brandCampusCaption"]')
+      .inputValue(),
+    "品牌园区历史影像，展示品牌产学研布局；不对应新园区当前建设进度。",
+  );
   await a11y(page);
   await page
     .locator('#websiteContentForm [name="brand_mission"]')
