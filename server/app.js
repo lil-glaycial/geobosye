@@ -9,6 +9,7 @@ const knowledge = require("../content/knowledge.json");
 const { renderProducts } = require("./render-products");
 const { homeFields, renderHome } = require("./home-content");
 const { htmlToText } = require("./content-text");
+const { parseDelimited, toCsv } = require("./csv-import");
 const {
   registerPublicContent,
   homepageContent,
@@ -34,6 +35,7 @@ const imagePath = z
     (s) => !s || /^(assets|uploads)\/[a-zA-Z0-9_.-]+$/.test(s),
     "请选择本站媒体图片",
   );
+
 const wechatSourceUrl = z
   .string()
   .url()
@@ -904,6 +906,272 @@ function createApp(options = {}) {
   });
   for (const type of Object.keys(schemas)) {
     const permission = type === "news" ? "articles" : type;
+    if (type === "articles" || type === "stores") {
+      const importUpload = multer({
+        storage: multer.memoryStorage(),
+        limits: { fileSize: 5 * 1024 * 1024, files: 1 },
+      });
+      const importConfig =
+        type === "articles"
+          ? {
+              label: "文章",
+              headers: [
+                "文章标题",
+                "栏目",
+                "文章摘要",
+                "文章正文",
+                "展示图片",
+                "排序",
+                "发布状态",
+              ],
+              aliases: {
+                title: ["title", "标题", "文章标题"],
+                category: ["category", "栏目", "分类", "文章栏目"],
+                summary: ["summary", "摘要", "文章摘要"],
+                body: ["body", "正文", "文章正文", "内容"],
+                image: ["image", "图片", "图片路径", "封面图片", "展示图片"],
+                sort: ["sort", "排序", "顺序", "排序值"],
+                published: [
+                  "published",
+                  "发布",
+                  "是否发布",
+                  "状态",
+                  "发布状态",
+                ],
+              },
+            }
+          : {
+              label: "门店",
+              headers: [
+                "门店名称",
+                "城市",
+                "详细地址",
+                "门店电话",
+                "营业时间",
+                "展示图片",
+                "排序",
+                "发布状态",
+              ],
+              aliases: {
+                name: ["name", "门店名称", "门店"],
+                city: ["city", "城市"],
+                address: ["address", "详细地址", "地址"],
+                phone: ["phone", "门店电话", "电话", "联系电话"],
+                hours: ["hours", "营业时间", "营业时间说明"],
+                image: ["image", "图片", "图片路径", "展示图片"],
+                sort: ["sort", "排序", "顺序", "排序值"],
+                published: [
+                  "published",
+                  "发布",
+                  "是否发布",
+                  "状态",
+                  "发布状态",
+                ],
+              },
+            };
+      const normalizeHeader = (value) =>
+        String(value ?? "")
+          .replace(/^\ufeff/, "")
+          .trim()
+          .toLowerCase()
+          .replace(/[\s_\-\/（）()]/g, "");
+      const importTemplate = [importConfig.headers];
+      app.get(
+        "/api/admin/" + type + "/import-template",
+        allow(permission + ".read"),
+        (_req, res) => {
+          res
+            .type("text/csv; charset=utf-8")
+            .set(
+              "Content-Disposition",
+              `attachment; filename="${type}-import-template.csv"`,
+            )
+            .send("\ufeff" + toCsv(importTemplate));
+        },
+      );
+      app.post(
+        "/api/admin/" + type + "/import",
+        allow(permission + ".write"),
+        importUpload.single("file"),
+        (req, res, next) => {
+          try {
+            if (!req.file) throw fail(400, "请选择 CSV 或 TSV 文件");
+            const name = String(req.file.originalname || "").toLowerCase();
+            if (!/\.(csv|tsv|txt)$/.test(name))
+              throw fail(400, "批量导入仅支持 CSV 或 TSV 文件");
+            const text = req.file.buffer.toString("utf8");
+            let sourceRows;
+            try {
+              sourceRows = parseDelimited(text);
+            } catch (error) {
+              throw fail(400, error.message || "CSV 文件格式不正确");
+            }
+            if (!sourceRows.length) throw fail(400, "文件中没有可导入的数据");
+            if (sourceRows.length > 1000)
+              throw fail(400, `单次最多导入 1000 条${importConfig.label}`);
+            const aliases = Object.fromEntries(
+              Object.entries(importConfig.aliases).map(([key, names]) => [
+                key,
+                new Set(names.map(normalizeHeader)),
+              ]),
+            );
+            const sourceValue = (row, names) => {
+              const key = Object.keys(row).find((candidate) =>
+                names.has(normalizeHeader(candidate)),
+              );
+              return key ? row[key] : "";
+            };
+            const required =
+              type === "articles"
+                ? ["title", "category", "summary", "body"]
+                : ["name", "city", "address", "phone"];
+            const headerKeys = new Set(
+              Object.keys(sourceRows[0]).map(normalizeHeader),
+            );
+            const missing = required.filter(
+              (key) =>
+                ![...aliases[key]].some((alias) => headerKeys.has(alias)),
+            );
+            if (missing.length) {
+              const labels = missing.map((key) =>
+                key === "title"
+                  ? "文章标题"
+                  : key === "category"
+                    ? "栏目"
+                    : key === "summary"
+                      ? "文章摘要"
+                      : key === "body"
+                        ? "文章正文"
+                        : key === "name"
+                          ? "门店名称"
+                          : key === "city"
+                            ? "城市"
+                            : key === "address"
+                              ? "详细地址"
+                              : "门店电话",
+              );
+              throw fail(400, `导入表头缺少：${labels.join("、")}`);
+            }
+            const boolValue = (value) => {
+              const normalized = String(value || "")
+                .trim()
+                .toLowerCase();
+              if (!normalized) return false;
+              if (
+                [
+                  "1",
+                  "true",
+                  "yes",
+                  "y",
+                  "是",
+                  "发布",
+                  "已发布",
+                  "上线",
+                ].includes(normalized)
+              )
+                return true;
+              if (
+                [
+                  "0",
+                  "false",
+                  "no",
+                  "n",
+                  "否",
+                  "草稿",
+                  "未发布",
+                  "下线",
+                ].includes(normalized)
+              )
+                return false;
+              throw new Error(
+                "发布状态请填写“已发布”或“草稿”，也可填写 1 或 0",
+              );
+            };
+            const errors = [];
+            const normalizedRows = sourceRows.map((row) => {
+              try {
+                const sortText = sourceValue(row, aliases.sort);
+                const published = boolValue(
+                  sourceValue(row, aliases.published),
+                );
+                const sourceData =
+                  type === "articles"
+                    ? {
+                        title: sourceValue(row, aliases.title),
+                        category: sourceValue(row, aliases.category),
+                        summary: sourceValue(row, aliases.summary),
+                        body: sourceValue(row, aliases.body),
+                        image: sourceValue(row, aliases.image),
+                        sort: sortText === "" ? 0 : Number(sortText),
+                      }
+                    : {
+                        name: sourceValue(row, aliases.name),
+                        city: sourceValue(row, aliases.city),
+                        address: sourceValue(row, aliases.address),
+                        phone: sourceValue(row, aliases.phone),
+                        hours: sourceValue(row, aliases.hours),
+                        image: sourceValue(row, aliases.image),
+                        sort: sortText === "" ? 0 : Number(sortText),
+                      };
+                return {
+                  data: sourceData,
+                  published,
+                };
+              } catch (error) {
+                errors.push({ row: row.__row, error: error.message });
+                return null;
+              }
+            });
+            const parsed = normalizedRows.map((row, index) => {
+              if (!row) return null;
+              try {
+                return {
+                  data: schemas[type].parse(row.data),
+                  published: row.published,
+                };
+              } catch (error) {
+                const details =
+                  error instanceof z.ZodError
+                    ? error.issues
+                        .map(
+                          (issue) => `${issue.path.join(".")} ${issue.message}`,
+                        )
+                        .join("；")
+                    : error.message;
+                errors.push({ row: sourceRows[index].__row, error: details });
+                return null;
+              }
+            });
+            if (errors.length)
+              return res.status(400).json({
+                error: `有 ${errors.length} 行未通过校验，请修正后重新导入`,
+                errors,
+                rows: errors,
+              });
+            if (!parsed.length) throw fail(400, "文件中没有可导入的数据");
+            const time = now();
+            const insert = db.prepare("INSERT INTO items VALUES(?,?,?,?,?,?)");
+            db.transaction(() => {
+              parsed.forEach((data) => {
+                const id = randomUUID();
+                insert.run(
+                  id,
+                  type,
+                  JSON.stringify(data.data),
+                  data.published ? 1 : 0,
+                  time,
+                  time,
+                );
+                audit(req, `批量导入${importConfig.label}`, id);
+              });
+            })();
+            res.status(201).json({ imported: parsed.length });
+          } catch (error) {
+            next(error);
+          }
+        },
+      );
+    }
     app.get("/api/admin/" + type, allow(permission + ".read"), (_req, res) =>
       res.json({
         items: db
@@ -1349,7 +1617,11 @@ function createApp(options = {}) {
     if (error instanceof multer.MulterError)
       return res
         .status(400)
-        .json({ error: "图片上传失败，请使用不超过 5 MB 的图片" });
+        .json({
+          error: error.field === "file" && /\/import$/.test(_req.path)
+            ? "导入文件上传失败，请使用不超过 5 MB 的 CSV 或 TSV 文件"
+            : "图片上传失败，请使用不超过 5 MB 的图片",
+        });
     if (error.status)
       return res.status(error.status).json({ error: error.message });
     console.error(error);

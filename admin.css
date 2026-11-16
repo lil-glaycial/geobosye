@@ -309,6 +309,13 @@ button {
   justify-content: space-between;
   margin-bottom: 31px;
 }
+.heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
 .page-kicker {
   font-size: 9px;
   letter-spacing: 0.18em;
@@ -1308,6 +1315,11 @@ button {
   margin-top: 14px;
   width: 100%;
 }
+.admin-modal.bulk-import-modal {
+  width: 820px;
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
+}
 .admin-toast {
   position: fixed;
   left: 50%;
@@ -1381,6 +1393,10 @@ button {
   .page-heading .primary-action {
     white-space: nowrap;
     padding: 9px 11px;
+  }
+  .heading-actions {
+    width: 100%;
+    justify-content: flex-start;
   }
   .overview-grid {
     grid-template-columns: 1fr 1fr;
@@ -1787,6 +1803,60 @@ button:disabled {
 .modal-note {
   font-size: 13px;
   color: #61766a;
+  line-height: 1.8;
+}
+.bulk-import-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 14px 0 18px;
+  padding: 12px 14px;
+  background: #f2f8f6;
+  border: 1px solid #dbe8e3;
+  color: #61766a;
+  font-size: 12px;
+}
+.bulk-import-fields {
+  margin: 10px 0 16px;
+  color: #61766a;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.bulk-import-file input[type="file"] {
+  padding: 9px 10px !important;
+  background: #fff;
+}
+.bulk-import-preview {
+  margin: 14px 0;
+  overflow: hidden;
+}
+.bulk-import-preview-title,
+.bulk-import-result-summary {
+  margin: 8px 0;
+  color: #456153;
+  font-size: 13px;
+}
+.bulk-import-preview-table {
+  min-width: 650px;
+  font-size: 12px;
+}
+.bulk-import-preview-table th,
+.bulk-import-preview-table td {
+  white-space: nowrap;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bulk-import-result {
+  margin-top: 12px;
+  color: #456153;
+}
+.bulk-import-result ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: #a33b2c;
+  font-size: 12px;
   line-height: 1.8;
 }
 .permission-fieldset {

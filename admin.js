@@ -92,7 +92,9 @@
     if (!res.ok) {
       const d = await res.json().catch(() => ({ error: "服务不可用" }));
       if (res.status === 401 && url !== "auth/login") showLogin();
-      throw new Error(d.error || "请求失败");
+      const error = new Error(d.error || "请求失败");
+      if (Array.isArray(d.rows)) error.rows = d.rows;
+      throw error;
     }
     if (raw) return res;
     if (!(res.headers.get("content-type") || "").includes("application/json"))
@@ -145,6 +147,12 @@
   }
   const newButton = (label) =>
     `<button class="primary-action" data-action="new">＋ ${label}</button>`;
+  const importButton = (view) =>
+    `<button class="outline-btn" type="button" data-action="bulk-import" data-import-view="${esc(view)}">↓ 批量导入</button>`;
+  const actionButtons = (view, label) =>
+    can(view + ".write")
+      ? `<div class="heading-actions">${newButton(label)}${importButton(view)}</div>`
+      : "";
   function table(heads, rows) {
     return `<div class="panel table-panel"><div class="table-scroll" tabindex="0" role="region" aria-label="数据表格，可横向滚动"><table class="full-table"><thead><tr>${heads.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>${rows.length ? "" : empty()}</div>`;
   }
@@ -279,7 +287,11 @@
         heading(
           labels[0],
           labels[1],
-          can(view + ".write") ? newButton(labels[2]) : "",
+          ["stores", "articles"].includes(view)
+            ? actionButtons(view, labels[2])
+            : can(view + ".write")
+              ? newButton(labels[2])
+              : "",
         ) +
         table(
           ["名称", "简介 / 地址", "状态", "更新时间", "操作"],
@@ -348,18 +360,27 @@
         can(permission)
           ? api(path).catch(() => ({ items: [] }))
           : Promise.resolve({ items: [] });
-      const [site, content, homeData, pageData, stores, services, products, articles, news] =
-        await Promise.all([
-          api("admin/site"),
-          api("admin/content"),
-          api("admin/home-fields"),
-          api("admin/page-content"),
-          read("admin/stores", "stores.read"),
-          read("admin/services", "services.read"),
-          read("admin/products", "products.read"),
-          read("admin/articles", "articles.read"),
-          read("admin/news", "articles.read"),
-        ]);
+      const [
+        site,
+        content,
+        homeData,
+        pageData,
+        stores,
+        services,
+        products,
+        articles,
+        news,
+      ] = await Promise.all([
+        api("admin/site"),
+        api("admin/content"),
+        api("admin/home-fields"),
+        api("admin/page-content"),
+        read("admin/stores", "stores.read"),
+        read("admin/services", "services.read"),
+        read("admin/products", "products.read"),
+        read("admin/articles", "articles.read"),
+        read("admin/news", "articles.read"),
+      ]);
       state.websiteItems = {
         stores: stores.items || [],
         services: services.items || [],
@@ -549,12 +570,33 @@
     const siteFields =
       field("heroTitle", "首页主标题", site.heroTitle, "text", true, 40) +
       field("heroAccent", "首页副标题", site.heroAccent, "text", true, 40) +
-      field("heroDescription", "首页介绍", site.heroDescription, "textarea", true, 400) +
-      field("brandIntro", "品牌简介（与品牌资料同步）", site.brandIntro, "textarea", true, 2000) +
+      field(
+        "heroDescription",
+        "首页介绍",
+        site.heroDescription,
+        "textarea",
+        true,
+        400,
+      ) +
+      field(
+        "brandIntro",
+        "品牌简介（与品牌资料同步）",
+        site.brandIntro,
+        "textarea",
+        true,
+        2000,
+      ) +
       field("phone", "咨询电话", site.phone, "text", true, 30) +
       field("address", "总部地址", site.address, "text", true, 200) +
       field("seoTitle", "搜索结果标题", site.seoTitle, "text", true, 100) +
-      field("seoDescription", "搜索结果描述", site.seoDescription, "textarea", true, 300) +
+      field(
+        "seoDescription",
+        "搜索结果描述",
+        site.seoDescription,
+        "textarea",
+        true,
+        300,
+      ) +
       field("icp", "ICP备案号", site.icp) +
       field("police", "公安备案号", site.police);
 
@@ -581,25 +623,67 @@
         "品牌基础信息",
         [
           field("brand_name", "品牌名称", b.name, "text", true, 80),
-          field("brand_established", "成立年份", b.established, "text", true, 20),
+          field(
+            "brand_established",
+            "成立年份",
+            b.established,
+            "text",
+            true,
+            20,
+          ),
           field("brand_mission", "品牌使命", b.mission, "textarea", true, 300),
           field("brand_values", "品牌价值观", b.values, "textarea", true, 500),
-          field("brand_description", "品牌介绍", b.description, "textarea", true, 2000),
+          field(
+            "brand_description",
+            "品牌介绍",
+            b.description,
+            "textarea",
+            true,
+            2000,
+          ),
         ],
       ],
       [
         "创始人信息",
         [
           field("brand_founder", "创始人", b.founder, "text", true, 80),
-          field("brand_founderRole", "创始人身份", b.founderRole, "text", true, 120),
-          field("brand_founderBody", "创始人简介", b.founderBody, "textarea", true, 3000),
-          field("brand_founderResearch", "研究初心与成果", b.founderResearch, "textarea", true, 5000),
+          field(
+            "brand_founderRole",
+            "创始人身份",
+            b.founderRole,
+            "text",
+            true,
+            120,
+          ),
+          field(
+            "brand_founderBody",
+            "创始人简介",
+            b.founderBody,
+            "textarea",
+            true,
+            3000,
+          ),
+          field(
+            "brand_founderResearch",
+            "研究初心与成果",
+            b.founderResearch,
+            "textarea",
+            true,
+            5000,
+          ),
         ],
       ],
       [
         "品牌规模指标",
         [
-          field("brand_researchYears", "研究积累指标", b.researchYears, "text", true, 30),
+          field(
+            "brand_researchYears",
+            "研究积累指标",
+            b.researchYears,
+            "text",
+            true,
+            30,
+          ),
           field("brand_stores", "品牌门店指标", b.stores, "text", true, 30),
           field("brand_series", "产品系列指标", b.series, "text", true, 30),
           field("brand_offices", "办事处指标", b.offices, "text", true, 30),
@@ -624,11 +708,41 @@
       )
       .join("");
     const dynamic = [
-      ["stores", "门店查询", "stores.read", "stores.write", "门店地址、电话和营业时间。"],
-      ["services", "服务项目", "services.read", "services.write", "首页服务卡片和服务详情弹窗。"],
-      ["products", "产品系列", "products.read", "products.write", "首页产品栏目和产品详情。"],
-      ["articles", "内容发布", "articles.read", "articles.write", "用于文章类内容。"],
-      ["news", "品牌资讯", "articles.read", "articles.write", "公众号文章需要在这里手动提交，保存并发布后才会出现在官网。"],
+      [
+        "stores",
+        "门店查询",
+        "stores.read",
+        "stores.write",
+        "门店地址、电话和营业时间。",
+      ],
+      [
+        "services",
+        "服务项目",
+        "services.read",
+        "services.write",
+        "首页服务卡片和服务详情弹窗。",
+      ],
+      [
+        "products",
+        "产品系列",
+        "products.read",
+        "products.write",
+        "首页产品栏目和产品详情。",
+      ],
+      [
+        "articles",
+        "内容发布",
+        "articles.read",
+        "articles.write",
+        "用于文章类内容。",
+      ],
+      [
+        "news",
+        "品牌资讯",
+        "articles.read",
+        "articles.write",
+        "公众号文章需要在这里手动提交，保存并发布后才会出现在官网。",
+      ],
     ]
       .filter(([, , permission]) => can(permission))
       .map(([key, title, permission, writePermission, note]) => {
@@ -677,20 +791,42 @@
         : page.path === "/contact"
           ? [
               ["contactPhoneTitle", "联系页 · 电话卡标题", "text", 120],
-              ["contactPhoneDescription", "联系页 · 电话卡说明", "textarea", 300],
+              [
+                "contactPhoneDescription",
+                "联系页 · 电话卡说明",
+                "textarea",
+                300,
+              ],
               ["contactPhoneLink", "联系页 · 电话卡按钮", "text", 120],
               ["contactFormTitle", "联系页 · 表单卡标题", "text", 120],
-              ["contactFormDescription", "联系页 · 表单卡说明", "textarea", 400],
+              [
+                "contactFormDescription",
+                "联系页 · 表单卡说明",
+                "textarea",
+                400,
+              ],
               ["contactFormLink", "联系页 · 表单卡按钮", "text", 120],
               ["contactStoreTitle", "联系页 · 门店卡标题", "text", 120],
-              ["contactStoreDescription", "联系页 · 门店卡说明", "textarea", 400],
+              [
+                "contactStoreDescription",
+                "联系页 · 门店卡说明",
+                "textarea",
+                400,
+              ],
               ["contactStoreLink", "联系页 · 门店卡按钮", "text", 120],
             ]
           : [];
     const copy = page.hubCopy || {};
     return specs
       .map(([key, label, type, max]) =>
-        field(`page_${index}_hub_${key}`, label, copy[key] || "", type, false, max),
+        field(
+          `page_${index}_hub_${key}`,
+          label,
+          copy[key] || "",
+          type,
+          false,
+          max,
+        ),
       )
       .join("");
   }
@@ -1018,6 +1154,10 @@
     onModalSubmit = onSubmit;
     $("#modalTitle").textContent = title;
     $("#modalBody").innerHTML = content;
+    $("#editorModal .admin-modal").classList.toggle(
+      "bulk-import-modal",
+      Boolean($("#modalBody").querySelector("#bulkImportPreview")),
+    );
     $("#modalClose").hidden = !closeAllowed;
     $("#editorModal").hidden = false;
     $("#editorModal").classList.add("open");
@@ -1032,6 +1172,7 @@
     if (!modalCloseAllowed && !force) return;
     closeMediaPicker(force);
     $("#editorModal").classList.remove("open");
+    $("#editorModal .admin-modal").classList.remove("bulk-import-modal");
     $("#editorModal").hidden = true;
     document.body.style.overflow = "";
     lastFocus?.focus();
@@ -1039,6 +1180,184 @@
   }
   const form = (content, button = "保存") =>
     `<form id="editorForm">${content}<p class="form-error" role="alert"></p><button class="primary-action" type="submit">${button}</button></form>`;
+  const bulkImportConfigs = {
+    stores: {
+      title: "批量导入门店",
+      endpoint: "admin/stores/import",
+      permission: "stores.write",
+      description:
+        "按模板填写门店资料，一次导入多条记录。导入前请确认城市、地址和电话完整，发布列填写“是”或“否”。",
+      columns: [
+        ["name", "门店名称", true],
+        ["city", "城市", true],
+        ["address", "详细地址", true],
+        ["phone", "门店电话", true],
+        ["hours", "营业时间", false],
+        ["image", "展示图片", false],
+        ["sort", "排序", false],
+        ["published", "发布状态", false],
+      ],
+      sample: {
+        name: "北京朝阳门店",
+        city: "北京",
+        address: "北京市朝阳区示例路 1 号",
+        phone: "010-12345678",
+        hours: "09:00-18:00",
+        image: "",
+        sort: "0",
+        published: "是",
+      },
+    },
+    articles: {
+      title: "批量导入内容",
+      endpoint: "admin/articles/import",
+      permission: "articles.write",
+      description:
+        "按模板填写文章，一次导入多条内容。栏目请填写“品牌动态”“毛发知识”或“合作资讯”，发布列填写“是”或“否”。",
+      columns: [
+        ["title", "文章标题", true],
+        ["category", "栏目", true],
+        ["summary", "文章摘要", true],
+        ["body", "文章正文", true],
+        ["image", "展示图片", false],
+        ["sort", "排序", false],
+        ["published", "发布状态", false],
+      ],
+      sample: {
+        title: "博士园品牌动态",
+        category: "品牌动态",
+        summary: "这里填写文章摘要。",
+        body: "这里填写文章正文。",
+        image: "",
+        sort: "0",
+        published: "是",
+      },
+    },
+  };
+  function csvCell(value) {
+    const text = String(value ?? "");
+    return /[",\r\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+  }
+  function csvTemplate(config) {
+    const keys = config.columns.map(([, label]) => label);
+    return "\uFEFF" + keys.join(",") + "\n";
+  }
+  function parseCsv(text) {
+    const rows = [];
+    let row = [],
+      value = "",
+      quoted = false;
+    text = String(text || "").replace(/^\uFEFF/, "");
+    const firstLine = text.split(/\r?\n/, 1)[0] || "";
+    const delimiter = firstLine.includes("\t") ? "\t" : ",";
+    for (let i = 0; i < text.length; i += 1) {
+      const char = text[i];
+      if (quoted) {
+        if (char === '"' && text[i + 1] === '"') {
+          value += '"';
+          i += 1;
+        } else if (char === '"') quoted = false;
+        else value += char;
+      } else if (char === '"' && value === "") quoted = true;
+      else if (char === delimiter) {
+        row.push(value);
+        value = "";
+      } else if (char === "\n") {
+        row.push(value.replace(/\r$/, ""));
+        if (row.some((cell) => cell.trim())) rows.push(row);
+        row = [];
+        value = "";
+      } else value += char;
+    }
+    if (value || row.length) {
+      row.push(value.replace(/\r$/, ""));
+      if (row.some((cell) => cell.trim())) rows.push(row);
+    }
+    return rows;
+  }
+  function renderImportPreview(config, rows, message = "") {
+    const target = $("#bulkImportPreview");
+    if (!target) return;
+    if (message) {
+      target.innerHTML = `<p class="form-error">${esc(message)}</p>`;
+      return;
+    }
+    if (!rows.length) {
+      target.innerHTML =
+        '<p class="modal-note">选择 CSV 文件后，这里会显示前几行预览。</p>';
+      return;
+    }
+    const headers = rows[0];
+    const body = rows
+      .slice(1, 6)
+      .map(
+        (row) =>
+          `<tr>${headers.map((_, i) => `<td>${esc(row[i] || "")}</td>`).join("")}</tr>`,
+      )
+      .join("");
+    target.innerHTML = `<p class="bulk-import-preview-title">共检测到 ${Math.max(rows.length - 1, 0)} 条数据，预览前 ${Math.min(Math.max(rows.length - 1, 0), 5)} 条</p><div class="table-scroll"><table class="full-table bulk-import-preview-table"><thead><tr>${headers.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${body || `<tr><td colspan="${headers.length}">没有数据行</td></tr>`}</tbody></table></div>`;
+  }
+  function downloadImportTemplate(view) {
+    const config = bulkImportConfigs[view];
+    if (!config) return;
+    const blob = new Blob([csvTemplate(config)], {
+      type: "text/csv;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download =
+      view === "stores" ? "门店批量导入模板.csv" : "内容批量导入模板.csv";
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+  async function bulkImport(view) {
+    const config = bulkImportConfigs[view];
+    if (!config || !can(config.permission)) return;
+    state.returnView = state.view;
+    state.modalView = view;
+    showModal(
+      config.title,
+      form(
+        `<p class="modal-note">${config.description}</p><div class="bulk-import-actions"><button class="outline-btn" type="button" data-action="download-import-template" data-import-view="${view}">↓ 下载 CSV 模板</button><span>模板首行是字段名，请保留并从第二行开始填写。</span></div><p class="bulk-import-fields"><b>字段：</b>${config.columns.map(([, label, required]) => `${esc(label)}${required ? "（必填）" : "（可选）"}`).join("、")}</p><label class="edit-field bulk-import-file">选择 CSV / TSV 文件 <span class="required">*</span><input id="bulkImportFile" name="bulkImportFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" required></label><div id="bulkImportPreview" class="bulk-import-preview"><p class="modal-note">选择文件后，这里会显示前几行预览。</p></div><div id="bulkImportResult" class="bulk-import-result" aria-live="polite"></div>`,
+        "开始导入",
+      ),
+      async (_data, el) => {
+        const file = el.elements.bulkImportFile?.files?.[0];
+        if (!file) throw new Error("请选择 CSV 文件");
+        if (!/\.(csv|tsv|txt)$/i.test(file.name))
+          throw new Error("请选择 CSV、TSV 或 TXT 文件");
+        const body = new FormData();
+        body.append("file", file);
+        let result;
+        try {
+          result = await api(config.endpoint, { method: "POST", body });
+        } catch (error) {
+          if (!Array.isArray(error.rows)) throw error;
+          const resultEl = el.querySelector("#bulkImportResult");
+          if (resultEl)
+            resultEl.innerHTML = `<p class="bulk-import-result-summary">导入失败，请按提示修正后重新上传。</p><ul>${error.rows.map((row) => `<li>第 ${esc(row.row ?? row.line ?? "?")} 行：${esc(row.error || row.message || "导入失败")}</li>`).join("")}</ul>`;
+          toast("导入失败，请检查文件内容");
+          return;
+        }
+        const errors = Array.isArray(result.errors) ? result.errors : [];
+        const imported = Number(
+          result.imported ?? result.success ?? result.created ?? 0,
+        );
+        const failed = Number(result.failed ?? errors.length);
+        const resultEl = el.querySelector("#bulkImportResult");
+        if (resultEl)
+          resultEl.innerHTML = `<p class="bulk-import-result-summary">已导入 <b>${imported}</b> 条${failed ? `，失败 <b>${failed}</b> 条` : "，全部成功"}。</p>${errors.length ? `<ul>${errors.map((error) => `<li>第 ${esc(error.row ?? error.line ?? "?")} 行：${esc(error.error || error.message || "导入失败")}</li>`).join("")}</ul>` : ""}`;
+        if (errors.length || failed) {
+          toast(`导入完成：成功 ${imported} 条，失败 ${failed} 条`);
+          return;
+        }
+        closeModal();
+        toast(`批量导入成功，共 ${imported} 条`);
+        navigate(state.returnView === "website" ? "website" : view, false);
+      },
+    );
+  }
   function passwordDialog(required = false) {
     showModal(
       required ? "首次登录 · 设置新密码" : "修改密码",
@@ -1200,9 +1519,23 @@
             30000,
           ) +
           field("account", "来源账号", i.account, "text", false, 80) +
-          field("publishedAt", "原文发布时间", i.publishedAt, "text", false, 16) +
+          field(
+            "publishedAt",
+            "原文发布时间",
+            i.publishedAt,
+            "text",
+            false,
+            16,
+          ) +
           field("imageCount", "原文图片数", i.imageCount, "number", false, 3) +
-          field("sourceUrl", "微信公众号原文链接", i.sourceUrl, "url", false, 500);
+          field(
+            "sourceUrl",
+            "微信公众号原文链接",
+            i.sourceUrl,
+            "url",
+            false,
+            500,
+          );
       const write = can(view + ".write");
       fields +=
         imageField(i.image, write) +
@@ -1408,7 +1741,8 @@
         syncHomeCollection(block);
       } else if (action === "choose-image") {
         const field = btn.closest(".image-field");
-        const activeView = state.view === "website" ? state.modalView : state.view;
+        const activeView =
+          state.view === "website" ? state.modalView : state.view;
         if (can(activeView + ".write")) await openMediaPicker(field);
         else {
           const url = field.querySelector('[name="image"]').value;
@@ -1418,13 +1752,17 @@
           );
         }
       } else if (action === "clear-image") {
-        const activeView = state.view === "website" ? state.modalView : state.view;
+        const activeView =
+          state.view === "website" ? state.modalView : state.view;
         if (can(activeView + ".write"))
           updateImageField(btn.closest(".image-field"), "");
       } else if (action === "upload-media") $("#mediaUpload").click();
       else if (action === "preview-media") await openMediaPicker(null, item);
-      else if (action === "website-edit")
-        await edit(btn.dataset.module, item);
+      else if (action === "bulk-import")
+        await bulkImport(btn.dataset.importView);
+      else if (action === "download-import-template")
+        downloadImportTemplate(btn.dataset.importView);
+      else if (action === "website-edit") await edit(btn.dataset.module, item);
       else if (action === "new") await edit(state.view);
       else if (action === "new-lead") await edit("leads");
       else if (action === "edit") await edit(state.view, item);
@@ -1522,7 +1860,9 @@
         const data = Object.fromEntries(new FormData(el));
         if (el.id === "siteForm" || el.id === "websiteSiteForm") {
           await api("admin/site", { method: "PUT", body: data });
-          toast(el.id === "websiteSiteForm" ? "顶部与首屏已保存" : "官网设置已保存");
+          toast(
+            el.id === "websiteSiteForm" ? "顶部与首屏已保存" : "官网设置已保存",
+          );
         } else if (el.id === "contentForm" || el.id === "websiteContentForm") {
           const collections = {};
           for (const [key] of contentLists) {
@@ -1569,7 +1909,11 @@
           delete data.contentForm;
           delete data.websiteContentForm;
           await api("admin/content", { method: "PUT", body: data });
-          toast(el.id === "websiteContentForm" ? "品牌资料已保存并更新" : "官网内容已保存并更新");
+          toast(
+            el.id === "websiteContentForm"
+              ? "品牌资料已保存并更新"
+              : "官网内容已保存并更新",
+          );
         } else if (el.id === "homeForm" || el.id === "websiteHomeForm") {
           const fields = [];
           for (const metaEl of el.querySelectorAll('[name^="__meta_"]')) {
@@ -1578,7 +1922,11 @@
             delete data[meta.key];
           }
           await api("admin/home-fields", { method: "PUT", body: { fields } });
-          toast(el.id === "websiteHomeForm" ? "首页模块已保存并更新" : "首页内容已保存并更新");
+          toast(
+            el.id === "websiteHomeForm"
+              ? "首页模块已保存并更新"
+              : "首页内容已保存并更新",
+          );
         } else if (el.id === "pageForm" || el.id === "websitePagesForm") {
           const pages = [...el.querySelectorAll("[data-page-editor]")].map(
             (editor) => {
@@ -1586,7 +1934,8 @@
               const hubCopy = {};
               for (const [key, value] of Object.entries(data)) {
                 const marker = prefix + "hub_";
-                if (key.startsWith(marker)) hubCopy[key.slice(marker.length)] = value;
+                if (key.startsWith(marker))
+                  hubCopy[key.slice(marker.length)] = value;
               }
               return {
                 path: data[prefix + "path"],
@@ -1600,7 +1949,11 @@
             },
           );
           await api("admin/page-content", { method: "PUT", body: { pages } });
-          toast(el.id === "websitePagesForm" ? "资料详情页已保存并更新" : "资料页内容已保存并更新");
+          toast(
+            el.id === "websitePagesForm"
+              ? "资料详情页已保存并更新"
+              : "资料页内容已保存并更新",
+          );
         } else await onModalSubmit?.(data, el);
       } catch (error) {
         errorEl.textContent = error.message;
@@ -1615,6 +1968,25 @@
       editor.querySelector('input[type="checkbox"]').checked = true;
   });
   document.addEventListener("change", async (e) => {
+    if (e.target.id === "bulkImportFile") {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (!/\.(csv|tsv|txt)$/i.test(file.name)) {
+        renderImportPreview(null, [], "请选择 CSV、TSV 或 TXT 文件");
+        return;
+      }
+      try {
+        const text = await file.text();
+        const rows = parseCsv(text);
+        renderImportPreview(bulkImportConfigs[state.modalView] || {}, rows);
+      } catch {
+        renderImportPreview(
+          null,
+          [],
+          "无法读取该文件，请重新选择 CSV、TSV 或 TXT 文件",
+        );
+      }
+    }
     if (e.target.id === "mediaUpload") {
       try {
         const file = e.target.files[0];
