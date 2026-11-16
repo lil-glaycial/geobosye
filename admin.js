@@ -1197,16 +1197,6 @@
         ["sort", "排序", false],
         ["published", "发布状态", false],
       ],
-      sample: {
-        name: "北京朝阳门店",
-        city: "北京",
-        address: "北京市朝阳区示例路 1 号",
-        phone: "010-12345678",
-        hours: "09:00-18:00",
-        image: "",
-        sort: "0",
-        published: "是",
-      },
     },
     articles: {
       title: "批量导入内容",
@@ -1223,21 +1213,8 @@
         ["sort", "排序", false],
         ["published", "发布状态", false],
       ],
-      sample: {
-        title: "博士园品牌动态",
-        category: "品牌动态",
-        summary: "这里填写文章摘要。",
-        body: "这里填写文章正文。",
-        image: "",
-        sort: "0",
-        published: "是",
-      },
     },
   };
-  function csvCell(value) {
-    const text = String(value ?? "");
-    return /[",\r\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
-  }
   function csvTemplate(config) {
     const keys = config.columns.map(([, label]) => label);
     return "\uFEFF" + keys.join(",") + "\n";
@@ -1971,6 +1948,8 @@
     if (e.target.id === "bulkImportFile") {
       const file = e.target.files[0];
       if (!file) return;
+      const result = $("#bulkImportResult");
+      if (result) result.textContent = "";
       if (!/\.(csv|tsv|txt)$/i.test(file.name)) {
         renderImportPreview(null, [], "请选择 CSV、TSV 或 TXT 文件");
         return;
