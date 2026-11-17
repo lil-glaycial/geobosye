@@ -287,7 +287,7 @@
         heading(
           labels[0],
           labels[1],
-          ["stores", "articles"].includes(view)
+          ["stores", "articles", "news"].includes(view)
             ? actionButtons(view, labels[2])
             : can(view + ".write")
               ? newButton(labels[2])
@@ -1214,6 +1214,26 @@
         ["published", "发布状态", false],
       ],
     },
+    news: {
+      title: "批量导入品牌资讯",
+      endpoint: "admin/news/import",
+      permission: "articles.write",
+      description:
+        "按模板填写品牌资讯，一次导入多条内容。发布日期必填，原文发布时间请使用 YYYY-MM-DDTHH:mm 格式；发布列填写“是”或“否”。",
+      columns: [
+        ["title", "资讯标题", true],
+        ["summary", "资讯摘要", true],
+        ["body", "资讯正文", true],
+        ["publishedDate", "发布日期", true],
+        ["image", "展示图片", false],
+        ["sort", "排序", false],
+        ["account", "来源账号", false],
+        ["publishedAt", "原文发布时间", false],
+        ["imageCount", "原文图片数", false],
+        ["sourceUrl", "微信公众号原文链接", false],
+        ["published", "发布状态", false],
+      ],
+    },
   };
   function csvTemplate(config) {
     const keys = config.columns.map(([, label, required]) =>
@@ -1286,7 +1306,11 @@
     const link = document.createElement("a");
     link.href = url;
     link.download =
-      view === "stores" ? "门店批量导入模板.csv" : "内容批量导入模板.csv";
+      view === "stores"
+        ? "门店批量导入模板.csv"
+        : view === "news"
+          ? "品牌资讯批量导入模板.csv"
+          : "内容批量导入模板.csv";
     link.click();
     URL.revokeObjectURL(url);
   }
