@@ -906,7 +906,7 @@ function createApp(options = {}) {
   });
   for (const type of Object.keys(schemas)) {
     const permission = type === "news" ? "articles" : type;
-    if (type === "articles" || type === "stores") {
+    if (type === "articles" || type === "stores" || type === "news") {
       const importUpload = multer({
         storage: multer.memoryStorage(),
         limits: { fileSize: 5 * 1024 * 1024, files: 1 },
@@ -940,35 +940,86 @@ function createApp(options = {}) {
                 ],
               },
             }
-          : {
-              label: "门店",
-              headers: [
-                "门店名称*",
-                "城市*",
-                "详细地址*",
-                "门店电话",
-                "营业时间",
-                "展示图片",
-                "排序",
-                "发布状态",
-              ],
-              aliases: {
-                name: ["name", "门店名称", "门店"],
-                city: ["city", "城市"],
-                address: ["address", "详细地址", "地址"],
-                phone: ["phone", "门店电话", "电话", "联系电话"],
-                hours: ["hours", "营业时间", "营业时间说明"],
-                image: ["image", "图片", "图片路径", "展示图片"],
-                sort: ["sort", "排序", "顺序", "排序值"],
-                published: [
-                  "published",
-                  "发布",
-                  "是否发布",
-                  "状态",
+          : type === "stores"
+            ? {
+                label: "门店",
+                headers: [
+                  "门店名称*",
+                  "城市*",
+                  "详细地址*",
+                  "门店电话",
+                  "营业时间",
+                  "展示图片",
+                  "排序",
                   "发布状态",
                 ],
-              },
-            };
+                aliases: {
+                  name: ["name", "门店名称", "门店"],
+                  city: ["city", "城市"],
+                  address: ["address", "详细地址", "地址"],
+                  phone: ["phone", "门店电话", "电话", "联系电话"],
+                  hours: ["hours", "营业时间", "营业时间说明"],
+                  image: ["image", "图片", "图片路径", "展示图片"],
+                  sort: ["sort", "排序", "顺序", "排序值"],
+                  published: [
+                    "published",
+                    "发布",
+                    "是否发布",
+                    "状态",
+                    "发布状态",
+                  ],
+                },
+              }
+                : {
+                label: "品牌资讯",
+                headers: [
+                  "资讯标题*",
+                  "资讯摘要*",
+                  "资讯正文*",
+                  "发布日期*",
+                  "展示图片",
+                  "排序",
+                  "来源账号",
+                  "原文发布时间",
+                  "原文图片数",
+                  "微信公众号原文链接",
+                  "发布状态",
+                ],
+                aliases: {
+                  title: ["title", "标题", "资讯标题"],
+                  summary: ["summary", "摘要", "资讯摘要"],
+                  body: ["body", "正文", "资讯正文", "内容"],
+                  publishedDate: [
+                    "publishedDate",
+                    "发布日期",
+                    "发布日",
+                    "资讯发布日期",
+                  ],
+                  account: ["account", "来源账号", "发布账号"],
+                  publishedAt: ["publishedAt", "原文发布时间"],
+                  imageCount: [
+                    "imageCount",
+                    "原文图片数",
+                    "图片数",
+                    "图片数量",
+                  ],
+                  sourceUrl: [
+                    "sourceUrl",
+                    "公众号原文链接",
+                    "微信公众号原文链接",
+                    "原文链接",
+                  ],
+                  image: ["image", "图片", "图片路径", "展示图片"],
+                  sort: ["sort", "排序", "顺序", "排序值"],
+                  published: [
+                    "published",
+                    "发布",
+                    "是否发布",
+                    "状态",
+                    "发布状态",
+                  ],
+                },
+              };
       const normalizeHeader = (value) =>
         String(value ?? "")
           .replace(/^\ufeff/, "")
@@ -1024,7 +1075,9 @@ function createApp(options = {}) {
             const required =
               type === "articles"
                 ? ["title", "category", "summary", "body"]
-                : ["name", "city", "address"];
+                : type === "stores"
+                  ? ["name", "city", "address"]
+                  : ["title", "summary", "body", "publishedDate"];
             const headerKeys = new Set(
               Object.keys(sourceRows[0]).map(normalizeHeader),
             );
@@ -1033,23 +1086,18 @@ function createApp(options = {}) {
                 ![...aliases[key]].some((alias) => headerKeys.has(alias)),
             );
             if (missing.length) {
-              const labels = missing.map((key) =>
-                key === "title"
-                  ? "文章标题"
-                  : key === "category"
-                    ? "栏目"
-                    : key === "summary"
-                      ? "文章摘要"
-                      : key === "body"
-                        ? "文章正文"
-                        : key === "name"
-                          ? "门店名称"
-                          : key === "city"
-                            ? "城市"
-                            : key === "address"
-                              ? "详细地址"
-                              : "门店电话",
-              );
+              const requiredLabels = {
+                title: type === "news" ? "资讯标题" : "文章标题",
+                category: "栏目",
+                summary: type === "news" ? "资讯摘要" : "文章摘要",
+                body: type === "news" ? "资讯正文" : "文章正文",
+                publishedDate: "发布日期",
+                name: "门店名称",
+                city: "城市",
+                address: "详细地址",
+                phone: "门店电话",
+              };
+              const labels = missing.map((key) => requiredLabels[key] || key);
               throw fail(400, `导入表头缺少：${labels.join("、")}`);
             }
             const boolValue = (value) => {
@@ -1104,7 +1152,8 @@ function createApp(options = {}) {
                         image: sourceValue(row, aliases.image),
                         sort: sortText === "" ? 0 : Number(sortText),
                       }
-                    : {
+                    : type === "stores"
+                      ? {
                         name: sourceValue(row, aliases.name),
                         city: sourceValue(row, aliases.city),
                         address: sourceValue(row, aliases.address),
@@ -1112,7 +1161,26 @@ function createApp(options = {}) {
                         hours: sourceValue(row, aliases.hours),
                         image: sourceValue(row, aliases.image),
                         sort: sortText === "" ? 0 : Number(sortText),
-                      };
+                        }
+                      : {
+                          title: sourceValue(row, aliases.title),
+                          summary: sourceValue(row, aliases.summary),
+                          body: sourceValue(row, aliases.body),
+                          publishedDate: sourceValue(row, aliases.publishedDate),
+                          account: sourceValue(row, aliases.account),
+                          publishedAt: sourceValue(row, aliases.publishedAt),
+                          imageCount: sourceValue(row, aliases.imageCount),
+                          sourceUrl: sourceValue(row, aliases.sourceUrl),
+                          image: sourceValue(row, aliases.image),
+                          sort: sortText === "" ? 0 : Number(sortText),
+                        };
+                if (type === "news") {
+                  if (sourceData.account === "") delete sourceData.account;
+                  if (sourceData.publishedAt === "") delete sourceData.publishedAt;
+                  if (sourceData.imageCount === "") delete sourceData.imageCount;
+                  else sourceData.imageCount = Number(sourceData.imageCount);
+                  if (sourceData.sourceUrl === "") delete sourceData.sourceUrl;
+                }
                 return {
                   data: sourceData,
                   published,

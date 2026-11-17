@@ -110,6 +110,34 @@ test("内容发布 CSV 批量导入会整体校验并写入", async () => {
       ).items.some((item) => item.name === "批量门店"),
       true,
     );
+    const newsTemplate = await fetch(
+      `${base}/api/admin/news/import-template`,
+      { headers: { Origin: base, Cookie: cookie } },
+    );
+    assert.equal(newsTemplate.status, 200);
+    assert.match(await newsTemplate.text(), /资讯标题\*/);
+    const newsCsv = [
+      "资讯标题*,资讯摘要*,资讯正文*,发布日期*,来源账号,原文发布时间,原文图片数,公众号原文链接,展示图片,排序,发布状态",
+      '批量资讯,"摘要内容","正文内容",2026-11-17,博士园会员服务中心,2026-11-17T10:30,3,https://mp.weixin.qq.com/s/test-news,assets/care.jpg,1,已发布',
+    ].join("\n");
+    const newsForm = new FormData();
+    newsForm.append(
+      "file",
+      new Blob([newsCsv], { type: "text/csv" }),
+      "news.csv",
+    );
+    const newsImport = await fetch(`${base}/api/admin/news/import`, {
+      method: "POST",
+      headers: { Origin: base, Cookie: cookie, "X-CSRF-Token": csrf },
+      body: newsForm,
+    });
+    assert.equal(newsImport.status, 201, await newsImport.text());
+    const newsRows = await (
+      await fetch(`${base}/api/admin/news`, {
+        headers: { Origin: base, Cookie: cookie },
+      })
+    ).json();
+    assert.equal(newsRows.items.some((item) => item.title === "批量资讯"), true);
   } finally {
     await new Promise((resolve) => server.close(resolve));
     db.close();
