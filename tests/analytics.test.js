@@ -13,6 +13,39 @@ const loaderPath = "/assets/baidu-analytics.js";
 const analyticsOrigin = "https://hm.baidu.com";
 const analyticsUrl =
   analyticsOrigin + "/hm.js?c49949fab25fc18f582cf44798b2397b";
+const publicSources = {
+  "script-src": [
+    "'self'",
+    "'unsafe-eval'",
+    analyticsOrigin,
+    "https://goutong.baidu.com",
+    "https://aff-im.cdn.bcebos.com",
+    "https://aiff.cdn.bcebos.com",
+    "https://banti-static.cdn.bcebos.com",
+    "https://safe.cdn.bcebos.com",
+    "https://passport.baidu.com",
+    "https://affimvip.baidu.com",
+  ],
+  "img-src": [
+    "'self'",
+    "data:",
+    analyticsOrigin,
+    "https://affimvip.baidu.com",
+    "https://aff-im.bj.bcebos.com",
+    "https://aff-im.cdn.bcebos.com",
+    "https://sofire.baidu.com",
+  ],
+  "connect-src": [
+    "'self'",
+    analyticsOrigin,
+    "https://affimvip.baidu.com",
+    "https://sofire.baidu.com",
+    "https://sfp.safe.baidu.com",
+    "https://banti.baidu.com",
+  ],
+  "frame-src": ["'self'", "https://affimvip.baidu.com"],
+  "media-src": ["'self'", "https://aifanfan.baidu.com"],
+};
 
 function policyOf(headers) {
   const value = headers.get("content-security-policy");
@@ -53,17 +86,25 @@ function assertPublicPage(result, pathname, baselinePolicy) {
     /<script\b[^>]*src=["']https?:\/\/hm\.baidu\.com/i,
   );
   const policy = policyOf(result.response.headers);
-  const changed = new Set(["script-src", "connect-src", "img-src"]);
-  for (const [name, sources] of baselinePolicy) {
+  const expectedPolicy = new Map([
+    ...baselinePolicy,
+    ...Object.entries(publicSources),
+  ]);
+  assert.equal(policy.size, expectedPolicy.size, pathname);
+  for (const [name, sources] of expectedPolicy) {
     assert.deepEqual(
       policy.get(name),
-      changed.has(name) ? [...sources, analyticsOrigin] : sources,
-      `${pathname} 的 ${name} 应仅增加必要统计来源`,
+      sources,
+      `${pathname} 的 ${name} 应保留精确来源白名单`,
     );
   }
-  assert.equal(policy.size, baselinePolicy.size, pathname);
   assert.ok(!policy.get("script-src").includes("'unsafe-inline'"), pathname);
-  assert.ok(!policy.get("script-src").includes("'unsafe-eval'"), pathname);
+  assert.ok(policy.get("script-src").includes("'unsafe-eval'"), pathname);
+  assert.equal(
+    result.response.headers.get("referrer-policy"),
+    "strict-origin-when-cross-origin",
+    pathname,
+  );
 }
 
 test("百度统计只覆盖公开 HTML，且保持后台和错误页的 CSP 边界", async (t) => {
@@ -83,6 +124,15 @@ test("百度统计只覆盖公开 HTML，且保持后台和错误页的 CSP 边�
     assert.doesNotMatch(
       baseline.response.headers.get("content-security-policy"),
       /baidu/i,
+    );
+    assert.deepEqual(baselinePolicy.get("script-src"), ["'self'"]);
+    assert.deepEqual(baselinePolicy.get("connect-src"), ["'self'"]);
+    assert.deepEqual(baselinePolicy.get("img-src"), ["'self'", "data:"]);
+    assert.equal(baselinePolicy.has("frame-src"), false);
+    assert.equal(baselinePolicy.has("media-src"), false);
+    assert.equal(
+      baseline.response.headers.get("referrer-policy"),
+      "no-referrer",
     );
     const stamp = "2026-11-26T01:00:00.000Z";
     const dynamicPages = [];
@@ -166,6 +216,11 @@ test("百度统计只覆盖公开 HTML，且保持后台和错误页的 CSP 边�
             baselinePolicy,
             pathname,
           );
+          assert.equal(
+            result.response.headers.get("referrer-policy"),
+            "no-referrer",
+            pathname,
+          );
         }
       },
     );
@@ -201,6 +256,17 @@ test("百度统计只覆盖公开 HTML，且保持后台和错误页的 CSP 边�
               .on("error", reject);
           });
           assert.equal(result.response.statusCode, 200, host);
+          assertPublicPage(
+            {
+              response: {
+                status: result.response.statusCode,
+                headers: new Headers(result.response.headers),
+              },
+              body: result.body,
+            },
+            host,
+            baselinePolicy,
+          );
           const scripts = analyticsScripts(result.body);
           assert.equal(scripts.length, 1, host);
           assert.equal(
@@ -225,6 +291,11 @@ test("百度统计只覆盖公开 HTML，且保持后台和错误页的 CSP 边�
             baselinePolicy,
             pathname,
           );
+          assert.equal(
+            redirect.response.headers.get("referrer-policy"),
+            "no-referrer",
+            pathname,
+          );
           assertPublicPage(await request(pathname), pathname, baselinePolicy);
         }
       },
@@ -237,6 +308,10 @@ test("百度统计只覆盖公开 HTML，且保持后台和错误页的 CSP 边�
         assert.equal(loader.response.status, 200);
         assert.match(loader.response.headers.get("content-type"), /javascript/);
         assert.deepEqual(policyOf(loader.response.headers), baselinePolicy);
+        assert.equal(
+          loader.response.headers.get("referrer-policy"),
+          "no-referrer",
+        );
         for (const existingQueue of [
           undefined,
           [["_trackEvent", "咨询", "提交"]],

@@ -603,7 +603,7 @@ function fixedPages(site, content = knowledge) {
     title: "隐私政策",
     label: "PRIVACY",
     description:
-      "说明博士园官网咨询信息与访问统计的用途、保护方式、Cookie 及查询、更正、删除或撤回同意的方式。",
+      "说明博士园官网咨询表单、在线咨询与访问统计的信息用途、保护方式、Cookie 及查询、更正、删除或撤回同意的方式。",
     showSources: false,
     body:
       privacy +
