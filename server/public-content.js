@@ -5,6 +5,7 @@ const path = require("node:path");
 const knowledge = require("../content/knowledge.json");
 const { renderText } = require("./content-text");
 const { newsPages, newsListing } = require("./news");
+const { sendPublicPage } = require("./analytics");
 const updated = knowledge.version;
 const esc = (value) =>
   String(value ?? "").replace(
@@ -602,7 +603,7 @@ function fixedPages(site, content = knowledge) {
     title: "隐私政策",
     label: "PRIVACY",
     description:
-      "说明博士园官网咨询信息的收集、用途、保护、必要 Cookie 与查询、更正、删除或撤回同意的方式。",
+      "说明博士园官网咨询信息与访问统计的用途、保护方式、Cookie 及查询、更正、删除或撤回同意的方式。",
     showSources: false,
     body:
       privacy +
@@ -893,7 +894,7 @@ function registerPublicContent(app, db) {
           /<main id="main"[\s\S]*?<\/main>/,
           () => page.listing,
         );
-      res.type("html").send(html);
+      sendPublicPage(req, res, html);
     },
   );
 }

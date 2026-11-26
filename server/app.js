@@ -1,5 +1,6 @@
 const express = require("express");
 const helmet = require("helmet");
+const { contentSecurityPolicy, sendPublicPage } = require("./analytics");
 const { rateLimit } = require("express-rate-limit");
 const multer = require("multer");
 const { z } = require("zod");
@@ -278,20 +279,7 @@ function createApp(options = {}) {
   if (process.env.TRUST_PROXY === "1") app.set("trust proxy", 1);
   app.use(
     helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'"],
-          styleSrc: ["'self'", "'unsafe-inline'"],
-          fontSrc: ["'self'"],
-          imgSrc: ["'self'", "data:"],
-          connectSrc: ["'self'"],
-          formAction: ["'self'"],
-          frameAncestors: ["'none'"],
-          upgradeInsecureRequests:
-            process.env.NODE_ENV === "production" ? [] : null,
-        },
-      },
+      contentSecurityPolicy: contentSecurityPolicy(),
       hsts: process.env.NODE_ENV === "production",
     }),
   );
@@ -1654,7 +1642,7 @@ function createApp(options = {}) {
       homeFields(fs.readFileSync(path.join(root, "index.html"), "utf8")),
       site,
     );
-    res.type("html").send(homepageContent(db, site, req, html));
+    sendPublicPage(req, res, homepageContent(db, site, req, html));
   });
   app.get("/robots.txt", (req, res) =>
     res

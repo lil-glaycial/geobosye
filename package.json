@@ -13,7 +13,7 @@
     "stop:local": "node scripts/local-service.mjs stop",
     "dev": "node --watch server/index.js",
     "setup": "node server/setup.js",
-    "test": "node --test tests/api.test.js tests/public-content.test.js tests/news.test.js tests/import.test.js",
+    "test": "node --test tests/api.test.js tests/public-content.test.js tests/news.test.js tests/import.test.js tests/analytics.test.js",
     "test:browser": "node tests/browser.mjs",
     "test:icons": "node tests/arrow-icons.mjs",
     "test:login": "node tests/login-recovery.mjs",
